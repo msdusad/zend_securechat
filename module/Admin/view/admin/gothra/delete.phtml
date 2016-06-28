@@ -1,0 +1,25 @@
+<div id="top"><?= $this->partial('layout/admin_top_menu', array('tittle' => 'Delete Gothra')); ?></div>
+<div id="left"> <?= $this->partial('layout/left-menu', array('gothra' => 'active')); ?></div> 
+<div id="content"> 
+    <div class="outer">
+        <div class="inner">
+
+            <p>Are you sure that you want to delete
+                '<?php echo $this->escapeHtml($this->gothra->title); ?>'?
+            </p>
+            <?php
+            $url = $this->url('admin/gothra', array(
+                'action' => 'delete',
+                'id' => $this->gothra->id,
+            ));
+            ?>
+            <form action="<?php echo $url; ?>" method="post">
+                <div>
+                    <input type="hidden" name="id" value="<?php echo (int) $this->gothra->id; ?>" />
+                    <input type="submit" name="del" value="Yes" />
+                    <input type="submit" name="del" value="No" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

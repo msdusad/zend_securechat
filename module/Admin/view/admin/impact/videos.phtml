@@ -1,0 +1,42 @@
+
+<div id="top"><?= $this->partial('layout/admin_top_menu', array('tittle' => 'Add new Impact')); ?></div>
+<div id="left"> <?= $this->partial('layout/left-menu', array('impact' => 'active')); ?></div> 
+<div id="content"> 
+    <div class="outer">
+        <div class="inner">
+            <?php if ($this->message != '') { ?>
+                <div class="flash_message">
+                    <?php echo $this->message[0]; ?>
+                </div>
+            <?php } ?>
+             <?php if (count($this->gallery) > 0) { ?>
+                <form method="POST" action="<?php echo $this->url('admin/impacts', array('action' => 'deletevideos', 'id' => $this->id));
+                ?>">
+                    <ul class="impact_gallery">
+                        <?php foreach ($this->gallery as $value) { 
+                            
+                            parse_str( parse_url( $value['video_url'], PHP_URL_QUERY ), $my_array_of_vars );
+                                      
+                            ?>
+                            <li>
+                                <a target="_blank" href="<?php echo $value['video_url']; ?>"> <img src="<?php echo "http://img.youtube.com/vi/".$my_array_of_vars['v']."/2.jpg"; ?>"/></a>
+                                <input type="checkbox" name="ids[]" value="<?php echo $value['id']; ?>">
+
+                            </li>
+                        <?php } ?>
+                    </ul>  
+                    <input type="submit" value="Delete"/>
+                </form>
+            <?php }
+            ?>
+             <?php
+            $form = $this->form;
+            $form->setAttribute('action', $this->url('admin/impacts', array('action' => 'videos','id'=>$this->id)));
+            $form->prepare();
+            echo $this->form()->openTag($form);
+            echo $this->formCollection($form);
+            echo $this->form()->closeTag();
+            ?>
+        </div>
+    </div>
+</div>

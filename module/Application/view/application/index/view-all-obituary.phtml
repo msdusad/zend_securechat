@@ -1,0 +1,936 @@
+<?php $this->partial('layout/top_links'); ?>
+<?php echo $this->headLink()->prependStylesheet($this->basePath() . '/addthis/css/search.css'); ?>
+<style type="text/css">
+.atozli{
+	float: left;
+	list-style: none;
+	margin-left: 8px;
+	cursor: pointer;
+}
+</style>
+<div class="container">
+<span style="float:left;text-align:left; font-size: 22px; font-weight: bold; color:#f79647; margin-top:8px;"> Featured Obituaries   </span>
+<form action="<?php echo $this->basePath('/view-all-obituary');?>" id="searchid" method="post">
+
+		<!--		
+		<div class="con-text">
+        	<div class="col-lg-4 col-sm-12 col-xs-12 search-items-space">
+        	<label> Select Country   </label>
+					<select name="country" id="country" placeholder="USA" class="form-control select-country">
+						                 
+                    <option value="USA">USA</option>
+                    
+                    
+               </select>	
+             </div>
+					
+             <div class="col-lg-4 col-sm-12 col-xs-12 search-items-space">       
+                    <select name="state" id="states" placeholder="California" class="form-control select-city" onchange="getCities()">
+                    <option value=""> State </option>
+                    <?php
+                    asort($states);
+							foreach($states as $k=>$v){
+								if($v!="") {
+							?>
+							<option value="<?php echo $k;?>" <?php if($k==$postdata['state']){ echo 'selected';}?>> <?php echo $v;?> </option>
+							<?php	
+						}						
+							}                    
+                    ?>
+                    </select>	
+                    <?php $citylist="";
+                     if($postdata['citylist']!=''){ $citylist=json_decode($postdata['citylist']);}
+                     ?>
+                    
+                    <select name="cities" id="cities" placeholder="All Cities" class="form-control select-city pull-right" onchange="getPostalcode()">
+                    <option value="">City</option>
+                    <?php
+							foreach($citylist as $ky=>$va){
+							?>
+							<option value="<?php echo $ky;?>" <?php if($ky==$postdata['cities']){ echo 'selected';}?>> <?php echo $va;?> </option>
+							<?php							
+							}                    
+                    ?>
+                    </select>
+			 </div>
+                    <?php $postallist="";
+                     if($postdata['postallist']!=''){ $postallist=json_decode($postdata['postallist']);}
+                     ?>
+              <div class="col-lg-4 col-sm-12 col-xs-12">      
+                    <select name="postalCode" id="postalCode" class="form-control">
+                 	<option value="">Postal Code </option>
+                    <?php
+							foreach($postallist as $pky=>$pva){
+							?>
+							<option value="<?php echo $pky;?>" <?php if($pky==$postdata['postalCode']){ echo 'selected';}?>> <?php echo $pva;?> </option>
+							<?php							
+							}                    
+                    ?>
+                    </select>	
+               </div>     
+                            			
+                  	
+        
+        </div> 
+       
+        <div class="clearfix"> </div> <br/> --> 
+        <div class="adv-search-block second-color" style="width:100%; padding-top:7px;">
+
+			<div class="con-text">
+
+        	<div class="col-md-2 col-sm-2 col-xs-6 spacing">
+					<select name="country" id="country" required="required" class="form-control txt-height"  onchange="getStates()">
+                     <option value="">Country</option>
+                    <?php
+                    asort($country);
+							foreach($country as $ck=>$cv){
+								if($cv!="") {
+							?>
+							<option value="<?php echo $ck;?>" <?php if($ck==$postdata['country'] || $cv=='USA'){ echo 'selected';}?>> <?php echo $cv;?> </option>
+							<?php	
+						}						
+							}                    
+                    ?>
+               </select>	
+             </div>
+					
+             <div class="col-md-2 col-sm-2 col-xs-6 spacing"> 
+             <?php $stateslist="";
+						   if($postdata['stateslist']!=''){ 
+                     $stateslist=json_decode($postdata['stateslist']);}else{
+								echo "<script type='text/javascript'> 
+								$(document).ready(function(){
+									getStates();
+									});
+									</script>";                     
+                     }
+                     	
+                     ?>       
+                    <select name="state" id="states" placeholder="California" class="form-control txt-height" onchange="getCities()">
+                    <option value=""> State </option>
+                    <?php
+                    asort($stateslist);
+							foreach($stateslist as $k=>$v){
+								if($v!="") {
+							?>
+							<option value="<?php echo $k;?>" <?php if($k==$postdata['state']){ echo 'selected';}?>> <?php echo $v;?> </option>
+							<?php	
+						}						
+							}                    
+                    ?>
+                    </select>	
+             	</div> 
+						              
+              
+              <div class="col-md-2 col-sm-2 col-xs-6 spacing"> 
+                    <?php $citylist="";
+                     if($postdata['citylist']!=''){ $citylist=json_decode($postdata['citylist']);}else{
+								echo "<script type='text/javascript'>
+								$(document).ready(function(){
+									getCities();
+									});
+									</script>";                     
+                     }
+                     ?>
+                    
+                    <select name="cities" id="cities" placeholder="All Cities" class="form-control txt-height" onchange="getPostalcode()">
+                    <option value="">City</option>
+                    <?php
+							foreach($citylist as $ky=>$va){
+							?>
+							<option value="<?php echo $ky;?>" <?php if($ky==$postdata['cities']){ echo 'selected';}?>> <?php echo $va;?> </option>
+							<?php							
+							}                    
+                    ?>
+                    </select>
+			 			</div>
+			 			
+                    <?php $postallist="";
+                     if($postdata['postallist']!=''){ $postallist=json_decode($postdata['postallist']);}else{
+								echo "<script type='text/javascript'>
+								$(document).ready(function(){
+									getPostalcode();
+									});
+									</script>";                     
+                     }
+                     ?>
+              <div class="col-md-2 col-sm-2 col-xs-6 spacing">      
+                    <select name="postalCode" id="postalCode" class="form-control txt-height">
+                 	<option value="">Zip/Postal Code </option>
+                    <?php
+							foreach($postallist as $pky=>$pva){
+							?>
+							<option value="<?php echo $pky;?>" <?php if($pky==$postdata['postalCode']){ echo 'selected';}?>> <?php echo $pva;?> </option>
+							<?php							
+							}                    
+                    ?>
+                    </select>	
+               </div>     
+               <div class="col-md-2 col-sm-2 col-xs-6 spacing">
+        	<input type="text" name="firstname" value="<?php echo $postdata['firstname'];?>" id="firstname" placeholder="First Name" class="form-control txt-height"/>
+            </div>
+            
+            <div class="col-md-2 col-sm-2 col-xs-6 spacing">
+        	<input type="text" name="middlename" value="<?php echo $postdata['middlename'];?>" id="middlename" placeholder="Middle Name" class="form-control txt-height"/>
+            </div>
+        
+        </div>
+			        
+        
+        <div class="advance-search" style="min-height:130px;!important">
+        	
+            
+            <div class="col-md-2 col-sm-2 col-xs-6 spacing">
+        	<input type="text" name="lastname" value="<?php echo $postdata['lastname'];?>" id="lastname" placeholder="Last Name" class="form-control txt-height"/>
+            </div>
+
+            <div class="col-md-2 col-sm-2 col-xs-6 spacing">
+        			<select name="gender" id="gender" class="form-control txt-height" style="padding: 0 12px;">
+				<option value="">--Gender--</option>
+				
+				<option value="male" <?php if($postdata['gender']=='male'){ echo 'selected';}?>>Male</option>
+				<option value="female" <?php if($postdata['gender']=='female'){ echo 'selected';}?>>Female</option>
+				<option value="other" <?php if($postdata['gender']=='other'){ echo 'selected';}?>>Other</option>			          
+            </select>  
+           </div>
+            <div class="col-md-2 col-sm-2 col-xs-6 spacing">
+            <input type="hidden" name="filterVar" id="filterVar" value="<?php echo $postdata['filterVar'];?>"/>
+        	<input type="text" name="nationality" value="<?php echo $postdata['nationality'];?>" id="nationality" placeholder="Nationality" class="form-control txt-height"/>
+            </div>
+            <div class="col-md-2 col-sm-2 col-xs-6 spacing">
+        	<input type="text" name="keywords" value="<?php echo $postdata['keywords'];?>" id="Keywords" placeholder="Keywords" class="form-control txt-height"/>
+            </div>
+
+            <div class="col-md-3 col-sm-4 col-xs-6 spacing recently-added">
+            <select name="pastdays" id="pastdays" class="form-control txt-height" style="padding: 0 5px;">
+				<!--<option value="">--Past Days--</option>-->
+				<option value="">Recently Added</option>
+				<option value="5" <?php if($postdata['pastdays']=='5'){ echo 'selected';}?>>Past 5 days</option>
+				<option value="15" <?php if($postdata['pastdays']=='15'){ echo 'selected';}?>>Past 15 days</option>
+				<option value="30" <?php if($postdata['pastdays']=='30'){ echo 'selected';}?>>Past 30 days</option>
+				<option value="90" <?php if($postdata['pastdays']=='90'){ echo 'selected';}?>>Past 90 days</option>
+				<option value="365" <?php if($postdata['pastdays']=='365'){ echo 'selected';}?>>Up to 365 days</option>
+				<option value=">365" <?php if($postdata['pastdays']=='>365'){ echo 'selected';}?>>More than 365 days</option>
+				          
+            </select>
+        	   </div>
+            <div class="col-md-3 col-sm-4 col-xs-6 spacing causeof-death">
+            <select name="causeofdeath" id="causeofdeath" class="form-control txt-height" style="padding: 0 0px;">
+				<option value="">--Cause Of Death--</option>
+				<?php 
+					foreach($deathcause as $dcause) {
+				?>
+				<option value="<?php echo $dcause['id'];?>" <?php if($postdata['causeofdeath']==$dcause['id']){ echo 'selected';}?>><?php echo $dcause['name'] ?></option>
+				<?php
+					}				
+				?>				          
+            </select>
+        	   </div>
+
+             <div class="col-sm-4  col-xs-12 btn-btn-search">
+            	<div class="btn btn-warning search-btn-adv">
+            	<button type="submit" style="border: 0px none; background: #f79647; color: #fff; width: 100%;">Search</button> </div>
+            	<div class="search-reset"> 
+                <input type="reset" id="resetBtn" class="reset pull-right" style="display:none"/>
+               <i class="fa fa-refresh" title="Reset" onclick="resetFn()"></i>
+
+                </div>
+            </div>
+            
+        </div>
+        </div>
+        
+        </form>
+        </div>
+
+<div class="">
+<?php if ($this->message != '') { ?>
+                <div class="flash_message">
+                    <?php echo $this->message[0]; ?>
+                </div>
+ <?php } ?>
+    <div class="container">
+	  <div class="contact">
+
+        <div class="clearfix"> </div> <br>
+        
+        
+        <div class="search-page-desing">
+        <div class="featured-block" style="width:100%">
+        <div class="featured-obituaries">
+        	<h3><span class="backbtn" onclick="window.open('<?php echo $this->basePath('/search');?>','_self')">Go back to search</span> </h3>
+<div id="atozfilter" style="display:table">
+<ul>
+<li class="atozli">#</li>
+<li class="atozli <?php if($postdata['filterVar']=='A'){ echo 'active';}?>">A</li>
+<li class="atozli <?php if($postdata['filterVar']=='B'){ echo 'active';}?>">B</li>
+<li class="atozli <?php if($postdata['filterVar']=='C'){ echo 'active';}?>">C</li>
+<li class="atozli <?php if($postdata['filterVar']=='D'){ echo 'active';}?>">D</li>
+<li class="atozli <?php if($postdata['filterVar']=='E'){ echo 'active';}?>">E</li>
+<li class="atozli <?php if($postdata['filterVar']=='F'){ echo 'active';}?>">F</li>
+<li class="atozli <?php if($postdata['filterVar']=='G'){ echo 'active';}?>">G</li>
+<li class="atozli <?php if($postdata['filterVar']=='H'){ echo 'active';}?>">H</li>
+<li class="atozli <?php if($postdata['filterVar']=='I'){ echo 'active';}?>">I</li>
+<li class="atozli <?php if($postdata['filterVar']=='J'){ echo 'active';}?>">J</li>
+<li class="atozli <?php if($postdata['filterVar']=='K'){ echo 'active';}?>">K</li>
+<li class="atozli <?php if($postdata['filterVar']=='L'){ echo 'active';}?>">L</li>
+<li class="atozli <?php if($postdata['filterVar']=='M'){ echo 'active';}?>">M</li>
+<li class="atozli <?php if($postdata['filterVar']=='N'){ echo 'active';}?>">N</li>
+<li class="atozli <?php if($postdata['filterVar']=='O'){ echo 'active';}?>">O</li>
+<li class="atozli <?php if($postdata['filterVar']=='P'){ echo 'active';}?>">P</li>
+<li class="atozli <?php if($postdata['filterVar']=='Q'){ echo 'active';}?>">Q</li>
+<li class="atozli <?php if($postdata['filterVar']=='R'){ echo 'active';}?>">R</li>
+<li class="atozli <?php if($postdata['filterVar']=='S'){ echo 'active';}?>">S</li>
+<li class="atozli <?php if($postdata['filterVar']=='T'){ echo 'active';}?>">T</li>
+<li class="atozli <?php if($postdata['filterVar']=='U'){ echo 'active';}?>">U</li>
+<li class="atozli <?php if($postdata['filterVar']=='V'){ echo 'active';}?>">V</li>
+<li class="atozli <?php if($postdata['filterVar']=='W'){ echo 'active';}?>">W</li>
+<li class="atozli <?php if($postdata['filterVar']=='X'){ echo 'active';}?>">X</li>
+<li class="atozli <?php if($postdata['filterVar']=='Y'){ echo 'active';}?>">Y</li>
+<li class="atozli <?php if($postdata['filterVar']=='Z'){ echo 'active';}?>">Z</li>
+
+</ul>
+ </div>				
+				<div id="fobituaries">   
+				
+          <?php
+          $cn=1;
+          $sn=1;
+            foreach ($obituary as $ob) {
+        				$id=$ob['id'];
+        				$obituaryid=$ob['obituary_id'];
+        				$img="dummy.jpg";
+        					if($ob['imageUrl']!="") {
+        					$img=$ob['imageUrl'];
+        				}
+							?>   
+							
+            <div class="col-md-2 col-sm-2 col-xs-4 ">
+            <div class="feature-obitury-img" title="<?php echo $ob['first_name']." ".$ob['middle_name']." ".$ob['last_name'];?>">
+            	<div class="abou-img" >
+                	<a href="<?php echo $this->basePath('/view-account?id='.$id);?>">
+                   	<img src="<?php echo $this->basePath('/../module/Obituary/assets/images/'.$obituaryid.'/'.$img);?>" alt=" " height="120px"/></a>
+              
+                </div>
+                <p class="name-para"> <?php
+                if($ob['first_name']!="" || $ob['middle_name']!="" || $ob['last_name']!="") {
+                 $name=ucfirst($ob['first_name'])." ".ucfirst($ob['middle_name'])." ".ucfirst($ob['last_name']);
+                	
+                	if(strlen($name)>20) {
+							 echo substr($name, 0, 20).'...';          	
+                	}else {
+							echo $name;                	
+                	}
+                 
+ 					 }else {
+						if($ob['gender']=='male') {
+							echo "Unknown Male"; 
+						}else {
+							echo "Unknown Female";						
+						} 					 
+ 					 }
+ 						?>  </p>
+               
+            </div>
+            </div>
+<?php 
+if($cn==6) {
+	$cn=0;
+	?>
+<div class="clearfix">  </div>
+	<?php
+}
+?>            
+           
+            <?php 
+            $cn++;
+            $sn++;
+					 }
+					if($sn==1) {
+						?>
+						<span style="width:100%;display:block">No Records Found.</span>
+						<span>Please Reset and Search again</span>
+						<?php
+					}	
+					 ?>
+					   
+            </div>
+          	 <div class="clearfix">  </div>
+            <div class="page-nation-search" style="margin-top:10px">
+            <?php
+					$ocnt=30;          
+             if($ocnt<$obituaryCnt[0]['obCount']) { 
+             ?>
+            <div class="page-no left-pagenation">
+             <ul class="pagination pagination-sm" id="obpagination" style="text-align:center;">
+              <li class="obpag prev" style="display:none"><a href="javascript:void(0)" onclick="prevPagination(this)">Previous</a></li>
+             <?php 
+					
+					for($i=1;$i<=ceil($obituaryCnt[0]['obCount']/30	);$i++) {             
+             ?>
+             <?php
+						if($i<=2) {
+				?>
+				<li  class="obpag <?php if($i==1){ echo 'active';} ?>"><a href="javascript:void(0)" onclick="obituaryPagination(this,<?php echo $i;?>)"><?php echo $i;?></a></li>
+				<?php										
+						}else {
+				?>
+				<li  class="obpag <?php if($i==1){ echo 'active';} ?>" style="display:none"><a href="javascript:void(0)" onclick="obituaryPagination(this,<?php echo $i;?>)"><?php echo $i;?></a></li>
+				<?php						
+						}            
+             ?>
+              
+              
+              <?php 
+					}
+              ?>
+				<li class="obpag next"><a href="javascript:void(0)" onclick="nextPagination(this)">Next</a></li>
+            </ul>
+            </div>
+            <?php } ?>
+            </div>
+        </div>
+        </div>
+		
+       
+        </div>
+        
+         
+   </div>
+   </div>     
+        
+</div>
+<script type="text/javascript">
+$(document).ready(function(){
+//getStates();
+//getCities();
+//getPostalcode();
+});
+function resetFn() {
+	$("#resetBtn").click();
+	$('#country').val("2");
+	$('#states').empty().append("<option value=''> State </option>");
+	$("#cities").empty().append("<option value=''> City </option>");
+	$('#postalCode').empty().append("<option value=''> Zip/Postal Code </option>");
+	$("#firstname").val("");
+	$("#middlename").val("");
+	$("#lastname").val("");
+	$('#gender option:first-child').attr("selected", "selected");
+	$("#nationality").val("");
+	$("#Keywords").val("");
+	$("#pastdays option:first-child").attr("selected", "selected");
+	$("#causeofdeath option:first-child").attr("selected", "selected");
+	
+}
+$(document).ready(function () {
+	$('#Keywords').autocomplete({
+		      	source: function( request, response ) {
+		      	
+		      		$.ajax({
+		      			url : '<?php echo $this->basePath('/getkeywords');?>',
+		      			dataType: "json",
+		      			type:"post",
+		      			data: {
+						   keywords: $("#Keywords").val()
+						   },
+						 success: function( data ) {
+						 	//alert(data);
+						 	$(".ui-helper-hidden-accessible").hide();
+							 response( $.map( data, function( item ) {
+								return {
+									label: item,
+									value: item
+								}
+							}));
+						}
+		      		});
+		      		
+		      	},
+		      	autoFocus: true,
+		      	minLength: 0      	
+		      });
+$(".atozli").click(function () {
+	var filterval=$(this).html();
+	if (filterval=='#') {
+		filterval='';
+	}
+	$("#filterVar").val(filterval);
+	$("#searchid").submit();
+});
+});
+var obminimum=0;
+var obmaximum=1;
+
+function nextPagination(d) {
+	var activeNum=0;
+	var pagnum=0;
+
+var obcount=<?php echo ceil($obituaryCnt[0]['obCount']/30);?>;
+
+	var cls=$(d).parent().attr("class").split(" ");
+	$("."+cls[0]).each(function (e) {
+	
+		if($(this).attr("class")==cls[0]+" active"){
+				activeNum=parseInt($(this).children("a").html());	
+				if (obcount>obmaximum) {
+					obminimum = activeNum;
+					obmaximum= activeNum+1;
+				}
+		}
+	});
+	
+		$("."+cls[0]).each(function (e) {
+		pagnum=parseInt($(this).children("a").html());
+			if (pagnum>=obminimum && pagnum<=obmaximum ) {
+			$(this).css("display","");
+		}else {
+			$(this).css("display","none");
+		}
+		$(".prev").show();
+		if (obcount==(activeNum+1)) {
+				$(".next").hide();
+			}else {
+				$(".next").show();
+			}
+		if ($(this).children("a").html()==(activeNum+1)) {
+			$("."+cls[0]).removeClass("active");
+			$(this).addClass("active");
+			
+	var data="count="+parseInt(activeNum*30)+"&limit=30";
+	$.ajax({
+		url:"<?php echo $this->basePath('/obituaryPagination');?>",
+		data:	data,
+		type:"post",
+		async:false,
+		success:function (res) {
+			$("#fobituaries").empty();
+			var resul=$.parseJSON(res);
+			var opt="";
+			$.each(resul, function (k,v) {
+				var oid=v['id'];
+				var obituaryid=v['obituary_id'];
+				var obimg="dummy.jpg";
+        		if(v['imageUrl']!="" && v['imageUrl']!=null) {
+        			obimg=v['imageUrl'];
+        		}
+        		//alert(obimg);
+				var olink='view-account?id='+oid;
+				var oname=v['first_name']+" "+v['middle_name']+" "+v['last_name'];
+				opt +="<div class='col-md-2 col-sm-2 col-xs-2 '>";
+				opt +="<div class='feature-obitury-img' title='"+oname+"'>";
+				opt +="<div class='abou-img' >";
+				opt +="<a href='<?php echo $this->basePath('"+olink+"');?>'>";
+			
+				opt +="<img src='<?php echo $this->basePath('/../module/Obituary/assets/images/"+obituaryid+"/"+obimg+"');?>' alt='' height='120px' /></a>";
+var pname="";
+                if(v['first_name']!="" || v['middle_name']!="" || v['last_name']!="") {
+                 pname= firstToUpperCase(v['first_name'])+" "+firstToUpperCase(v['middle_name'])+" "+firstToUpperCase(v['last_name']);
+						if(pname.length>20) {
+							pname= pname.substring(0, 20)+'...';          	
+                	}
+ 					 }else {
+						if(v['gender']=='male') {
+							pname= "Unknown Male"; 
+						}else {
+							pname= "Unknown Female";						
+						} 					 
+ 					 }
+ 					
+				opt +="<p> "+pname+"</p>";				
+				opt +="</div>";
+				
+            	opt +="</div>";
+            	opt +="</div>";
+			});
+			$("#fobituaries").append(opt);
+		},
+		error:function (res) {
+			$("#fobituaries").empty();
+			var resul3=res.responseText;
+			var resul=$.parseJSON(resul3);
+			
+			var opt="";
+			$.each(resul, function (k,v) {
+				var oid=v['id'];
+				var obituaryid=v['obituary_id'];
+				var obimg="dummy.jpg";
+        		if(v['imageUrl']!="" && v['imageUrl']!=null) {
+        			obimg=v['imageUrl'];
+        		}
+        		//alert(obimg);
+				var olink='view-account?id='+oid;
+				var oname=v['first_name']+" "+v['middle_name']+" "+v['last_name'];
+				opt +="<div class='col-md-2 col-sm-2 col-xs-2 '>";
+				opt +="<div class='feature-obitury-img' title='"+oname+"'>";
+				opt +="<div class='abou-img' >";
+				opt +="<a href='<?php echo $this->basePath('"+olink+"');?>'>";
+			
+				opt +="<img src='<?php echo $this->basePath('/../module/Obituary/assets/images/"+obituaryid+"/"+obimg+"');?>' alt='' height='120px' /></a>";
+var pname="";
+                if(v['first_name']!="" || v['middle_name']!="" || v['last_name']!="") {
+                 pname= firstToUpperCase(v['first_name'])+" "+firstToUpperCase(v['middle_name'])+" "+firstToUpperCase(v['last_name']);
+						if(pname.length>20) {
+							pname= pname.substring(0, 20)+'...';          	
+                	}
+ 					 }else {
+						if(v['gender']=='male') {
+							pname= "Unknown Male"; 
+						}else {
+							pname= "Unknown Female";						
+						} 					 
+ 					 }
+ 					
+				opt +="<p> "+pname+"</p>";				
+				opt +="</div>";
+				
+            	opt +="</div>";
+            	opt +="</div>";
+			});
+			$("#fobituaries").append(opt);
+		}
+	});
+}
+});
+}
+function prevPagination(d) {
+	var activeNum=0;
+	var pagnum=0;
+
+var obcount=<?php echo ceil($obituaryCnt[0]['obCount']/30);?>;
+
+	var cls=$(d).parent().attr("class").split(" ");
+	$("."+cls[0]).each(function (e) {
+		
+		if($(this).attr("class")==cls[0]+" active"){
+				activeNum=parseInt($(this).children("a").html());	
+				if (1<obminimum) {
+					obminimum = activeNum-1;
+					obmaximum =activeNum;
+				}
+		}
+	});
+	
+		
+		$("."+cls[0]).each(function (e) {
+			pagnum=parseInt($(this).children("a").html());
+			if (pagnum>=obminimum && pagnum<=obmaximum ) {
+				$(this).css("display","");
+			}else {
+				$(this).css("display","none");
+			}
+		$(".next").show(); 
+		if ($(this).children("a").html()==(activeNum-1)) {
+			$("."+cls[0]).removeClass("active");
+			
+			$(this).addClass("active");
+			if (activeNum==2) {
+				$(".prev").hide();
+			}else {
+				$(".prev").show();
+			}
+var data="count="+parseInt((activeNum-2)*30)+"&limit=30";
+	$.ajax({
+		url:"<?php echo $this->basePath('/obituaryPagination');?>",
+		data:	data,
+		type:"post",
+		async:false,
+		success:function (res) {
+			$("#fobituaries").empty();
+			var resul=$.parseJSON(res);
+			var opt="";
+			$.each(resul, function (k,v) {
+				var oid=v['id'];
+				var obituaryid=v['obituary_id'];
+				var obimg="dummy.jpg";
+        		if(v['imageUrl']!="" && v['imageUrl']!=null) {
+        			obimg=v['imageUrl'];
+        		}
+				var olink='view-account?id='+oid;
+				var oname=v['first_name']+" "+v['middle_name']+" "+v['last_name'];
+				opt +="<div class='col-md-2 col-sm-2 col-xs-2 '>";
+				 opt +="<div class='feature-obitury-img' title='"+oname+"'>";
+				opt +="<div class='abou-img' >";
+				opt +="<a href='<?php echo $this->basePath('"+olink+"');?>'>";
+				opt +="<img src='<?php echo $this->basePath('/../module/Obituary/assets/images/"+obituaryid+"/"+obimg+"');?>' alt='' height='120px' /></a>";
+var pname="";
+                if(v['first_name']!="" || v['middle_name']!="" || v['last_name']!="") {
+                 pname= firstToUpperCase(v['first_name'])+" "+firstToUpperCase(v['middle_name'])+" "+firstToUpperCase(v['last_name']);
+                 if(pname.length>20) {
+							pname= pname.substring(0, 20)+'...';          	
+                	}
+ 					 }else {
+						if(v['gender']=='male') {
+							pname= "Unknown Male"; 
+						}else {
+							pname= "Unknown Female";						
+						} 					 
+ 					 }
+				opt +="<p> "+pname+" </p>";				
+				opt +="</div>";
+				
+            	opt +="</div>";
+            	opt +="</div>";
+			});
+			$("#fobituaries").append(opt);
+		},
+		error: function (res) {
+			$("#fobituaries").empty();
+			var resul3=res.responseText;
+			var resul=$.parseJSON(resul3);
+			var opt="";
+			$.each(resul, function (k,v) {
+				var oid=v['id'];
+				var obituaryid=v['obituary_id'];
+				var obimg="dummy.jpg";
+        		if(v['imageUrl']!="" && v['imageUrl']!=null) {
+        			obimg=v['imageUrl'];
+        		}
+				var olink='view-account?id='+oid;
+				var oname=v['first_name']+" "+v['middle_name']+" "+v['last_name'];
+				opt +="<div class='col-md-2 col-sm-2 col-xs-2 '>";
+				 opt +="<div class='feature-obitury-img' title='"+oname+"'>";
+				opt +="<div class='abou-img' >";
+				opt +="<a href='<?php echo $this->basePath('"+olink+"');?>'>";
+				opt +="<img src='<?php echo $this->basePath('/../module/Obituary/assets/images/"+obituaryid+"/"+obimg+"');?>' alt='' height='120px' /></a>";
+var pname="";
+                if(v['first_name']!="" || v['middle_name']!="" || v['last_name']!="") {
+                 pname= firstToUpperCase(v['first_name'])+" "+firstToUpperCase(v['middle_name'])+" "+firstToUpperCase(v['last_name']);
+                 if(pname.length>20) {
+							pname= pname.substring(0, 20)+'...';          	
+                	}
+ 					 }else {
+						if(v['gender']=='male') {
+							pname= "Unknown Male"; 
+						}else {
+							pname= "Unknown Female";						
+						} 					 
+ 					 }
+				opt +="<p> "+pname+" </p>";				
+				opt +="</div>";
+				
+            	opt +="</div>";
+            	opt +="</div>";
+			});
+			$("#fobituaries").append(opt);
+		}
+	});
+		}
+	});
+	
+}
+function obituaryPagination(d,c) {
+	var cnt=parseInt((c-1)*30);
+	var data="count="+parseInt((c-1)*30)+"&limit=30";
+	if (cnt!=0) {
+		$(".prev").show();
+		$(".next").show();
+	}else {
+		$(".prev").hide();
+		$(".next").show();
+	}
+	var obcount=<?php echo ceil($obituaryCnt[0]['obCount']/30);?>;
+	if(obcount==c){
+	$(".next").hide();
+	
+	}
+	$.ajax({
+		url:"<?php echo $this->basePath('/obituaryPagination');?>",
+		data:	data,
+		type:"post",
+		async:false,
+		success:function (res) {
+			
+			$("#fobituaries").empty();
+			var resul=$.parseJSON(res);
+			//alert(resul.toSource());
+var opt="";
+			$.each(resul, function (k,v) {
+				var oid=v['id'];
+				var obituaryid=v['obituary_id'];
+				var obimg="dummy.jpg";
+        		if(v['imageUrl']!="" && v['imageUrl']!=null) {
+        			obimg=v['imageUrl'];
+        		}
+        		
+				var olink='view-account?id='+oid;
+				var oname=v['first_name']+" "+v['middle_name']+" "+v['last_name'];
+				opt +="<div class='col-md-2 col-sm-2 col-xs-2 '>";
+				 opt +="<div class='feature-obitury-img' title='"+oname+"'>";
+				opt +="<div class='abou-img' >";
+				opt +="<a href='<?php echo $this->basePath('"+olink+"');?>'>";
+				opt +="<img src='<?php echo $this->basePath('/../module/Obituary/assets/images/"+obituaryid+"/"+obimg+"');?>' alt='' height='120px' /></a>";
+var pname="";
+                if(v['first_name']!="" || v['middle_name']!="" || v['last_name']!="") {
+                 pname= firstToUpperCase(v['first_name'])+" "+firstToUpperCase(v['middle_name'])+" "+firstToUpperCase(v['last_name']);
+                 if(pname.length>20) {
+							pname= pname.substring(0, 20)+'...';          	
+                	}
+ 					 }else {
+						if(v['gender']=='male') {
+							pname= "Unknown Male"; 
+						}else {
+							pname= "Unknown Female";						
+						} 					 
+ 					 }
+				opt +="<p> "+pname+" </p>";				
+				opt +="</div>";
+				
+            	opt +="</div>";
+            	opt +="</div>";
+			});
+			$("#fobituaries").append(opt);
+$("#obpagination > li").removeClass('active');
+			$(d).parent().addClass("active");
+		},
+error:function (res) {
+			$("#fobituaries").empty();
+			var resul3=res.responseText;
+//alert(resul3.toSource());
+var resul=$.parseJSON(resul3);
+var opt="";
+			$.each(resul, function (k,v) {
+				var oid=v['id'];
+				var obituaryid=v['obituary_id'];
+				var obimg="dummy.jpg";
+        		if(v['imageUrl']!="" && v['imageUrl']!=null) {
+        			obimg=v['imageUrl'];
+        		}
+        		
+				var olink='view-account?id='+oid;
+				var oname=v['first_name']+" "+v['middle_name']+" "+v['last_name'];
+				opt +="<div class='col-md-2 col-sm-2 col-xs-2 '>";
+				 opt +="<div class='feature-obitury-img' title='"+oname+"'>";
+				opt +="<div class='abou-img' >";
+				opt +="<a href='<?php echo $this->basePath('"+olink+"');?>'>";
+				opt +="<img src='<?php echo $this->basePath('/../module/Obituary/assets/images/"+obituaryid+"/"+obimg+"');?>' alt='' height='120px' /></a>";
+var pname="";
+                if(v['first_name']!="" || v['middle_name']!="" || v['last_name']!="") {
+                 pname= firstToUpperCase(v['first_name'])+" "+firstToUpperCase(v['middle_name'])+" "+firstToUpperCase(v['last_name']);
+                 if(pname.length>20) {
+							pname= pname.substring(0, 20)+'...';          	
+                	}
+ 					 }else {
+						if(v['gender']=='male') {
+							pname= "Unknown Male"; 
+						}else {
+							pname= "Unknown Female";						
+						} 					 
+ 					 }
+				opt +="<p> "+pname+" </p>";				
+				opt +="</div>";
+				
+            	opt +="</div>";
+            	opt +="</div>";
+			});
+			$("#fobituaries").append(opt);
+$("#obpagination > li").removeClass('active');
+			$(d).parent().addClass("active");
+		}
+	});
+}
+function getStates() {
+	var country=$("#country").val();
+	var data="country="+country;
+	//alert(country);
+	if (country=="") {
+		$("#states").empty().append("<option value=''> State </option>");
+			$("#cities").empty().append("<option value=''> City </option>");
+			$("#postalCode").empty().append("<option value=''> Postal Code </option>");
+	}else {
+	$.ajax({
+		url:"<?php echo $this->basePath('/states');?>",
+		data:	data,
+		type:"post",
+		async:false,
+		success:function (res) {
+			//alert(res);
+			$("#states").empty();
+			$("#cities").empty().append("<option value=''> City </option>");
+			$("#postalCode").empty().append("<option value=''> Zip/Postal Code </option>");
+			var resul=$.parseJSON(res);
+			var opt="<option value=''> State </option>";
+			$.each(resul, function (k,v) {
+				opt +="<option value='"+k+"'>"+v+"</option>";
+			}); 
+			$("#states").append(opt);
+		},
+error:function(res){
+res=res.responseText;
+$("#states").empty();
+			$("#cities").empty().append("<option value=''> City </option>");
+			$("#postalCode").empty().append("<option value=''> Zip/Postal Code </option>");
+			var resul=$.parseJSON(res);
+			var opt="<option value=''> State </option>";
+			$.each(resul, function (k,v) {
+				opt +="<option value='"+k+"'>"+v+"</option>";
+			}); 
+			$("#states").append(opt);
+}
+	});
+}
+}
+function getCities() {
+	var state=$("#states").val();
+	//var country=$("#country").val();
+	var data="state="+state;
+	$.ajax({
+		url:"<?php echo $this->basePath('/city');?>",
+		data:	data,
+		type:"post",
+		async:false,
+		success:function (res) {
+			$("#cities").empty();
+			$("#postalCode").empty().append("<option value=''> Zip/Postal Code </option>");
+			var resul=$.parseJSON(res);
+			var opt="<option value=''> City </option>";
+			$.each(resul, function (k,v) {
+				opt +="<option value='"+k+"'>"+v+"</option>";
+			}); 
+			$("#cities").append(opt);
+		},
+error:function(res){
+res=res.responseText;
+$("#cities").empty();
+			$("#postalCode").empty().append("<option value=''> Zip/Postal Code </option>");
+			var resul=$.parseJSON(res);
+			var opt="<option value=''> City </option>";
+			$.each(resul, function (k,v) {
+				opt +="<option value='"+k+"'>"+v+"</option>";
+			}); 
+			$("#cities").append(opt);
+}
+	});
+}
+
+function getPostalcode() {
+	var state=$("#states").val();
+	var city=$("#cities").val();
+	var data="state="+state+"&city="+city;
+	$.ajax({
+		url:"<?php echo $this->basePath('/postalcode');?>",
+		data:	data,
+		type:"post",
+		async:false,
+		success:function (res) {
+			//alert(res);
+			$("#postalCode").empty();
+			var resul=$.parseJSON(res);
+			var opt="<option value=''> Zip/Postal Code </option>";
+			$.each(resul, function (k,v) {
+				opt +="<option value='"+k+"'>"+v+"</option>";
+			}); 
+			$("#postalCode").append(opt);
+		},
+error:function(res){
+res=res.responseText;
+$("#postalCode").empty();
+			var resul=$.parseJSON(res);
+			var opt="<option value=''> Zip/Postal Code </option>";
+			$.each(resul, function (k,v) {
+				opt +="<option value='"+k+"'>"+v+"</option>";
+			}); 
+			$("#postalCode").append(opt);
+}
+	});
+}
+</script>

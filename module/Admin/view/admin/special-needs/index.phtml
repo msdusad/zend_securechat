@@ -1,0 +1,125 @@
+
+<?php
+echo $this->headLink()->prependStylesheet($this->basePath() . '/assets/css/rituals.css')->prependStylesheet($this->basePath() . '/assets/css/specialneeds.css');
+
+echo $this->partial('layout/top_links');
+?>
+<div class="row">
+    <div class="layout_nav">
+        <ul>
+            <li><a class="before" href="<?php echo $this->basePath('/'); ?>">Home &rsaquo; </a></li>
+            <li><a class="before" href="<?php echo $this->url('cremation-plans'); ?>">Cremation Planning &rsaquo;</a></li>
+            <li><a class="before" href="<?php echo $this->url('special-needs'); ?>">Special Needs</a></li> 
+        </ul>
+    </div>
+    <div class='clear'></div>
+    <?php if ($this->message != '') { ?>
+        <div class="flash_message">
+            <?php echo $this->message[0]; ?>
+        </div>
+    <?php } ?>
+    <div class="specialneeds">
+        <nav>
+            <ul class="mainNav">              
+                <li>
+                    <a href="#"><?php echo $this->category; ?></a>
+                    <ul class="submenu">
+                        <li><a href="<?php echo $this->url('special-needs'); ?>">All</a></li>
+                        <?php foreach ($this->categories as $category) { ?>
+                            <li><a href="<?php echo $this->url('special-needs', array('id' => $category['id'])); ?>"><?php echo $category['title'] ?><span class="number"><?php echo $category['profiles'] ?></span></a></li>
+                        <?php } ?>                    
+                    </ul>
+                </li>               
+            </ul>
+        </nav>
+        <?php if (empty($this->specialneeds)) { ?>
+            <div class="row-fluid deaths">
+                <ul>
+                    <li>
+                        No records
+                    </li>
+                </ul>
+            </div>
+        <?php } else { ?>
+            <div class="row-fluid deaths">
+                <?php  if($this->userid!=0){?>
+                <a class="addpost" href="<?php echo $this->url('special-needs', array('action' => 'add')); ?>">Add new Post</a>
+                <?php }?>
+                <div id="posts">
+                    <ul class="thumbnails">
+                        <?php
+                        $i = 1;
+                        foreach ($this->specialneeds as $key => $val) {
+                            ?>  <li class="span4 <?php if($i%4==0){ echo 'last';}?>">
+                                <div class="thumbnail">
+                                    <?php if($val['photo_url']!=''){$imgUrl= 'thumb/' . $val['id'] . '_' . $val['photo_url'];}else{$imgUrl='no-image.jpg';}?>
+                                    <img height="160" src="<?php echo $this->basePath('/../module/Admin/assets/specialneeds/' . $imgUrl); ?>"/>   
+                                    <div class="caption">
+                                        <h4> <?php echo ucfirst($val['title']); ?></h4>
+                                        <p><?php echo substr($val['content'], 0, 100); ?></p>
+                                        <p>
+                                            <a href="<?php echo $this->url('special-needs', array('action' => 'details', 'id' => $val['id'])); ?>" class="readmore">Read More</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </li>
+
+                        <?php $i = $i+1;} ?>
+                    </ul>
+
+                </div>
+                <div class="loadmore">
+                    <?php if ($this->total > 8) { ?>
+                <a href='#' id="loadmore" class="btn btn-default" >Load More </a>
+                    <?php }?>
+                </div>
+            </div>
+
+        <?php } ?>
+        <div class="loading" style="display:none"><p><img src="<?php echo $this->basePath('img/ajax-loader.gif') ?>"/></p></div>
+    </div>
+
+</div>
+
+<?php //$this->inlineScript()->captureStart()  ?>
+<script>
+
+    $(function() {
+        $(".submenu").hide().parent().on('mouseenter', function() {
+            $this = $(this);
+            if (!$this.hasClass("hover")) {
+                $this.addClass("hover").children(".submenu").stop().fadeIn();
+            }
+        }).on('mouseleave', function() {
+            $this = $(this);
+            if ($this.hasClass("hover")) {
+                $this.removeClass("hover").children(".submenu").fadeOut();
+            }
+        });
+        var post = 8;
+        $('#loadmore').click(function(e) {
+            e.preventDefault();
+
+            var data = {start: post}
+            $.ajax({
+                type: 'POST',
+                url: '<?php echo $this->url('special-needs', array('action' => 'ajax', 'id' => $this->id)); ?>',
+                data: data,
+                beforeSend: function() {
+                    $('.loading').css('display', 'block');
+                },
+                success: function(data) {
+
+                    $('#posts').append(data);
+                    $('.loading').css('display', 'none');
+                    console.log(data);
+                    if(data==''){$('#loadmore').css('display', 'none');}
+                }
+            });
+            post = post + 8;
+        });
+    });
+</script>
+<?php //$this->inlineScript()->captureEnd() ?>
+
+

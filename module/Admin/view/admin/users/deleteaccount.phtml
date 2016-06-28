@@ -1,0 +1,38 @@
+<?php
+$title = 'Delete Account Permanently';
+$this->headTitle($title);
+$user = $this->user;
+?>
+<?= $this->partial('layout/top_links'); ?>
+<div class="layout_nav">
+        <ul>
+            <li><a class="before" href="<?php echo $this->basePath('/'); ?>">Home &rsaquo; </a></li>           
+            <li>Delete Account</li> 
+        </ul>
+ </div>
+<div class='clear'></div>
+<div class="myaccount">
+    <h3>Delete Account</h3>
+    <div style="padding:10px">
+        <div class="maincontent">
+            <div class="alertbox">
+                <h1><?php echo $this->escapeHtml($title); ?></h1>
+
+                <p>This action will delete your account and associated content. it can't revert back    
+                </p>
+<?php
+$url = $this->url('delete-account', array('id' => $user->id));
+$cancelurl = $this->url('cremation-plans');
+?>
+                <form action="<?php echo $url; ?>" method="post">
+                    <div>
+                        <input type="hidden" name="id" value="<?php echo (int) $user->id; ?>" />
+                        <input type="submit" name="del" value="Yes" class="btn btn-danger btn-sm"/>
+                        <input type="button" onclick="window.location.href='<?php echo $cancelurl; ?>'" class="btn btn-warning btn-sm" value='Cancel'>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+</div>

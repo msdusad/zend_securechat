@@ -1,0 +1,17 @@
+<div id="top"><?= $this->partial('layout/admin_top_menu', array('tittle' => 'Add new Language')); ?></div>
+<div id="left"> <?= $this->partial('layout/left-menu', array('languages' => 'active')); ?></div> 
+<div id="content"> 
+    <div class="outer">
+        <div class="inner">
+            <?php
+            $form = $this->form;
+            $form->setAttribute('action', $this->url('admin/language', array('action' => 'add')));
+            $form->prepare();
+
+            echo $this->form()->openTag($form);
+            echo $this->formCollection($form);
+            echo $this->form()->closeTag();
+            ?>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,98 @@
+<script>
+$(document).ready( function() {
+	$('a.state').click( function() {
+        url=$(this).attr('href');
+		rel=$(this).attr('rel');
+        setrel =(rel=='0' ? '1': '0');
+        state = (rel=='0' ? 'state btn btn-xs btn-success':'state btn btn-xs btn-danger');
+        title = (rel=='0' ? 'Active':'Inactive');
+        $(this).attr('class',state);
+        $(this).attr('rel',setrel);
+        $(this).text(title);
+		$.post(url,{state:rel});
+        return false;
+	});
+});
+</script>
+<style>
+.upload_button {
+    background-color: #D2D2D2;
+    border: 1px solid;
+    border-radius: 4px;
+    color: #777;
+    cursor: pointer;
+   
+    font-family: openFont2;
+	font-color: #ffffff;
+    font-size: 17px;
+    margin-bottom: 30px;
+    padding: 20px 80px;
+    text-decoration: none;
+	width:100%;
+}
+</style>
+<!-- Main content -->
+<section class="content">
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="box">
+				<div class="box-header">
+					<h3 class="box-title"><?php echo $this->translate('Manage Upload Images');?></h3> 
+				</div>
+				<div class='upload_button'> 
+					<form method="post" enctype="multipart/form-data">
+						<input type="file" name="file"/>
+						<input type="submit" name="sub" value="Add Images" class='btn btn-default btn-lg' style="float:right; margin-top:-35px;"/>
+					</form>
+				</div>
+			</div><!-- /.box-header -->
+                          
+                            
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title"><?php echo $this->translate('All Upload Images') ?></h3> 
+                    </div><!-- /.box-header -->
+					<img class="loaders" style='display:none'  src="<?php echo $this->basePath('img/spinner.gif'); ?>" />
+                    <div class="box-body table-responsive">
+                        <?php if(count($results)>0):?>
+							<table class="table table-bordered table-striped">
+                                <thead>
+									<tr>
+										<th><?php echo $this->translate('Sno');?></th>
+										<th><?php echo $this->translate('Name');?></th>
+										<th><?php echo $this->translate('Upload Date');?></th>
+										<th><?php echo $this->translate('File Extension');?></th>
+										<th><?php echo $this->translate('Status');?></th>
+										<th><?php echo $this->translate('Remove');?></th>
+										
+									</tr>
+                                </thead>
+                                <tbody>
+                                    <?php $sn=1; foreach($results as $result):?>
+                                            
+									<tr>
+										<td><?php echo $sn;?></td>
+										<td><?php echo $result['name'];?></td>
+										<td><?php echo date("Y-M-d", strtotime($result['created']));?></td>
+										<td><?php echo $result['extension'];?></td>
+										<td>
+											<a href="<?php echo $this->url('administrator',array('controller'=>'administrator','action'=>'filestatus','id'=>$result['id'])); ?>" class='state  <?php echo $result['status']=='0' ? ' btn btn-xs btn-danger':' btn btn-xs btn-success';?>' rel='<?php echo $result['status'];?>' >
+												<?php echo $result['status']=='0' ? "Inactive" : "Active ";?>
+											</a>
+										</td>
+										<td>
+											<a href="<?php echo $this->url('administrator',array('controller'=>'administrator','action'=>'deleteFile','id'=>$result['id'])); ?>">
+												Remove
+											</a>
+										</td>
+									</tr>
+                                            <?php $sn++;
+                                            endforeach;?> 
+                                        </tbody>
+                                    </table>
+                                  <?php endif;?>  
+                                </div><!-- /.box-body -->
+                            </div><!-- /.box -->
+                        </div>
+                    </div>
+                </section><!-- /.content -->

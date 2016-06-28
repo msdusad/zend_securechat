@@ -1,0 +1,115 @@
+<?php
+require_once('config/autoload/conn.php');
+	include("functions.phtml");
+	$msg="";
+	if($_REQUEST['command']=='delete' && $_REQUEST['pid']>0){
+		remove_product($_REQUEST['pid']);
+	}
+	else if($_REQUEST['command']=='clear'){
+		unset($_SESSION['cart']);
+	}
+	else if($_REQUEST['command']=='update'){
+		$max=count($_SESSION['cart']);
+		for($i=0;$i<$max;$i++){
+			$pid=$_SESSION['cart'][$i]['productid'];
+			$q=intval($_REQUEST['product'.$pid]);
+			if($q>0 && $q<=999){
+				$_SESSION['cart'][$i]['qty']=$q;
+			}
+			else{
+				$msg='Some proudcts not updated!, quantity must be a number between 1 and 999';
+			}
+		}
+	}
+
+?>
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Shopping Cart</title>
+<link rel="stylesheet" href="<?php echo $this->basePath() . '/assets/css/groceries.css';?>"/>
+ <script src="<?php echo $this->basePath() . '/assets/js/function.js';?>"></script>
+<script language="javascript">
+	function del(pid){
+		if(confirm('Do you really mean to delete this item')){
+			document.form1.pid.value=pid;
+			document.form1.command.value='delete';
+			document.form1.submit();
+		}
+	}
+	function clear_cart(){
+		if(confirm('This will empty your shopping cart, continue?')){
+			document.form1.command.value='clear';
+			document.form1.submit();
+		}
+	}
+	function update_cart(){
+		document.form1.command.value='update';
+		document.form1.submit();
+	}
+
+</script>
+</head>
+<body>
+<form name="form1" method="post" class="form-group">
+<input type="hidden" name="pid" class="form-control" />
+<input type="hidden" name="command" class="form-control"/>
+	<div class="cart_container" >
+    <div class="cart_box">
+    	
+    </div>
+    	<div class="msg"><?php echo $msg; ?></div>
+    	<table  class="table-bordered" id="tab">
+    	<?php
+			if(is_array($_SESSION['cart'])){
+            	echo '<thead><tr><th>Sr.No.</th><th>Product</th><th>Name</th><th width="11%">Price in &#8377</th><th>Qty</th><th>Amount</th><th>Options</th></tr></thead>';
+				$max=count($_SESSION['cart']);
+				for($i=0;$i<$max;$i++){
+					$pid=$_SESSION['cart'][$i]['productid'];
+					$q=$_SESSION['cart'][$i]['qty'];
+					$p_name=get_product_name($pid);
+                    $p_image=get_image($pid);
+					if($q==0) continue;
+			?>
+            		<tbody><tr><td align="center"><?=$i+1?></td>
+                        <td>
+        <?php 
+            echo'<div id="prod"><img src="data:image/jpeg;base64,'.base64_encode($p_image).'">';
+        ?>
+                        </td>
+                        <td><?=$p_name?></td>
+                    <td align="center"><?='&#8377;'." ".get_price($pid)?></td>
+                    <td>
+                        <input type="text" name="product<?=$pid?>" value="<?=$q?>" maxlength="3" size="2" style="text-align:center;" />
+                        
+                    </td>                    
+                    <td><?='&#8377;'." ".get_price($pid)*$q?></td>
+                        <td><a href="javascript:del(<?=$pid?>)">
+                            <img src="<?php echo $this->basePath() . '/assets/images/1457977601_Close_Box_Red.png';?>" class="opt_btn">
+                            </a></td></tr></tbody>
+            <?					
+				}
+			?>
+				<tbody><tr>
+                    <td colspan="7">
+                        <input type="button" class="btn-primary" value="Continue Shopping" onclick="window.location='groceries.php'" />
+                        <input type="button" class="btn-primary" value="Clear Cart" onclick="clear_cart()">
+                        <input type="button" class="btn-primary" value="Update Cart" onclick="update_cart()">
+                        <input type="button" class="btn-primary" value="Place Order" onclick="window.location='billing.php'" >
+                        <input type="button" class="btn-primary" value="Print" onclick="print()" style="width:76px;">
+                        <span class="t-item">Total Items: <?=$i++;?></span>
+                    </td></tr></tbody>
+            <tbody><tr>
+                <td colspan="7" align="right">Total Amount: <?='&#8377;'." ".get_order_total()?></td></tr></tbody>
+			<?
+            }
+			else{
+				echo '<b>There are no items in your shopping cart !</b></tr></tbody>';
+			}
+		?>
+        </table>
+    </div>
+</form>
+</body>
+</html>

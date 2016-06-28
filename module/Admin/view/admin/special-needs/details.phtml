@@ -1,0 +1,120 @@
+
+
+<?php
+echo $this->headLink()->prependStylesheet($this->basePath() . '/assets/css/rituals.css')
+        ->prependStylesheet($this->basePath() . '/assets/css/specialneeds.css')
+        ->prependStylesheet($this->basePath() . '/assets/player/video-js.css');
+$this->headScript()->prependFile($this->basePath() . '/assets/player/video.js');
+
+echo $this->partial('layout/top_links');
+?>
+<div class="row">
+    <div class="layout_nav">
+        <ul>
+            <li><a class="before" href="<?php echo $this->basePath('/'); ?>">Home &rsaquo; </a></li>
+            <li><a class="before" href="<?php echo $this->url('cremation-plans'); ?>">Cremation Planning &rsaquo;</a></li>
+            <li><a class="before" href="<?php echo $this->url('special-needs'); ?>">Special Needs &rsaquo;</a></li>
+            <li><a class="before" href="<?php echo $this->url('special-needs', array('id' => $this->specialneeds->category_id)); ?>"><?php echo $this->category; ?> &rsaquo;</a></li>
+            <li><?php echo $this->specialneeds->title; ?></li> 
+        </ul>
+    </div>
+    <div class='clear'></div>    
+    <div class="specialneeds">
+        <nav>
+            <ul class="mainNav">              
+                <li>
+                    <a href="#"><?php echo $this->category; ?></a>
+                    <ul class="submenu">
+                         <li><a href="<?php echo $this->url('special-needs'); ?>">All</a></li>
+                        <?php foreach ($this->categories as $category) { ?>
+                            <li><a href="<?php echo $this->url('special-needs', array('id' => $category['id'])); ?>"><?php echo $category['title'] ?><span class="number"><?php echo $category['profiles'] ?></span></a></li>
+                        <?php } ?>                    
+                    </ul>
+                </li>               
+            </ul>
+        </nav>
+        <div class="row-fluid deaths">
+
+            <div class="gallery">
+                <?php $image = '';
+                foreach ($this->gallery as $key => $val) {
+                    ?> 
+                    <a>
+                        <img width="200" height="150" src="<?php echo $this->basePath('/../module/Admin/assets/specialneeds/thumb/' . $val['special_needs_id'] . '_' . $val['photo_url']); ?>"/>   
+                    </a>
+           <?php } ?>
+            </div>
+            <div class="details">
+                <p class="info">By &nbsp; <?php echo ucfirst($this->userName); ?>  &nbsp; | &nbsp; <?php
+                    $date = new DateTime($this->specialneeds->created_at);
+                    echo $date->format('F j, Y');
+                    ?>,
+                    <?php echo $this->specialneeds->location; ?>,<?php echo $this->specialneeds->country; ?>
+                    &nbsp; | &nbsp;
+                    <a title="Link to memoralize" href="<?php echo $this->url('memoralize'); ?>">Add to Memoralize</a>
+                    
+                    <?php if ($this->specialneeds->link != '') { ?>
+                        &nbsp; | &nbsp;
+                        <a  target="_blank" title="Link to website" href="<?php echo $this->specialneeds->link; ?>">Web Link</a>
+<?php }  if ($this->userid == $this->specialneeds->user_id || $this->userid == '1') { ?>
+                        &nbsp; | &nbsp;
+                        <a class="fa fa-trash-o fa-fw fancybox" title="delete this post" href="#delete"></a>
+<?php } ?>
+                </p>
+                <p><?php echo $this->specialneeds->content; ?></p>
+            </div>
+<?php if ($this->specialneeds->video_url != '') { ?>
+                <div class="video">
+                    <video class="video-js vjs-default-skin" controls preload="none" width="640" height="264"                           
+                           data-setup="{}">
+                        <source src="<?php echo $this->basePath('/../module/Admin/assets/specialneeds/' . $this->specialneeds->video_url); ?>" type='video/mp4' />  
+                    </video>
+                </div>
+<?php } ?>
+        </div>
+    </div>
+</div>
+<div id="delete" style="display:none">
+    <?php
+    $url = $this->url('special-needs', array(
+        'action' => 'delete',
+        'id' => $this->specialneeds->id,
+    ));
+    ?>
+
+    <div class="alertbox">
+        <h1><?php echo $this->specialneeds->title; ?></h1>
+
+        <p>This action will delete this post and associated content. it can't revert back    
+        </p>
+        <form action="<?php echo $url; ?>" method="post">
+            <div>
+                <input type="hidden" name="id" value="<?php echo (int) $this->specialneeds->id; ?>" />
+                <input type="submit" name="del" value="Yes" class='btn btn-danger btn-sm'/>
+                <input type="submit" name="del" value="No" class="btn btn-warning btn-sm"/>
+            </div>
+        </form>
+    </div>
+</div>
+
+<?php $this->inlineScript()->captureStart() ?>
+
+$(function(){
+$('.fancybox').fancybox();
+videojs.options.flash.swf = "video-js.swf";
+$(".submenu").hide().parent().on('mouseenter', function() {
+$this = $(this);
+if (!$this.hasClass("hover")) {
+$this.addClass("hover").children(".submenu").stop().fadeIn();
+}
+}).on('mouseleave', function() {
+$this = $(this);
+if ($this.hasClass("hover")) {
+$this.removeClass("hover").children(".submenu").fadeOut();
+}
+});
+
+} );
+<?php $this->inlineScript()->captureEnd() ?>
+
+

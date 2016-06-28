@@ -1,0 +1,404 @@
+<?php
+$this->headLink()->prependStylesheet($this->basePath() . '/css/jquery-ui-1.7.2.custom.css')
+        ->prependStylesheet($this->basePath() . '/assets/lib/fancybox/jquery.fancybox.css');
+
+$this->headScript()
+        ->prependFile($this->basePath() . '/js/jquery-ui.js')
+        ->prependFile($this->basePath() . '/assets/lib/fancybox/jquery.fancybox.js');
+?> 
+<?php
+$form = $this->emailForm;
+$form->prepare();
+
+$form->setAttribute('method', 'post');
+$form->setAttribute('name', 'emailform');
+?>
+<?= $this->partial('layout/top_links'); ?>
+<style>
+    .fancybox-skin{padding: 0px!important;}
+    .fancybox-inner{width:100%!important}
+    .fancybox-inner form{padding:30px}
+    .fancybox-inner form input{float:left}
+    .fancybox-inner h4{padding: 15px;background: #548ed7;color: #fff;margin: 0;border-radius: 4px 0 0 0;}  
+    
+</style>
+<div class="layout_nav">
+        <ul>
+            <li><a class="before" href="<?php echo $this->basePath('/'); ?>">Home &rsaquo; </a></li>
+             <li>Contacts</li>
+            
+        </ul>
+    </div>
+<div class="myaccount">
+    <h3>Contacts</h3>
+    <div class="">
+        <?php if ($this->message != '') { ?>
+            <div class="flash_message">
+                <?php echo $this->message[0]; ?>
+            </div>
+        <?php } ?>
+        <div class="contactlinks">           
+            <?php
+            // try to get already authenticated provider list
+            try {
+                $connected_adapters_list = $this->providers;
+
+                if (count($connected_adapters_list)) {
+                    ?> 
+
+                    <ul class="social-link">
+                        <li><p>You'r contacts imported from </p></li>
+                        <?php foreach ($connected_adapters_list as $adapter_id) { ?>
+                            <li class="<?php echo strtolower($adapter_id) ?> <?php if ($adapter_id == $this->currentProvider) { ?><?php echo strtolower($adapter_id) ?>active<?php } ?>">
+                                <a class="transparant" title=" click to disconnect <?php echo $adapter_id; ?>" href="<?php echo $this->url('scn-social-accounts', array('provider' => $adapter_id, 'return' => 'scn-social-contact'));
+                ?>"><?php echo $adapter_id; ?></a>
+                            </li>
+                        <?php } ?>
+
+                    </ul>
+
+                    <?php
+                }
+            } catch (Exception $e) {
+                
+            }
+            if (count($connected_adapters_list)) {
+                echo '<hr/>';
+            }
+            ?>
+
+
+            <ul class="social-link">
+                <li> <p>You can import contacts from</p></li>
+                <?php
+                $available_providers_list = array(
+                    "Google",
+                    "Yahoo",
+                    "Facebook",
+                    "Twitter",
+                    "LinkedIn",
+                );
+
+                foreach ($available_providers_list as $adapter_id) {
+                    if (in_array($adapter_id, $this->providers)) {
+                        
+                    } else {
+                        ?>
+                        <li class="<?php echo strtolower($adapter_id) ?>">
+                            <a class="transparant" href="<?php echo $this->url('scn-social-contact', array('provider' => $adapter_id, 'return' => 'scn-social-contact'));
+                        ?>"><?php echo $adapter_id; ?></a></li>
+                            <?php
+                        }
+                    }
+                    ?> 
+            </ul>
+        </div>
+        <div class="menu"> <a class="fancybox btn btn-default btn-sm" href="#import">Import</a>
+            <a class="btn btn-default btn-sm" id="exportall" href="#">Export</a>
+        </div>
+        <div class="maincontact">
+            <header class="head">
+                <div class="scnsearch-bar">                
+                    <form class="main-search" id="">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="socialuser" placeholder="Live Search ...">
+                          </div>
+                    </form>
+
+                </div>
+
+            </header>
+            <div id="scnleft" data-role="content" >
+                <form method="post" action="" id="contactlist">
+                    <ul id="contact" class="collapse">
+                        <li class="nav-header">Select all<input type="checkbox" name="sellectall" id="selectall" value=""></li>
+                        <?php
+                        try {
+                            // grab the user contacts list
+                            $user_contacts = $this->contacts;
+
+                            foreach ($user_contacts as $item) {
+                                if ($item->displayName != '') {
+                                    ?>
+                                    <li>
+                                        <?php
+                                        if ($item->photoURL) {
+                                            if (strpos($item->photoURL, 'facebook') !== false) {
+                                                $item->email = $item->identifier . '@facebook.com';
+                                            }
+                                            ?>
+                                            <input class="conatctcheck" type="checkbox" name="users[]" data-name="<?php echo $item->displayName; ?>" data-id="<?php echo $item->identifier; ?>" data-url="<?php echo $item->photoURL; ?>" />
+                                            <img src="<?php echo $item->photoURL; ?>" width="40" height="40"/>
+                                            <a class="socialuser" id="<?php echo $item->identifier; ?>" data-email="<?php echo $item->email; ?>" data-id="<?php echo $item->identifier; ?>" data-url="<?php echo $item->photoURL; ?>" 
+                                               data-name="<?php echo $item->displayName; ?>" data-dob="<?php echo $item->birthday; ?>"  data-loc="<?php echo $item->location; ?>"  data-home="<?php echo $item->home; ?>" data-company="<?php echo $item->company; ?>" data-job="<?php echo $item->jobTitle; ?>" 
+                                               href="#/<?php echo $item->displayName; ?>/" style=""><?php echo $item->displayName; ?></a>
+
+            <?php } else { ?> 
+                                            <input class="conatctcheck" type="checkbox" name="users[]" data-name="<?php echo $item->displayName; ?>" data-id="<?php echo $item->identifier; ?>" data-url="<?php echo $this->basePath('/img/avatar.jpg'); ?>" />
+                                            <img src="<?php echo $this->basePath('/img/avatar.jpg'); ?>" width="40" height="40"/>
+                                            <a class="socialuser" id="<?php echo $item->identifier; ?>" data-email="<?php echo $item->email; ?>" data-id="<?php echo $item->identifier; ?>" data-url="<?php echo $this->basePath('/img/avatar.jpg'); ?>" 
+                                               data-name="<?php echo $item->displayName; ?>" data-dob="<?php echo $item->birthday; ?>"  data-loc="<?php echo $item->location; ?>"  data-home="<?php echo $item->home; ?>" data-company="<?php echo $item->company; ?>" data-job="<?php echo $item->jobTitle; ?>" 
+                                               href="#/<?php echo $item->displayName; ?>/" style=""><?php echo $item->displayName; ?></a>
+
+                                            <?php
+                                        }
+
+                                        $names = explode(" ", $item->displayName);
+                                        ?>  
+                                        <input type="hidden" name="first_name[]" value="<?php echo $names[0]; ?>"/>
+                                        <input type="hidden" name="last_name[]" value="<?php
+                                               if (isset($names[1])) {
+                                                   echo $names[1];
+                                               }
+                                               ?>"/>
+                                        <input type="hidden" name="email[]" value="<?php echo $item->email; ?>"/>
+                                        <input type="hidden" name="location[]" value="<?php echo $item->location; ?>"/>
+                                        <input type="hidden" name="home[]" value="<?php echo $item->home; ?>"/>
+                                        <input type="hidden" name="company[]" value="<?php echo $item->company; ?>"/>
+                                        <input type="hidden" name="job_title[]" value="<?php echo $item->jobTitle; ?>"/>
+                                        <input type="hidden" name="birthday[]" value="<?php echo $item->birthday; ?>"/>
+                                        <input type="hidden" name="action" value="export">
+                                    </li> 
+                                    <?php
+                                }
+                            }
+
+                            if (!count($user_contacts)) {
+                                echo "No contact found!";
+                            }
+                        } catch (Exception $e) {
+                            // if code 8 => Provider does not support this feature
+                            if ($e->getCode() == 8) {
+                                echo "Provider does not support this feature. Currently only <b>Facebook, MySpace, Twitter and LinkedIn</b> do support this!
+						<br />Please refer to the user guide to know more about each adapters capabilities. <a href='http://hybridauth.sourceforge.net/userguide.html'>http://hybridauth.sourceforge.net/userguide.html</a>";
+                            } else {
+                                echo "Well, got an error: " . $e->getMessage();
+                            }
+                        }
+                        ?>
+                    </ul>
+                </form>
+            </div>
+
+
+
+            <div class="contactdetails">
+<?php echo $this->form()->openTag($form) ?>
+                <div id="contact-main">
+                    <div class="floatleft left">
+                        <img  src="#" border="0" width="100" height="100">
+                    </div>
+                    <div class="floatleft center">
+                        <p id="error"></p>
+                        <h4></h4>
+                        <div id="email"></div>
+                        <div id="adress"></div>
+                        <div id="home"></div>
+                        <div id="dob"></div>
+                        <div id="company"></div>
+                        <div id="job"></div>
+
+                    </div>
+                    <div class="floatleft right">
+                        <a id="send" href="#" class="btn btn-default btn-sm floatright">Send email</a>
+                        <div class="clear"></div>
+                        <div id="sendform" style="display:none">
+                            <div class="field">                   
+                                <?php echo $this->formRow($form->get('subject')) ?>
+                            </div>
+                            <div class="field">
+
+<?php echo $this->formRow($form->get('message')) ?>
+                            <?php echo $this->formHidden($form->get('identity')) ?>
+                            <?php echo $this->formHidden($form->get('provider')) ?>
+                            </div>
+
+<?php echo $this->formButton($form->get('submit')) ?>
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+
+                </div>
+
+<?php echo $this->form()->closeTag() ?>
+            </div>
+
+
+            <div id="import" style="display:none">
+                <h4>Please import csv file </h4>
+                <form method="post" action=""  enctype="multipart/form-data">
+                    
+                    <input type="file" name="csv">
+                    <input type="hidden" name="action" value="import">
+                    <input type="submit" value="import">
+                    <a target="_blank" href="<?php echo $this->basePath('/assets/contact/samplecontacts .csv'); ?>">Sample Excel File for import</a>
+                </form>
+            </div>
+            
+
+<?php //$this->inlineScript()->captureStart()   ?>
+            <script>
+                $('#selectall').change(function() {
+                    if ($(this).is(':checked')) {
+                        //$('.conatctcheck').attr('checked',true);
+                        $(this).closest('ul').find(':checkbox').prop('checked', this.checked);
+                    }
+                    else
+                    {
+                        $(this).closest('ul').find(':checkbox').prop('checked', false);
+                    }
+                });
+                $("#exportall").click(function() {
+
+                    if (jQuery('#contactlist input[type=checkbox]:checked').length) {
+                        
+                        $("#contactlist").submit();
+                       
+                    } else {
+                       alert('please select contacts');
+
+                    }
+
+                });
+
+                $(".socialuser").click(function() {
+
+                    if ($("#contact").hasClass("in"))
+                    {
+                        $("#contact").removeClass("in");
+                        $("#contact").toggleClass('collapse');
+                    }
+                    $('#contact-main h4').html($(this).data('name'))
+                    $('#contact-main div').css('display', 'block');
+                    $("#sendform").css('display', 'none');
+
+                    $('#contact-main img').attr('src', $(this).data('url'));
+
+                    if ($(this).data('email') != '') {
+                        $('#contact-main #email').html("<p>Email</p><h4>" + $(this).data('email') + "</h4>");
+                    } else {
+                        $('#contact-main #email').html("");
+                    }
+                    if ($(this).data('loc') != '') {
+                        $('#contact-main #adress').html("<p>Address</p><h4>" + $(this).data('loc') + "</h4>");
+                    } else {
+                        $('#contact-main #adress').html("");
+                    }
+                    if ($(this).data('dob') != '') {
+                        $('#contact-main #dob').html("<p>Birthday</p><h4>" + $(this).data('dob') + "</h4>");
+                    } else {
+                        $('#contact-main #dob').html("");
+                    }
+                    if ($(this).data('home') != '') {
+                        $('#contact-main #home').html("<p>Home</p><h4>" + $(this).data('home') + "</h4>");
+                    } else {
+                        $('#contact-main #home').html("");
+                    }
+                    if ($(this).data('company') != '') {
+                        $('#contact-main #company').html("<p>Company</p><h4>" + $(this).data('company') + "</h4>");
+                    } else {
+                        $('#contact-main #company').html("");
+                    }
+                    if ($(this).data('job') != '') {
+                        $('#contact-main #job').html("<p>Job Title</p><h4>" + $(this).data('job') + "</h4>");
+                    } else {
+                        $('#contact-main #job').html("");
+                    }
+
+                    $('#identity').val($(this).data('id'));
+                    $('#provider').val('<?php echo $this->currentProvider ?>');
+
+                });
+                $(window).resize(function() {
+                    var wHeight = $(window).height();
+                    var tHeight = $('#top').height();
+                    var mHeight = $('.head').height();
+                    var height = wHeight - (tHeight + mHeight);
+
+                    $('#contact').css('height', height);
+                    $('#contact').css('overflow-y', 'scroll');
+                });
+
+                (function($) {
+                    jQuery.expr[':'].Contains = function(a, i, m) {
+                        return (a.textContent || a.innerText || "").toUpperCase().indexOf(m[3].toUpperCase()) >= 0;
+                    };
+                    var wHeight = $(window).height();
+                    var tHeight = $('#top').height();
+                    var mHeight = $('.head').height();
+                    var height = wHeight - (tHeight + mHeight);
+
+                    $('#contact').css('height', height);
+                    $('#contact').css('overflow-y', 'scroll');
+
+
+                    $('#socialuser').change(function() {
+
+                        var list = $("#contact");
+                        var filter = $(this).val();
+                        if (filter) {
+
+                            $matches = $(list).find('a:Contains(' + filter + ')').parent();
+                            $('li', list).not($matches).slideUp();
+                            $matches.slideDown();
+
+                        } else {
+                            $(list).find("li").slideDown();
+                        }
+                        return false;
+                    }).keyup(function() {
+                        $(this).change();
+                    });
+
+
+
+                }(jQuery));
+
+                /*Message send button*/
+
+                $('#send').click(function() {
+                    if ($("#sendform").is(":hidden")) {
+                        $("#sendform").slideDown("slow");
+                        $("#error").html("");
+                    } else {
+                        $("#sendform").slideUp("slow");
+                    }
+                });
+
+                /*send Message through ajax*/
+
+                $("#emailform").submit(function(e)
+                {
+
+                    var postData = $(this).serializeArray();
+                    var formURL = '<?php echo $this->basePath('/sendmessage'); ?>';
+                    $.ajax(
+                            {
+                                url: formURL,
+                                type: "POST",
+                                data: postData,
+                                success: function(data, textStatus, jqXHR)
+                                {
+                                    var obj = jQuery.parseJSON(data);
+                                    //document.writeln(data);
+                                    //alert(obj.data);
+                                    if (obj.result != false) {
+                                        $("#sendform").slideUp("slow");
+                                        $("#error").html("Message was sent");
+                                    }
+                                },
+                                error: function(jqXHR, textStatus, errorThrown)
+                                {
+                                }
+                            });
+                    e.preventDefault();	//STOP default action
+                });
+
+
+                $('.fancybox').fancybox();
+
+            </script>
+<?php //$this->inlineScript()->captureEnd()   ?>
+        </div> </div>
+
+</div>

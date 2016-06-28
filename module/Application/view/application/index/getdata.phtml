@@ -1,0 +1,364 @@
+<?php 
+require_once('config/autoload/conn.php');
+
+// for i-mandir ajax code 
+if(isset($_POST['imandir_detail'])){
+    $id=$_POST['imandir_detail'];
+  $sql = "SELECT * FROM  imandir_cat_detail where category_id='$id'";
+  $result = mysql_query($sql);
+  echo "<span id='imandir_images'>";
+  if($result){
+  if($result && mysql_num_rows($result)>0){
+  while($row= mysql_fetch_array($result)){    
+$id=$row['id'];
+if($row['category_id']=='1'){
+echo '<input type="image" border="1" style="height:200px;width:200px;padding:5px;margin-top:5px;"  id=" '.$id.'" onclick="gotimage(this.id)" src="data:image/jpeg;base64,'.base64_encode( $row['image'] ). '"/>';
+}
+if($row['category_id']=='6'){
+?>
+<iframe src="https://calendar.google.com/calendar/embed?src=en.indian%23holiday%40group.v.calendar.google.com&ctz=Asia/Calcutta" style="border: 0;" width="600" height="600" frameborder="0" scrolling="no"></iframe>
+<?php
+}
+
+if($row['category_id']=='8'){
+    $link=$row['link'];
+?>
+ <a class="svg" href="#" onclick="videoPlay('<?php echo $link;?> ')">  
+<iframe style="height:200px;width:200px; " id="frame-tv" src="<?php echo $row['link'];?>" allowfullscreen="true" allowscriptaccess="always"> </iframe>
+</a>
+<?
+}
+
+else{
+echo '<input type="image" border="1" style="height:200px;width:200px;padding:5px;margin-top:5px;"  id=" '.$id.'" onclick="gotimageother(this.id)" src="data:image/jpeg;base64,'.base64_encode( $row['image'] ). '"/>';
+
+}
+ 
+
+  }
+
+}
+else{
+echo "No Image Found";
+
+}
+  echo "</span>";
+}
+}
+
+
+//end i-mandir code
+
+
+//display select box value////
+
+if(isset($_POST['mob_number']))
+{
+ $mobile_num=$_POST['mob_number'];
+ 
+ $stmt = mysql_query("SELECT * FROM user WHERE username='$mobile_num'");
+ ?>
+<span id="mob_result"> <?php
+
+
+ if($stmt && mysql_num_rows($stmt)>0)
+ {
+   require("vendor/twilio/sdk/Services/Twilio.php");
+
+    // Step 2: set our AccountSid and AuthToken from www.twilio.com/user/account
+    $AccountSid = "AC25b077f065860984d4436fffbb180f38";
+    $AuthToken = "96a6952aa2cc0947f64f493fd76c2c01";
+ 
+    // Step 3: instantiate a new Twilio Rest Client
+    $client = new Services_Twilio($AccountSid, $AuthToken);
+ 
+    // Step 4: make an array of people we know, to send them a message. 
+    // Feel free to change/add your own phone number and name here.
+    $num=$_POST['mob_number'];
+    $otp=rand('150BC0','99R00');
+    $people = array(
+        $num =>$otp,
+    );
+ 
+    // Step 5: Loop over all our friends. $number is a phone number above, and 
+    // $name is the name next to it
+    foreach ($people as $number => $name) {
+ 
+        $sms = $client->account->messages->sendMessage(
+ 
+        // Step 6: Change the 'From' number below to be a valid Twilio number 
+        // that you've purchased, or the (deprecated) Sandbox number
+            "+12016902474", 
+ 
+            // the number we are sending to - Any phone number
+            $number,
+ 
+            // the sms body
+            "Hey $name, Got It Code!"
+        );
+ 
+        // Display a confirmation message on the screen
+        //echo "<script type='text/javascript'>alert('OTP Sent On your Number');</script>";
+        echo "1";
+    }
+
+
+ }
+ else{
+    echo "Mobile Number Not Match";
+ }
+ ?> </span>
+ <?php
+}
+
+
+
+if(isset($_POST['traditional_id']))
+{
+ $rit_category=$_POST['traditional_id'];
+ 
+ $stmt = mysql_query("SELECT * FROM rituals WHERE traditional_id='$rit_category'");
+ ?>
+<span id="ritual_details_all"> <?php
+ while($row=mysql_fetch_assoc($stmt))
+ {
+    $id=$row[id];
+    $tradtional_id=$row[traditional_id];
+    $cultural=$row[cultural];
+    $preference=$row[preference];
+    $practical=$row[practical];
+    $interfaith=$row[interfaith];
+    $other=$row[other];
+echo "<span id='tr_id'>$tradtional_id</span>";
+echo "<span id='id'>$id</span>";
+echo "<span id='cultural'>$cultural</span>";
+echo "<span id='preference'>$preference</span>";
+echo "<span id='practical'>$practical</span>";
+echo "<span id='interfaith'>$interfaith</span>";
+echo "<span id='other'>$other</span>";
+ 
+ }
+ ?> </span>
+ <?php
+}
+
+
+
+if(isset($_POST['ritual_id_day']))
+{
+ $rit_srch_day_list=$_POST['ritual_id_day'];
+ 
+ $stmt = mysql_query("SELECT * FROM rituals_days WHERE ritual_id='$rit_srch_day_list'");
+ ?>
+<span id="ritual_day_list"> <option selected="selected">Please Select </option><?php
+ while($row=mysql_fetch_assoc($stmt))
+ {
+  ?>
+        <option value="<?php echo $row['content']; ?>"><?php echo "Day ".$row['day']; ?></option>
+       <?php
+ }
+ ?> </span>
+ <?php
+}
+
+
+
+if(isset($_POST['stateid']))
+{
+ $id=$_POST['stateid'];
+  
+ $stmt = mysql_query("SELECT * FROM states WHERE country_id='$id'");
+ ?>
+<span id="state_list"> <option selected="selected">Select State </option><?php
+ while($row=mysql_fetch_assoc($stmt))
+ {
+  ?>
+        <option value="<?php echo $row['id']; ?>"><?php echo $row['name']; ?></option>
+       <?php
+ }
+ ?> </span>
+ <?php
+}
+if(isset($_POST['cityid']))
+{
+ $ids=$_POST['cityid'];
+ $stmts = mysql_query("SELECT * FROM cities WHERE state_id='$ids'");
+ ?><span id="city_list"><option selected="selected">Select City </option><?php
+ while($rows=mysql_fetch_assoc($stmts))
+ {
+  ?>
+  <option value="<?php echo $rows['id']; ?>"><?php echo $rows['name']; ?></option>
+  <?php
+ }
+ ?>
+ </span><?php
+}
+?>
+
+<?php
+///display subcat value////
+if(isset($_POST['cat'])){
+    $id_val=$_POST['cat'];
+    $rs=mysql_query("select * from sub_category where c_id='$id_val'");
+    if($rs && mysql_num_rows($rs)>0)
+    {
+?>
+    <div class="submenu" id="hide">
+        <ul id="ajax_subcat_val">
+        <?php
+            while($data = mysql_fetch_array($rs)){
+            $id_val= $data['c_id'];
+            $id_val1= $data['sc_id'];
+        ?> 
+            <li class="active" data-interest="<?php echo $id_val1; ?>" id="activate">
+                <a href="#" onclick="subcat('<?php echo $id_val; ?>','<?php echo $id_val1; ?>')" id="subcat_val" >
+                    <?php echo $data['sc_name'];?>
+                </a>
+            </li>
+        <?php } ?>
+        </ul>
+    </div>
+<?php } } ?>
+
+<?php
+//for grid view////
+
+if(isset($_POST['cat_value'])){
+    $cid=$_POST['cat_value'];
+    $scid=$_POST['sub_cat'];
+    $pro=mysql_query("select * from products where c_id='$cid' && sc_id='$scid'");
+    echo '<div id="data1">';
+        while($pro_items=mysql_fetch_array($pro))
+        {
+          echo '<div class="col-sm-2" id="data" >';
+                echo '<div id="img"><img src="data:image/jpeg;base64,'.base64_encode( $pro_items['p_image'] ).'"></div>';
+                echo '<div class="name">'.$pro_items['p_name'].'</div>';
+                echo'<div class="price">'.'Price : '.'&#8377; '.$pro_items['p_price'].'</div>';
+                echo '<div class="desc">';?>
+                <input type="submit" value="Buy Now" class="btn" onclick="addtocart(<?= $pro_items['p_id'];?>)">
+                <?php echo '</div></div>';
+        }
+        echo "</div>";
+}
+
+///for select country state city /////
+if(isset($_POST['cat_val']) && isset($_POST['subcat_val']) && isset($_POST['country'])){
+    $cat_id=$_POST['cat_val'];
+    $subcat_id=$_POST['subcat_val'];
+    $country_code=$_POST['country'];
+    $product=mysql_query("select * from products where c_id='$cat_id' and sc_id='$subcat_id' and country='$country_code'");
+    echo '<div id="data1">';
+   
+        while($item=mysql_fetch_array($product))
+        {
+                 echo '<div class="col-sm-2" id="data">';
+                echo '<div id="img"><img src="data:image/jpeg;base64,'.base64_encode( $item['p_image'] ).'"></div>';
+                echo '<div class="name">'.$item['p_name'].'</div>';
+                echo'<div class="price">'.'Price : '.'&#8377; '.$item['p_price'].'</div>';
+                echo '<div class="desc">';?>
+                <input type="submit" value="Buy Now" class="btn" onclick="addtocart(<?=$item['p_id']?>)">
+                <?php echo '</div></div>';
+        }
+        echo "</div>";
+}
+if(isset($_POST['cat_val']) && isset($_POST['subcat_val']) && isset($_POST['state_id']) && isset($_POST['country_id'])){
+    $cat_id=$_POST['cat_val'];
+    $subcat_id=$_POST['subcat_val'];
+    $state_code=$_POST['state_id'];
+    $country_code=$_POST['country_id'];
+    $product=mysql_query("select * from products where c_id='$cat_id' and sc_id='$subcat_id' and country='$country_code' and state='$state_code'");
+    echo '<div id="data1">';
+    
+        while($item=mysql_fetch_array($product))
+        {
+                echo '<div class="col-sm-2" id="data">';
+                echo '<div id="img"><img src="data:image/jpeg;base64,'.base64_encode( $item['p_image'] ).'"></div>';
+                echo '<div class="name">'.$item['p_name'].'</div>';
+                echo'<div class="price">'.'Price : '.'&#8377; '.$item['p_price'].'</div>';
+                echo '<div class="desc">';?>
+                <input type="submit" value="Buy Now" class="btn" onclick="addtocart(<?=$item['p_id']?>)">
+                <?php echo '</div></div>';
+        }
+        echo "</div>";
+}
+if(isset($_POST['cat_val']) && isset($_POST['subcat_val']) && isset($_POST['city_ids']) && isset($_POST['state_ids']) && isset($_POST['country_ids'])){
+    $cat_id=$_POST['cat_val'];
+    $subcat_id=$_POST['subcat_val'];
+    $city_code=$_POST['city_ids'];
+    $state_code=$_POST['state_ids'];
+    $country_code=$_POST['country_ids'];
+    $product=mysql_query("select * from products where c_id='$cat_id' and sc_id='$subcat_id' and country='$country_code' and state='$state_code' and city='$city_code'");
+    echo '<div id="data1">';
+   
+        while($item=mysql_fetch_array($product))
+        {
+                 echo '<div class="col-sm-2" id="data">';
+                echo '<div id="img"><img src="data:image/jpeg;base64,'.base64_encode( $item['p_image'] ).'"></div>';
+                echo '<div class="name">'.$item['p_name'].'</div>';
+                echo'<div class="price">'.'Price : '.'&#8377; '.$item['p_price'].'</div>';
+                echo '<div class="desc">';?>
+                <input type="submit" value="Buy Now" class="btn" onclick="addtocart(<?=$item['p_id']?>)">
+                <?php echo '</div></div>';
+        }
+        echo "</div>";
+}
+
+
+
+if(isset($_POST['searchpro'])){
+
+    $productserch=$_POST['searchpro'];
+    $product=mysql_query("select * from products where p_name LIKE '%$productserch%'");
+     echo '<div id="data1">';
+   
+    if($product && mysql_num_rows($product)>0){
+        while($item=mysql_fetch_array($product))
+        {
+                 echo '<div class="col-sm-2" id="data">';
+                echo '<div id="img"><img src="data:image/jpeg;base64,'.base64_encode( $item['p_image'] ).'"></div>';
+                echo '<div class="name">'.$item['p_name'].'</div>';
+                echo'<div class="price">'.'Price : '.'&#8377; '.$item['p_price'].'</div>';
+                echo '<div class="desc">';?>
+                <input type="submit" value="Buy Now" class="btn" onclick="addtocart(<?=$item['p_id']?>)">
+                <?php echo '</div></div>';
+        }
+       
+    }
+    else{
+
+        echo " No Item Found ";
+    }
+     echo "</div>";
+}
+
+
+
+
+if(isset($_POST['searchbrand'])){
+
+    $productbrand=$_POST['searchbrand'];
+    $product=mysql_query("select * from products where p_brand LIKE '%$productbrand%'");
+    echo '<div id="data1">';
+   
+    if($product && mysql_num_rows($product)>0){
+        while($item=mysql_fetch_array($product))
+        {
+                 echo '<div class="col-sm-2" id="data">';
+                echo '<div id="img"><img src="data:image/jpeg;base64,'.base64_encode( $item['p_image'] ).'"></div>';
+                echo '<div class="name">'.$item['p_name'].'</div>';
+                echo'<div class="price">'.'Price : '.'&#8377; '.$item['p_price'].'</div>';
+                echo '<div class="desc">';?>
+                <input type="submit" value="Buy Now" class="btn" onclick="addtocart(<?=$item['p_id']?>)">
+                <?php echo '</div></div>';
+        }
+       
+    }
+    else{
+
+        echo " No Item Found ";
+    }
+     echo "</div>";
+}
+
+
+?>

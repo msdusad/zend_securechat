@@ -1,0 +1,218 @@
+<?php 
+ error_reporting(0);
+require_once('config/autoload/conn.php');
+echo $this->headLink()->prependStylesheet($this->basePath() . '/assets/css/style.css');     
+class DBController {
+	function runQuery($query) {
+		$result = mysql_query($query);
+		while($row=mysql_fetch_assoc($result)) {
+			$resultset[] = $row;
+		}		
+		if(!empty($resultset))
+			return $resultset;
+	}
+	
+	function numRows($query) {
+		$result  = mysql_query($query);
+		$rowcount = mysql_num_rows($result);
+		return $rowcount;	
+	}
+}
+$db_handle = new DBController();
+$query ="SELECT * FROM country";
+$results = $db_handle->runQuery($query);
+?>
+
+<head>
+    <script type="text/javascript">
+        function getState(val) {
+	//var menu= document.getElementById('ajax_menu').value; 
+	//var sub_menu=$('ul#ajax_sub_menu').find('li.active').data('interest'); 
+	//alert(menu);
+	$.ajax({
+	type: "POST",
+	url: "<?php echo $this->url('travelajax'); ?>",
+	data:{country_id:val},
+		//data:'country_id='+val+'menu_serch'+menu,
+	success: function(data){
+var ss=$('#state-list').html(jQuery(data).find('#result').html()); 
+var ss3=$('#ajax-output').html(jQuery(data).find('#left').html());
+var ss1=$('#ajax-output1').html(jQuery(data).find('#right').html());
+var ss2=$('#sponser-ajax').html(jQuery(data).find('#sponser').html());   
+       
+
+	}
+	});
+}
+function getCity(val) {
+	var count_id=document.getElementById('country-list').value;
+	//var menu= document.getElementById('ajax_menu').value; 
+	//var sub_menu=$('ul#ajax_sub_menu').find('li.active').data('interest'); 
+	
+	$.ajax({
+	type: "POST",
+url: "<?php echo $this->url('travelajax'); ?>",
+	data:{state_id:val,country_id:count_id},
+	//data:'state_id='+val,
+	success: function(data){
+	var ss=$('#city-list').html(jQuery(data).find('#cities').html()); 
+var ss=$('#ajax-output').html(jQuery(data).find('#left').html());
+var ss1=$('#ajax-output1').html(jQuery(data).find('#right').html());
+    var ss2=$('#sponser-ajax').html(jQuery(data).find('#sponser').html());  
+	}
+	});
+}
+	
+	function SubmitCity(val) {
+		var state=document.getElementById('state-list').value;
+	var count_id =document.getElementById('country-list').value;
+	//var menu= document.getElementById('ajax_menu').value; 
+	//var sub_menu=$('ul#ajax_sub_menu').find('li.active').data('interest'); 
+		
+	$.ajax({
+	type: "POST",
+	url: "<?php echo $this->url('travelajax'); ?>",
+	data:{city_id:val,state_id:state,country_id:count_id},
+		//data:'city_id='+val,
+	success: function(data){
+	//var ss=$('#state-list').html(jQuery(data).find('#result').html()); 
+var ss=$('#ajax-output').html(jQuery(data).find('#left').html());
+var ss1=$('#ajax-output1').html(jQuery(data).find('#right').html());
+        var ss2=$('#sponser-ajax').html(jQuery(data).find('#sponser').html());  
+	}
+	});
+}
+        
+        
+    </script>
+</head>
+
+
+    <div class="container">
+        
+<!--
+        <div class="content_header">
+
+                <select id="country" name="country" class="drop_down" onchange="showUser(this.value);">
+                <option value="india" selected>India</option>
+                <option value="USA">USA</option>     
+                </select>
+        </div>
+-->  
+		<!-- search Filer strt-->
+				<div class="search-fields" style="width:100%;">	
+ 
+ <div class="col-md-3 col-sm-3 col-xs-3 spacing" style="width:13%;">       
+                  <div class="layout_nav" style="">
+        <ul>
+            <li><a class="before" href="<?php echo $this->basePath('/'); ?>">Home &rsaquo; </a></li>
+            
+            <li>Travel</li> 
+        </ul>
+    </div>  
+                </div> 
+
+        	<div class="col-md-3 col-sm-3 col-xs-3 spacing leftspace" style="width:19%;" >
+
+ 
+					<select name="country" id="country-list"  onchange="getState(this.value);"  class="form-control txt-height">
+					<option value="">Select Country</option>
+						<?php
+foreach($results as $country) {
+?>
+<option value="<?php echo $country["id"]; ?>"><?php echo $country["name"]; ?></option>
+<?php
+}
+?>	          </select>	
+             </div>
+					
+             <div class="col-md-3 col-sm-3 col-xs-3 spacing" style="width:19%;">       
+                    <select name="state" id="state-list" onchange="getCity(this.value);" class="form-control txt-height">
+                    <option value="">Select State</option>
+                  
+                    </select>	
+             	</div> 
+						              
+              
+              <div class="col-md-3 col-sm-3 col-xs-3 spacing" style="width:19%;"> 
+                   
+                    <select name="city" id="city-list" onchange="SubmitCity(this.value)" class="form-control txt-height">
+                    <option value="">City</option>
+                   
+                    </select>
+			 			</div>
+<!--
+              <div class="col-md-3 col-sm-3 col-xs-3 spacing" style="width:20%;">
+              <div class="rightspace">          
+                    <select name="postalCode" id="postalCode" class="form-control txt-height">
+                 	<option value="">Zip/Postal Code </option>
+                   
+                    </select>	
+               </div> 
+             </div>   
+        <br><br>
+-->
+        </div>
+
+						<!-- end search Filter -->
+        
+        
+        
+        
+        
+        
+        
+        <div class="content_main">
+            <div class="provider">
+                 <p style="padding-left:7px;">Popular Resources</p>
+                <div id="ajax-output">   
+                    <?php
+                    $q="101";
+                    $query="select provider_image, provider_link from provider where country='".$q."'";
+                    $r=mysql_query($query) or die (mysql_error());
+                    while($data=mysql_fetch_array($r))
+                    { 
+                     echo '<a href="'.( $data['provider_link'] ).'" target="_blank"/>';    
+            echo '<img src="data:image/jpeg;base64,'.base64_encode( $data['provider_image'] ).'" class="morph"/>';
+                     echo '</a>';    
+                    }
+                
+                    ?>
+                </div>    
+            </div>
+            <div id="content_pg">
+                <h3 style="text-align:left;margin-left:20px;">Sponsor Link</h3>
+                <div id="sponser-ajax">
+                <?php
+                    $query="select sponcer_url from sponcer where country='".$q."'";
+                    $r=mysql_query($query) or die (mysql_error());
+                    while($data=mysql_fetch_array($r))
+                    { 
+                     echo '<iframe src="'.( $data['sponcer_url'] ).'" class="data">';
+                     echo '</iframe>';    
+                    }
+                    ?>
+                    
+                    </div>
+
+            </div>
+            <div class="logos">
+                <p style="padding-left:3px;">Links to Airlines</p>
+                <div id="ajax-output1">
+                    <?php
+                 
+                    $query="select airline_image, airline_link from airlines where country='".$q."'";
+                    $r=mysql_query($query) or die (mysql_error());
+                    while($data=mysql_fetch_array($r))
+                    { 
+                     echo '<a href="'.( $data['airline_link'] ).'" target="_blank"/>';    
+            echo '<img src="data:image/jpeg;base64,'.base64_encode( $data['airline_image'] ).'" class="tilt"/>';
+                    echo '</a>';    
+                    }
+                
+                    ?>
+              </div>    
+            </div>
+        </div>
+    </div>
+    

@@ -1,0 +1,52 @@
+<!DOCTYPE html> 
+<html> 
+<body> 
+<?php if($ext=='mp4'){?>
+<video width="100%" controls>
+  <source src="<?php echo $this->basepath().$path?>" type="video/mp4">
+</video>
+<?php }?>
+
+<?php if($ext=='ogg'){?>
+<video width="100%" controls>
+  <source src="<?php echo $this->basepath().$path?>" type="video/ogg">
+</video>
+<?php }?>
+
+<?php if($ext=='webm'){?>
+<video width="100%" controls>
+  <source src="<?php echo $this->basepath().$path?>" type="video/webm">
+</video>
+<?php }?>
+
+<?php if($ext=='gif'){?>
+<img src="<?php echo $this->basepath().$path?>" height="300" width="200">
+<?php }?>
+
+<?php if($ext=='jpeg'){?>
+<img src="<?php echo $this->basepath().$path?>" height="300" width="200">
+<?php }?>
+
+<?php if($ext=='png'){?>
+<center><img src="<?php echo $this->basepath().$path?>" height="300px" width="200px"></center>
+<?php }?>
+
+<?php if($ext=='jpg'){?>
+<img src="<?php echo $this->basepath().$path?>" height="300" width="200">
+<?php }?>
+
+<?php if($ext=='mp3'){?>
+<source src="<?php echo $this->basepath().$path?>" type="audio/ogg">
+<?php }?>
+
+<?php if($ext=='mpeg'){?>
+<source src="<?php echo $this->basepath().$path?>" type="audio/mpeg">
+<?php }?>
+<?php if($ext=='txt' || $ext=='pdf' || $ext=='docx' || $ext=='doc'){?>
+<div style="margin-top:50px">
+<center><b>File type Is Invalid</b></center>
+</div>
+<?php }?>
+
+</body> 
+</html>

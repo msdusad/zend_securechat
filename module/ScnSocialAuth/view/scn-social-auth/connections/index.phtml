@@ -1,0 +1,74 @@
+<?= $this->partial('layout/top_links'); ?>
+<div class="layout_nav">
+        <ul>
+            <li><a class="before" href="<?php echo $this->basePath('/'); ?>">Home &rsaquo; </a></li>           
+            <li>My Connections</li> 
+        </ul>
+ </div>
+<div class='clear'></div>
+<?php if ($this->message != '') { ?>
+    <div class="flash_message">
+        <?php echo $this->message[0]; ?>
+    </div>
+<?php } ?>
+<div class="myaccount">
+    <div style="display: inline-block;border-bottom: 1px solid #dfdfdf;width: 100%;">
+        <h3 style='border:none;float: left;'>My connections</h3>       
+        <a class="btn btn-default btn-sm submenu" href="<?php echo $this->url('scn-social-connections', array('action' => 'add')); ?>">add</a>
+        <a href="#" id="delete" class="btn btn-default btn-sm submenu">Delete</a>
+    </div>
+    <div style="padding:10px;">
+
+        <div class="maincontent">
+
+            <form name="connections" id="connectionform" method="POST" action="">
+                
+                <?php
+                // try to get already authenticated provider list
+                try {
+                    $connected_users = $this->connections;
+                    if(count($connected_users)<=0){  echo '<div class="error">No connections</div>';}
+                    if (count($connected_users)) {
+                        echo "<h4>You're connected to</h4>";
+                        ?> 
+                        <ul class="connections">                    
+                            <?php foreach ($connected_users as $users) { ?>
+                                <li>
+                                    <input type="checkbox" class="case" name="ids[]" value="<?php echo $users['id']; ?>">
+                                    <img src="<?php echo $this->basePath('/assets/img/icons/user_icon.gif'); ?>" width="30" height="30"/>
+                                    <div>
+                                        <h4>
+                                            <?php echo $users['name']; ?>
+                                        </h4>
+                                        
+                                        <span>Relation:<?php echo $users['relation']; ?></span>
+                                    </div>
+                                </li>
+                            <?php } ?>
+
+                        </ul>
+                        <?php
+                       
+                    }
+                } catch (Exception $e) {
+                    
+                  
+                }
+                ?> 
+
+                <input type="hidden" name="action" value="multidelete">
+
+            </form>
+        </div>
+    </div>   
+</div>
+<script>
+    $('#delete').click(function() {
+        if ($('.case').is(':checked')) {
+            $('#connectionform').submit();
+        } else {
+            alert('please select connections')
+        }
+
+    });
+</script>

@@ -1,0 +1,53 @@
+<?php
+echo $this->headLink()
+        ->prependStylesheet($this->basePath() . '/assets/lib/multipleupload/css/uploadfile.css');
+echo $this->headScript()->prependFile($this->basePath() . '/assets/lib/multipleupload/js/jquery.uploadfile.min.js');
+?>
+<div id="top"><?= $this->partial('layout/admin_top_menu', array('tittle' => 'Add new Impact')); ?></div>
+<div id="left"> <?= $this->partial('layout/left-menu', array('impact' => 'active')); ?></div> 
+<div id="content"> 
+    <div class="outer">
+        <div class="inner">
+            <?php if ($this->message != '') { ?>
+                <div class="flash_message">
+                    <?php echo $this->message[0]; ?>
+                </div>
+            <?php } ?>
+            <?php if (count($this->gallery) > 0) { ?>
+                <form method="POST" action="<?php echo $this->url('admin/impacts', array('action' => 'deletephotose', 'id' => $this->id));
+                ?>">
+                    <ul class="impact_gallery">
+                        <?php foreach ($this->gallery as $value) { ?>
+                            <li>
+                                <img src="<?php echo $this->basePath('/../module/Admin/assets/impact/thumb/' . $this->id . '_' . $value['photo_url']); ?>"/>
+                                <input type="checkbox" name="ids[]" value="<?php echo $value['id']; ?>">
+
+                            </li>
+                        <?php } ?>
+                    </ul>  
+                    <input type="submit" value="Delete"/>
+                </form>
+            <?php }
+            ?>
+            <div id="fileuploader">Upload</div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function()
+    {
+        $("#fileuploader").uploadFile({
+            url: "<?php echo $this->url('admin/impacts', array('action' => 'upload', 'id' => $this->id)); ?>",
+            fileName: "myfile",
+            allowedTypes:"png,gif,jpg,jpeg",
+            afterUploadAll: function()
+            {
+                location.reload();
+
+            }
+        });
+
+    });
+
+</script>

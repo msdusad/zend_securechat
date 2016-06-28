@@ -1,0 +1,26 @@
+<div id="top"><?= $this->partial('layout/admin_top_menu', array('tittle' => 'Delete Category')); ?></div>
+<div id="left"> <?= $this->partial('layout/left-menu', array('cms' => 'active')); ?></div> 
+<div id="content"> 
+    <div class="outer">
+        <div class="inner">
+
+            <p>Are you sure that you want to delete
+                '<?php echo $this->escapeHtml($this->rituals['name']); ?>'?
+            </p>
+            <?php
+            
+            $url = $this->url('admin/rituals', array(
+                'action' => 'delete',
+                'id' => $this->id,
+            ));
+            ?>
+            <form action="<?php echo $url; ?>" method="post">
+                <div>
+                    <input type="hidden" name="id" value="<?php echo (int) $this->id; ?>" />
+                    <input type="submit" name="del" value="Yes" />
+                    <input type="submit" name="del" value="No" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,564 @@
+ <script>
+jQuery(document).ready(function ($) {            
+             
+      $('#radiofirst').click(function() {
+        $('#MyaccountDiv').hide();
+        $('#newDiv').show();        
+      });
+      $('#radiosecond').click(function() {
+        $('#newDiv').hide();
+        $('#MyaccountDiv').show();
+      });
+	  $('.test img').click(function() {
+    var img = $(this).attr('src');
+	$('#change').attr("src",img);
+	});
+            
+            var options = {
+                $AutoPlay: true,                                    //[Optional] Whether to auto play, to enable slideshow, this option must be set to true, default value is false
+                $AutoPlayInterval: 4000,                            //[Optional] Interval (in milliseconds) to go for next slide since the previous stopped if the slider is auto playing, default value is 3000
+                $SlideDuration: 500,                                //[Optional] Specifies default duration (swipe) for slide in milliseconds, default value is 500
+                $DragOrientation: 3,                                //[Optional] Orientation to drag slide, 0 no drag, 1 horizental, 2 vertical, 3 either, default value is 1 (Note that the $DragOrientation should be the same as $PlayOrientation when $DisplayPieces is greater than 1, or parking position is not 0)
+                $UISearchMode: 0,                                   //[Optional] The way (0 parellel, 1 recursive, default value is 1) to search UI components (slides container, loading screen, navigator container, arrow navigator container, thumbnail navigator container etc).
+
+                $ThumbnailNavigatorOptions: {
+                    $Class: $JssorThumbnailNavigator$,              //[Required] Class to create thumbnail navigator instance
+                    $ChanceToShow: 2,                               //[Required] 0 Never, 1 Mouse Over, 2 Always
+
+                    $Loop: 2,                                       //[Optional] Enable loop(circular) of carousel or not, 0: stop, 1: loop, 2 rewind, default value is 1
+                    $SpacingX: 3,                                   //[Optional] Horizontal space between each thumbnail in pixel, default value is 0
+                    $SpacingY: 3,                                   //[Optional] Vertical space between each thumbnail in pixel, default value is 0
+                    $DisplayPieces: 6,                              //[Optional] Number of pieces to display, default value is 1
+                    $ParkingPosition: 204,                          //[Optional] The offset position to park thumbnail,
+
+                    $ArrowNavigatorOptions: {
+                        $Class: $JssorArrowNavigator$,              //[Requried] Class to create arrow navigator instance
+                        $ChanceToShow: 2,                               //[Required] 0 Never, 1 Mouse Over, 2 Always
+                        $AutoCenter: 2,                                 //[Optional] Auto center arrows in parent container, 0 No, 1 Horizontal, 2 Vertical, 3 Both, default value is 0
+                        $Steps: 6                                       //[Optional] Steps to go for each navigation request, default value is 1
+                    }
+                }
+            };
+
+            var jssor_slider1 = new $JssorSlider$("slider1_container", options);
+
+            //responsive code begin
+            //you can remove responsive code if you don't want the slider scales while window resizes
+            function ScaleSlider() {
+                var parentWidth = jssor_slider1.$Elmt.parentNode.clientWidth;
+                if (parentWidth)
+                    jssor_slider1.$ScaleWidth(Math.min(parentWidth, 447));
+                else
+                    window.setTimeout(ScaleSlider, 30);
+            }
+            ScaleSlider();
+
+            $(window).bind("load", ScaleSlider);
+            $(window).bind("resize", ScaleSlider);
+            $(window).bind("orientationchange", ScaleSlider);
+            //responsive code end
+        });
+   
+document.getElementById("uploadBtn").onchange = function () {
+    document.getElementById("uploadFile").value = this.value;
+};
+
+</script>
+
+
+<style>
+	.right_side{
+		margin-top: -40px;
+		float: right;
+		font-size:19px;
+		font-color:'black';
+		border:2px solid #777;
+		
+	}
+	.box {
+	border: 2px solid #ff6633;
+    color: #777;
+    display: inline-block;
+    font-family: openFont2;
+    font-size: 19px;
+    height: 150px;
+    margin-bottom: 30px;
+   
+    text-align: center;
+	width:200px;	
+	}
+	
+	.upload_button {
+    background-color: #D2D2D2;
+    border: 1px solid;
+    border-radius: 4px;
+    color: #777;
+    cursor: pointer;
+   
+    font-family: openFont2;
+	font-color: #ffffff;
+    font-size: 17px;
+    margin-bottom: 30px;
+    padding: 20px 80px;
+    text-decoration: none;
+	width:100%;
+}
+
+	#table_box{
+		border: 1px solid #ddd;
+		height: 100%;
+		margin-bottom: 10px;
+	}
+	#back {
+    background-image: url("addthis/images/mala-3.png");
+	background-size:100% 100%;
+	height:500px;
+	position:relative;
+	z-index:1;
+}
+	.important{
+		margin-left:150px;
+		top:50px;
+		position:absolute;
+		z-index:0;
+	}
+	.small_img{
+		background-image: url("addthis/images/mala-2.png");
+		background-size:100% 100%;
+		height:200px;
+		position:relative;
+		z-index:1;
+	}
+	
+}
+</style>
+
+
+<div class="header-bottom">
+<div class="col-md-4">
+<a class="logo-top" href="#">Cremation Planning <i class="fa fa-chevron-right"></i></a>
+<a class="main-slide" href="#">Announce</a>
+</div>
+<!--
+<div class="col-md-4">
+<div class="button-radio">
+<input type="radio" class="css-checkbox" id="radiofirst" name="radiog_lite" checked="checked" >
+<label class="css-label1 radGroup1" for="radiofirst">Create New</label>
+
+<input type="radio" class="css-checkbox" id="radiosecond" name="radiog_lite">
+<label class="css-label1 radGroup1" for="radiosecond">My Account</label>
+</div>
+</div>
+-->
+<div class="col-md-4">
+<div class="floatr border-full">
+<a class="alls first" href="page/faq">FAQ</a><a class="alls second" href="page/demo">Demo</a><a class="alls third" href="page/share">Share</a>
+</div>
+</div>
+
+<div class="clearfix"></div>
+</div>
+
+<div class="section-band">
+<div class="col-md-4 border-right text-center">
+		<a href="#">
+			<div id="back"></div>
+			<img id='change' height="500px" width="100%" src="images/user.png" style="position:absolute; top:0; left:0px; z-index:0;" />
+		</a>
+		
+		<p class="set-thumb">Deceased's Profile Name</p>
+		<span class="set-band">Date: Oct 2,1869-Jan 30,1948</span>
+				<div class='test' style="display:block;">
+		<?php 
+		/*foreach($results_thmb as $result){
+			$ext = $result['extension'];*/
+			$doc_name = $obituary[0]['imageUrl'];
+			$path = '/addthis/upload/'.$doc_name;
+			$src = $this->basepath().$path;
+		?>
+		
+			<img class="inputs" src='<?php echo $src;?>'/>
+		
+		<?php //}?></div>
+		
+	
+	<div class="back_border">Add Audio, Video and Images</div>
+		<select class="demoa form-controls">
+		<option>Rest in Peace</option>
+		  <option>R.I.P.</option>
+		  <option>We miss you</option>
+		  <option>Love you Forever</option>
+		  <option>You won't be forgotten</option>
+		  <option>You will always be in our hearts</option>
+		  <option>Whereever you are, we love you</option>
+		</select>
+		
+		<div class="set-img">
+			<a href="<?php echo $this->url('third');?>">
+				<img height='50px' width='50px' src="addthis/images/mala-2.png" />
+				<img height='50px' width='50px' src="addthis/images/candle.jpg" />
+				<img height='50px' width='50px' src="addthis/images/diya.jpg" />
+			</a>
+		</div>
+			
+				<p class="set-thumbs">Created by: Rajiv Bhatia</p>
+				<span class="set-bands">Privacy Setting: Public</span>
+		</div>
+
+
+
+
+<div class="col-md-8 border-left">
+<ul role="tablist" class="nav nav-tabs navs naving" id="myTab">
+      <li class="active" role="presentation"><a aria-expanded="true" aria-controls="info" data-toggle="tab" role="tab" id="info-tab" href="#info">Info</a></li>
+      <li role="presentation" class=""><a aria-controls="edu" data-toggle="tab" id="edu-tab" role="tab" href="#edu" aria-expanded="false">Edu</a></li>
+	   <li role="presentation" class=""><a aria-controls="family" data-toggle="tab" id="family-tab" role="tab" href="#family" aria-expanded="false">Family</a></li>
+	    <!--<li role="presentation" class=""><a aria-controls="guestbook" data-toggle="tab" id="guestbook-tab" role="tab" href="#guestbook" aria-expanded="false">Guestbook</a></li>
+		 <li role="presentation" class=""><a aria-controls="tributes" data-toggle="tab" id="tributes-tab" role="tab" href="#tributes" aria-expanded="false">Tributes</a></li>
+		  <li role="presentation" class=""><a aria-controls="donate" data-toggle="tab" id="donate-tab" role="tab" href="#donate" aria-expanded="false">Donate</a></li>
+		  <li role="presentation" class=""><a aria-controls="achievement" data-toggle="tab" id="achievement-tab" role="tab" href="#achievement" aria-expanded="false">Employment History</a></li>
+		  <li role="presentation" class=""><a aria-controls="home" data-toggle="tab" id="home-tab" role="tab" href="#home" aria-expanded="false">Achivement & Awards</a></li>
+		  <li role="presentation" class=""><a aria-controls="profile" data-toggle="tab" id="profile-tab" role="tab" href="#profile" aria-expanded="false">Honors</a></li>
+		  <li role="presentation" class=""><a aria-controls="footprints" data-toggle="tab" id="footprints-tab" role="tab" href="#footprints" aria-expanded="false">FootPrints</a></li>
+		--><!--   <li role="presentation" class=""><a aria-controls="more" data-toggle="tab" id="more-tab" role="tab" href="#more" aria-expanded="false">More...</a></li> -->
+    </ul>
+    <div class="tab-content" id="myTabContent">
+      <div aria-labelledby="info-tab" id="info" class="tab-pane fade active in" role="tabpanel">
+       
+	   <div class="new_submit">User Information:-</div>
+
+<div class="set-text">
+<div class="top-margin floatl">
+<p class="floatl set_width"><b>Name<span class="floatr">:-</span></b></p>
+<p class="floatl"><?php echo $obituary[0]['first_name'].' '.$obituary[0]['middle_name'].' '.$obituary[0]['last_name']; ?></p>
+</div>
+
+<div class="clearfix"></div>
+<div class="set-all">
+<p class="floatl set_width"><b>Gender<span class="floatr">:-</span></b></p>
+<p class="floatl"><?php echo $obituary[0]['gender'];?></p>
+</div>
+
+<div class="clearfix"></div>
+<div class="set-all">
+<p class="floatl set_width"><b>Place of Death<span class="floatr">:-</span></b></p>
+<p class="floatl"><?php echo $obituary[0]['death_place'];?></p>
+</div>
+<div class="clearfix"></div>
+<div class="set-all">
+<p class="floatl set_width"><b>Cause of Death<span class="floatr">:-</span></b></p>
+<p class="floatl"><?php echo $obituary[0]['death_cause'];?></p>
+</div>
+
+<div class="clearfix"></div>
+<div class="set-all">
+<p class="floatl set_width"><b>Date of Birth<span class="floatr">:-</span></b></p>
+<p class="floatl"><?php echo $obituary[0]['dob'];?></p>
+</div>
+<div class="clearfix"></div>
+<div class="set-all">
+<p class="floatl set_width"><b>Date of Death<span class="floatr">:-</span></b></p>
+<p class="floatl"><?php echo $obituary[0]['dod'];?></p>
+</div>
+<div class="clearfix"></div>
+<div class="set-all">
+<p class="floatl set_width"><b>Age (Approximate)<span class="floatr">:-</span></b></p>
+<p class="floatl"><?php echo (int)$obituary[0]['age'];?> Years</p>
+</div>
+<div class="clearfix"></div>
+
+</div>
+
+	   
+      </div>
+      <div aria-labelledby="edu-tab" id="edu" class="tab-pane fade" role="tabpanel">
+	  
+	  
+	  <div class="new_submit">Education Details:-</div>
+
+<div class="set-text">
+<div class="top-margin floatl">
+<p class="floatl set_width"><b>School Name<span class="floatr">:-</span></b></p>
+<p class="floatl"><?php echo $obituary[0]['school']; ?></p>
+</div>
+<div class="clearfix"></div>
+<div class="set-all">
+<p class="floatl set_width"><b>UG<span class="floatr">:-</span></b></p>
+<p class="floatl"><?php echo $obituary[0]['ug']; ?></p>
+</div>
+<div class="clearfix"></div>
+<div class="set-all">
+<p class="floatl set_width"><b>UG Specialization<span class="floatr">:-</span></b></p>
+<p class="floatl"><?php echo $obituary[0]['ug_specialization']; ?></p>
+</div>
+
+<div class="clearfix"></div>
+</div>
+	  
+	  
+       
+      </div>
+	  
+	  
+	  
+	  <div aria-labelledby="family-tab" id="family" class="tab-pane fade" role="tabpanel">
+	  
+
+	  
+	  <div class="new_submit">Family:-</div>
+     
+        <div class="set-text">
+        <div class="top-margin floatl">
+        <p class="floatl set_width"><b>Family<span class="floatr">:-</span></b></p>
+        <p class="floatl"><?php echo $obituary[0]['family']; ?></p>
+        </div>
+        
+        <div class="clearfix"></div>
+        </div>
+
+	  
+      </div>
+   
+     <div class="clearfix"></div>
+
+	  <div aria-labelledby="profile-tab" id="profile" class="tab-pane fade" role="tabpanel">
+	  <div class="border-set">
+       <div class="col-md-12">
+       <div class="set-form">
+      <form>
+	  <div class="form-group">
+    <label class="fon_large" for="exampleInputPassword1">Qualities: Best Singer, Most helpful</label>
+    <textarea placeholder="Message here..." rows="6" class="my-controls new-control"><?=$qualities;?></textarea>
+  </div>
+  <div class="form-group">
+    <label class="fon_large" for="exampleInputPassword1">Relationship: My Favourite Uncle</label>
+    <textarea placeholder="Message here..." rows="6" class="my-controls new-control"><?=$relationship?></textarea>
+  </div>
+  <div class="form-group">
+    <label class="fon_large" for="exampleInputPassword1">Influence: Fan of your Music</label>
+    <textarea placeholder="Message here..." rows="6" class="my-controls new-control"><?=$influence;?></textarea>
+  </div>
+  <a class="custom-span" style="float:right;margin-bottom:10px;"href="#"></a>
+  </form>
+
+	  
+      </div>
+       </div>
+       <div class="clearfix"></div>
+       </div>
+	   
+	    <div><!--<a class="toolButton" href="#">Tools</a>--><a class="saveButton">Save to my account</a><a class="sendButton flot_rght">Send</a></div>
+       
+      </div>
+	  
+	  
+	
+	  
+	  
+	  <div aria-labelledby="footprints-tab" id="footprints" class="tab-pane fade" role="tabpanel">
+	  
+	   <div class="border-set">
+       <div class="col-md-12">
+       <div class="set-form">
+      
+	  <form>
+	  <div class="form-group">
+    <label class="fon_large" for="exampleInputPassword1">Links</label>
+    <textarea placeholder="Message here..." rows="6" class="my-controls new-control"><?=$link;?></textarea>
+  </div>
+  <div class="form-group">
+    <label class="fon_large" for="exampleInputPassword1">References</label>
+    <textarea placeholder="Message here..." rows="6" class="my-controls new-control"><?=$refrance;?></textarea>
+  </div>
+  <div class="form-group">
+    <label class="fon_large" for="exampleInputPassword1">Social Sites</label>
+    <textarea placeholder="Message here..." rows="6" class="my-controls new-control"><?=$social;?></textarea>
+  </div>
+  <a class="custom-span" style="float:right;margin-bottom:10px;"href="#"></a>
+  </form>
+
+	  
+      </div>
+       </div>
+       <div class="clearfix"></div>
+       </div>
+	   
+	    <div><!--<a class="toolButton" href="#">Tools</a>--><a class="saveButton">Save to my account</a><a class="sendButton flot_rght">Send</a></div>
+	  
+	  
+       
+      </div>
+
+	
+
+	<div aria-labelledby="more-tab" id="more" class="tab-pane fade" role="tabpanel">
+
+<div class="border-set">
+       <div class="col-md-12">
+       <div class="set-form">
+      
+	  <form>
+	  <div class="row">
+	  <div class="col-md-6">
+  <div class="form-group">
+    <label for="exampleInputEmail1">Email address</label>
+    <input type="email" class="my-control" id="exampleInputEmail1" placeholder="Enter email">
+  </div>
+  </div>
+  <div class="col-md-6">
+  <div class="form-group">
+    <label for="exampleInputPassword1">Password</label>
+    <input type="password" class="my-control" id="exampleInputPassword1" placeholder="Password">
+  </div>
+  </div>
+  </div>
+  <div class="form-group">
+    <label for="exampleInputPassword1">Message</label>
+    <textarea placeholder="Message here..." rows="5" class="my-controls"></textarea>
+  </div>
+   <div class="form-group">
+    <label for="exampleInputPassword1">Select offerings:</label>
+    <select class="my-control1 demoak">
+  <option>First</option>
+  <option>Second</option>
+  <option>Third</option>
+  <option>Fourth</option>
+  <option>Fifth</option>
+  <option>Sixth</option>
+  <option>Seventh</option>
+  <option>Eighth</option>
+</select>
+  </div>
+  </form>
+
+	  
+      </div>
+       </div>
+       <div class="clearfix"></div>
+       </div>
+	   
+	   
+	   <div class="border-sets">
+       <div class="col-md-12">
+       <div class="set-form">
+      
+	  <form>
+	  <div class="row">
+	  <div class="col-md-6">
+  <div class="form-group">
+    <label for="exampleInputEmail1">Email address</label>
+    <input type="email" class="my-control" id="exampleInputEmail1" placeholder="Enter email">
+  </div>
+  </div>
+  <div class="col-md-6">
+  <div class="form-group">
+    <label for="exampleInputPassword1">Password</label>
+    <input type="password" class="my-control" id="exampleInputPassword1" placeholder="Password">
+  </div>
+  </div>
+  </div>
+  <div class="form-group">
+    <label for="exampleInputPassword1">Message</label>
+    <textarea placeholder="Message here..." rows="5" class="my-controls"></textarea>
+  </div>
+   <div class="form-group">
+    <label for="exampleInputPassword1">Select offerings:</label>
+    <select class="my-control1 demoak">
+  <option>First</option>
+  <option>Second</option>
+  <option>Third</option>
+  <option>Fourth</option>
+  <option>Fifth</option>
+  <option>Sixth</option>
+  <option>Seventh</option>
+  <option>Eighth</option>
+</select>
+  </div>
+  </form>
+
+	  
+      </div>
+       </div>
+       <div class="clearfix"></div>
+       </div>
+	  
+	   
+	   <div><a class="toolButton" href="#">Tools</a><a class="saveButton">Save to my account</a><a class="sendButton">Send</a></div>
+       
+      </div>
+	  
+	  
+	  <div aria-labelledby="profile-tab" id="profile" class="tab-pane fade" role="tabpanel">
+
+<div class="border-set">
+       <div class="col-md-12">
+       <div class="set-form">
+      
+	  <h4 class="new-text">In memory of the person, please make an impact through donations to</h4>
+	  <h3 class="new-fonts">Antimsanskar Default Suggestion</h3>
+	
+	<div class="row">
+	<div class="col-md-4">
+	<a class="view" href="#">Cleaning holy rivers</a>
+	</div>
+	<div class="col-md-4">
+	<a class="view" href="#">Cause of death related - like Cancer Heart Disease</a>
+	</div>
+	<div class="col-md-4">
+	<a class="view" href="#">Religious Beliefs</a>
+	</div>
+	</div>
+	
+	<div class="row">
+	<div class="col-md-4">
+	<a class="view" href="#">Soup Chicken, Food &amp; Shelter</a>
+	</div>
+	<div class="col-md-4">
+	<a class="view" href="#">Scholarships and Education</a>
+	</div>
+	<div class="col-md-4">
+	<a class="view" href="#">Research and Development</a>
+	</div>
+	</div>
+	
+	<div class="row">
+	<div class="col-md-4">
+	<a class="view" href="#">Soup Chicken, Food &amp; Shelter</a>
+	</div>
+	<div class="col-md-4">
+	<a class="view" href="#">Scholarships and Education</a>
+	</div>
+	<div class="col-md-4">
+	<a class="view" href="#">Research and Development</a>
+	</div>
+	</div> 
+	
+	<a href="#" class="fastButton">Mydonations: Click here to choose from a complete list of impact categories</a>
+	  
+      </div>
+       </div>
+       <div class="clearfix"></div>
+       </div>
+	   
+	  
+	   
+	   <div><a class="toolButton" href="#">Tools</a><a class="saveButton">Save to my account</a><a class="sendButton">Send</a></div>
+       
+      </div>
+      
+    </div>
+</div>
+<div class="clearfix"></div>
+</div>
+
+
+</div>
+</div>
+<script type="text/javascript">
+document.getElementById("uploadBtn").onchange = function () {
+    document.getElementById("uploadFile").value = this.value;
+};
+</script>
+</body>
+</html>
+

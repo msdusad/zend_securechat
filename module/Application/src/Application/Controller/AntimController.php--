@@ -1,0 +1,265 @@
+<?php
+/**
+ * Zend Framework (http://framework.zend.com/)
+ *
+ * @link      http://github.com/zendframework/ZendSkeletonApplication for the canonical source repository
+ * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd New BSD License
+ */
+
+namespace Application\Controller;
+
+use Zend\Mvc\Controller\AbstractActionController;
+use Zend\View\Model\ViewModel;
+use Zend\Crypt\BlockCipher;
+use Zend\Math\Rand;
+
+class IndexController extends AbstractActionController
+{
+    protected $deathUserTable;
+    protected $deathUserMetaTable;
+    
+    
+     public function indexAction()
+    {
+        if ($this->zfcUserAuthentication()->hasIdentity()) {
+        $link = $this->url()->fromRoute('application/default',array('controller' => 'index', 'action' => 'add-death-user'));
+        return $this->redirect()->toUrl($link);
+        }else{            
+          return $this->redirect()->toUrl('user/login');  
+        }
+    }
+    public function addDeathUserAction()
+    {          
+        if ($this->zfcUserAuthentication()->hasIdentity()) {
+             $current_user_id=$this->zfcUserAuthentication()->getIdentity()->getId();            
+        }
+        else 
+           return $this->redirect()->toUrl('/user/login'); 
+          
+        $token = $this->params()->fromQuery('step');
+        if(!empty($token)){
+            $userInfo = $this->getDeathUserTable()->getUser($token);
+            if(empty($userInfo)){
+                $this->flashMessenger()->addErrorMessage('Internal Server error raised please contact to site administration');
+                return $this->redirect()->toRoute('home');   
+            }
+        }
+        
+        $request =$this->getRequest();
+        if($request->isPost())
+        {
+            
+           if(empty($token)){
+                $user = $request->getPost('user');
+                $token = $this->createToken();
+                $user['steptoken'] =$token;
+                $user['user_id'] =$current_user_id;
+                $user_id = $this->getDeathUserTable()->saveDeathUser($user);
+                
+                $this->flashMessenger()->addSuccessMessage('Information Added Succssfully');
+           }else{
+            
+                $user = $request->getPost('user');
+                $user_id = $this->getDeathUserTable()->updateDeathUser($user,$user_id);
+                $this->flashMessenger()->addSuccessMessage('Information Updated Succssfully');
+           }
+    
+           $link = $this->url()->fromRoute('application/default',array('controller' => 'index', 'action' => 'add-death-user'), array('force_canonical' => true)).'?step='.$token.'&pos=2';
+           return $this->redirect()->toUrl($link);
+        }
+       
+        $DeathUsers = $this->getDeathUserTable()->getDeathUsers($current_user_id);  
+        return new ViewModel(array('deathUsers'=>$DeathUsers));
+    }
+   
+   public function deleteAction()
+   { 
+       if ($this->zfcUserAuthentication()->hasIdentity()) {
+             $current_user_id=$this->zfcUserAuthentication()->getIdentity()->getId();            
+        }
+        else 
+           return $this->redirect()->toUrl('/user/login'); 
+           
+      $deathUser_id = $this->params()->fromQuery('id');
+      $this->getDeathUserTable()->deleteDeathUser($deathUser_id,$current_user_id);
+      $this->flashMessenger()->addSuccessMessage('USer Details Deleted successfully!!! ');
+      $link = $this->url()->fromRoute('application/default',array('controller' => 'index', 'action' => 'add-death-user'));
+           return $this->redirect()->toUrl($link);
+   }
+      
+      
+    public function eduAction()
+    {
+        $token = $this->params()->fromQuery('step');
+        if(empty($token)){
+            $this->flashMessenger()->addErrorMessage('Please Fill Info Tab Data');
+            return $this->redirect()->toRoute('home'); 
+        }
+        
+        $userInfo = $this->getDeathUserTable()->getUser($token);
+		
+        if(empty($userInfo)){
+            $this->flashMessenger()->addErrorMessage('Internal Server error raised please contact to site administration');
+            return $this->redirect()->toRoute('home');   
+        }
+        
+        $request =$this->getRequest();
+        if($request->isPost())
+        {
+           $user = $request->getPost('user');
+           $user['deathuser_id']=$user_id;
+           $this->getDeathUserMetaTable()->saveMeta($user,$userInfo['deathuser_id']);
+           $this->flashMessenger()->addSuccessMessage('Education saved Succssfully');
+           $link = $this->url()->fromRoute('application/default',array('controller' => 'index', 'action' => 'add-death-user'), array('force_canonical' => true)).'?step='.$token.'&pos=3';
+		   return $this->redirect()->toUrl($link);
+		   
+		  // $link="http://trssoftwaresolutions.com/trssoftwaresolutions/zend/public?step=".$token;
+        //  header("Location : ",$link); 
+        }
+    }
+    public function familyAction()
+    {        
+        $token = $this->params()->fromQuery('step');
+        if(empty($token)){
+            $this->flashMessenger()->addErrorMessage('Please Fill Info Tab Information');
+            return $this->redirect()->toRoute('home'); 
+        }
+        $userInfo = $this->getDeathUserTable()->getUser($token);
+        if(empty($userInfo)){
+            $this->flashMessenger()->addErrorMessage('Internal Server Error !');
+            return $this->redirect()->toRoute('home');   
+        }
+        $request =$this->getRequest();
+        if($request->isPost())
+        {       
+           $userFamilyDetails = $request->getPost(); //echo "<pre>";print_r($userFamilyDetails);exit;
+           $this->getDeathUserMetaTable()->insertFamilyDetails($userInfo['deathuser_id'],$userFamilyDetails);
+           $this->flashMessenger()->addSuccessMessage('Family information saved Succssfully');
+           $link = $this->url()->fromRoute('application/default',array('controller' => 'index', 'action' => 'add-death-user'), array('force_canonical' => true)).'?step='.$token.'&pos=4';
+           return $this->redirect()->toUrl($link);
+        } 
+    }
+	
+	public function tributesAction()
+    {        
+        $token = $this->params()->fromQuery('step'); 
+        if(empty($token)){
+            $this->flashMessenger()->addErrorMessage('Please Fill Info Tab Information');
+            return $this->redirect()->toRoute('home'); 
+        }
+        $userInfo = $this->getDeathUserTable()->getUser($token);
+        if(empty($userInfo)){
+            $this->flashMessenger()->addErrorMessage('Internal Server Error !');
+            return $this->redirect()->toRoute('home');   
+        }
+        $request =$this->getRequest();
+        if($request->isPost())
+        {
+           $userTributesDetails = $request->getPost();
+            //echo "<pre>";print_r($userTributesDetails);exit;
+           $this->getDeathUserMetaTable()->insertTributesDetails($userInfo['deathuser_id'],$userTributesDetails);
+           $this->flashMessenger()->addSuccessMessage('Tributes information saved Succssfully');
+           $link = $this->url()->fromRoute('application/default',array('controller' => 'index', 'action' => 'add-death-user'), array('force_canonical' => true)).'?step='.$token.'&pos=6';
+           return $this->redirect()->toUrl($link);
+        } 
+    }
+    
+    public function guestbookAction()
+    {         
+        $token = $this->params()->fromQuery('step'); 
+        if(empty($token)){
+            $this->flashMessenger()->addErrorMessage('Please Fill Info Tab Information');
+            return $this->redirect()->toRoute('home'); 
+        }
+        $userInfo = $this->getDeathUserTable()->getUser($token);
+        if(empty($userInfo)){
+            $this->flashMessenger()->addErrorMessage('Internal Server Error !');
+            return $this->redirect()->toRoute('home');   
+        }
+        $request =$this->getRequest();
+        if($request->isPost())
+        {
+           $user = $request->getPost('user');
+           $this->getDeathUserMetaTable()->saveMeta($user,$userInfo['deathuser_id']);
+           $this->flashMessenger()->addSuccessMessage('Guestbook information saved Succssfully');
+           $link = $this->url()->fromRoute('application/default',array('controller' => 'index', 'action' => 'add-death-user'), array('force_canonical' => true)).'?step='.$token.'&pos=5';
+           return $this->redirect()->toUrl($link);
+        } 
+    }
+    
+    
+    public function viewAccountAction()
+    {
+       $death_user_id = $this->params()->fromQuery('id');
+       $DeathUser = $this->getDeathUserTable()->getDeathUserDetails($death_user_id);
+       $DeathUsermeta = $this->getDeathUserMetaTable()->getDeathUserMEtaDetails($death_user_id);
+       $DeathUsertributes = $this->getDeathUserTable()->gettributes($death_user_id);
+       $getfamily = $this->getDeathUserTable()->getfamily($death_user_id);
+       return new ViewModel(array('deathUser'=>$DeathUser,'deathUsermeta'=>$DeathUsermeta,'deathUsertributes'=>$DeathUsertributes,'getfamily'=>$getfamily));
+    }
+    
+    public function encryptToken($user_id)
+    {
+        $filter = new \Zend\Filter\Encrypt(array('adapter' => 'BlockCipher')); 
+        $filter->setKey('AntimSanskar');
+        $encrypted = urlencode($filter->filter($user_id));
+        return  $encrypted; 
+    }
+    public function decryptToken($query)
+    {
+        $filter = new \Zend\Filter\Decrypt();
+        $filter->setKey('AntimSanskar');
+        $user_id = (int)$filter->filter(urldecode($query)); 
+        return $user_id;
+    }
+    
+    /**
+     * Get Random unique Token default length=16
+     * 
+     * @author developed by Trs Software Solutions
+     * @return string
+     **/
+    private function createToken($length = 16)
+    {
+        $rand = Rand::getString($length,'abcdefghijklmnopqrstuvwxyz123456789', true);
+        return $rand;
+    }
+
+	public function uploadAction()
+	{
+		
+	}
+
+	
+    /**
+     * Get Death user Table Object by a service manager to perform CURD operations
+     * 
+     * @author developed by Trs Software Solutions
+     * @return entity object
+     **/
+    private function getDeathUserTable()
+    {
+        if (!$this->deathUserTable) {
+            $sm = $this->getServiceLocator();
+            $this->deathUserTable = $sm->get('Application\Model\DeathUserTable');
+        }
+
+        return $this->deathUserTable;
+    }
+    /**
+     * Get Death user Meta Table Object by a service manager to perform CURD operations
+     * 
+     * @author developed by Trs Software Solutions
+     * @return entity object
+     **/
+    private function getDeathUserMetaTable()
+    {
+        if (!$this->deathUserMetaTable) {
+            $sm = $this->getServiceLocator();
+            $this->deathUserMetaTable = $sm->get('Application\Model\DeathUserMetaTable');
+        }
+
+        return $this->deathUserMetaTable;
+    }
+}

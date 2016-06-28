@@ -1,0 +1,68 @@
+<?php
+$this->headScript()->prependFile($this->basePath() . '/assets/js/main.js')
+        ->prependFile($this->basePath() . '/assets/lib/touch-punch/jquery.ui.touch-punch.min.js')
+        ->prependFile($this->basePath() . '/assets/lib/tablesorter/js/jquery.tablesorter.min.js')
+        ->prependFile($this->basePath() . '/assets/lib/datatables/DT_bootstrap.js')
+        ->prependFile($this->basePath() . '/assets/lib/datatables/jquery.dataTables.js');
+?>
+<div id="top"><?= $this->partial('layout/admin_top_menu', array('tittle' => 'Categories')); ?></div>
+<div id="left"> <?= $this->partial('layout/left-menu', array('category' => 'active')); ?></div> 
+<div id="content"> 
+    <div class="outer">
+        <div class="inner">
+            <!--/span-->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="box">
+                        <header>
+                            <div class="icons"><i class="icon-move"></i></div>
+                            <h5>Category Table</h5>                           
+                        </header>
+                        <div id="collapse4" class="body">
+                            <form name="dataform" method="POST" action="">
+                                <div class="action">
+                                    <select name="action" class="form-control">
+                                        <option value="">Select Action</option>
+                                        <option value="multidelete">Delete</option>                                        
+                                    </select>
+                                    <input type="submit" value="Submit" class="btn btn-default btn-sm"/>
+                                </div>
+                                <table id="dataTable" class="table table-bordered table-condensed table-hover table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th><input type="checkbox" name="sellectall" value=""></th>
+                                            <th>Title</th> 
+                                            <th>Type</th> 
+                                            <th> <a href="<?php echo $this->url('admin/category', array('action' => 'add')); ?>">Add Category</a></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php foreach ($this->paginator as $category) : ?>
+                                            <tr>
+                                                <td><input type="checkbox" class="case" name="ids[]" value="<?php echo $category->id ?>"></td>
+                                                <td><?php echo $this->escapeHtml($category->title); ?></td>
+                                                 <td><?php echo $this->escapeHtml(ucfirst($category->type)); ?></td>
+                                                <td>
+                                                    <a href="<?php echo $this->url('admin/category', array('action' => 'edit', 'id' => $category->id));
+                                            ?>"><i class="fa fa-pencil fa-fw"></i></a>
+                                                    <a href="<?php echo $this->url('admin/category', array('action' => 'delete', 'id' => $category->id));
+                                            ?>"><i class="fa fa-trash-o fa-fw"></i></a>
+                                                </td>
+                                            </tr>
+                                        <?php endforeach; ?>
+                                    </tbody>
+                                </table>
+                            </form>
+                        </div></div>
+                </div>
+                <!--/row-->
+            </div>
+            <!--/span-->
+        </div>
+        <!--/row-->
+    </div>
+    <?php $this->inlineScript()->captureStart() ?>
+    $(function() { metisTable(); metisSortable();});
+    <?php $this->inlineScript()->captureEnd() ?>
+
+</div> 

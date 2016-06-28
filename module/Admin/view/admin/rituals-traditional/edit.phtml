@@ -1,0 +1,27 @@
+<?php
+$this->headScript()->prependFile($this->basePath() . '/assets/lib/NicEditor/nicEdit.js');
+ ?>
+<div id="top"><?= $this->partial('layout/admin_top_menu', array('tittle' => 'Edit Page')); ?></div>
+<div id="left"> <?= $this->partial('layout/left-menu', array('traditionals' => 'active')); ?></div> 
+<div id="content"> 
+    <div class="outer">
+        <div class="inner">
+            <?php
+            
+            $form = $this->form;
+            $form->setAttribute('action', $this->url('admin/traditionals', array('action' => 'edit', 'id' => $this->id)));
+            $form->prepare();
+
+            echo $this->form()->openTag($form);
+            echo $this->formHidden($form->get('id'));
+            echo $this->formRow($form->get('name'));       
+            echo $this->formSubmit($form->get('submit'));
+            echo $this->form()->closeTag();
+            
+            ?>
+        </div>
+    </div>
+</div>
+<?php $this->inlineScript()->captureStart() ?>
+
+<?php $this->inlineScript()->captureEnd() ?>

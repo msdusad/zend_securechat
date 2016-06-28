@@ -1,0 +1,282 @@
+<script>
+
+  function paginationbutton(pagenumber){
+
+    var per_page = 15;
+   $(".loaders").css('display','block');
+   $("#user_list_table").addClass('opacity_set');
+    $.ajax({
+
+      type: "POST",
+
+      url: "<?php echo $this->url('administrator',array('controller'=>'administrator','action'=>'user-paginator')) ?>",
+
+      data: {page:pagenumber,per_page:per_page}
+
+    }).done(function( response ) {
+      $(".loaders").css('display','none');
+      $("#user_list_table").removeClass('opacity_set');
+      $('#user_list_table tbody').html(response);
+
+    }
+
+                );
+
+    $.ajax({
+
+      type: "POST",
+
+ 	  url: "<?php echo $this->url('administrator',array('controller'=>'administrator','action'=>'user-paginator-layout')) ?>",
+
+      data: {page:pagenumber,per_page:per_page}
+
+    }).done(function( response ) {
+
+      $('#pagination_section').html(response);
+
+    }
+
+    );
+
+  }
+</script>
+<script>
+$(document).ready( function() {
+	$('a.state').click( function() {
+        url=$(this).attr('href');
+		rel=$(this).attr('rel');
+        setrel =(rel=='0' ? '1': '0');
+        state = (rel=='0' ? 'state btn btn-xs btn-success':'state btn btn-xs btn-danger');
+        title = (rel=='0' ? 'Active':'Inactive');
+        $(this).attr('class',state);
+        $(this).attr('rel',setrel);
+        $(this).text(title);
+		$.post(url,{state:rel});
+        return false;
+	});
+});
+</script>
+<!-- Main content -->
+<section class="content">
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="box">
+				<div class="box-header">
+					<h3 class="box-title"><?php echo $this->translate('Manage User Panel');?></h3>                                    
+				</div><!-- /.box-header -->
+                          
+                            
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title"><?php echo $this->translate('All Users List') ?></h3> 
+                    </div><!-- /.box-header -->
+					<img class="loaders" style='display:none'  src="<?php echo $this->basePath('img/spinner.gif'); ?>" />
+                    <div class="box-body table-responsive">
+                        <?php if(count($users)>0):?>
+							<table id="user_list_table" class="table table-bordered table-striped">
+                                <thead>
+									<tr>
+										<th><?php echo $this->translate('Sno');?></th>
+										<th><?php echo $this->translate('Name');?></th>
+										<th><?php echo $this->translate('Email');?></th>
+										<th><?php echo $this->translate('Role');?></th>
+										<th><?php echo $this->translate('Status');?></th>
+										<th><?php echo $this->translate('Action');?></th>
+										
+									</tr>
+                                </thead>
+                                <tbody>
+                                    <?php $sn=1; foreach($users as $userkey=>$uservalue):?>
+                                            
+									<tr>
+										<td><?php echo $sn;?></td>
+										<td><?php echo $uservalue['display_name']?></td>
+										<td><a href="<?php echo $this->url('administrator',array('controller'=>'administrator','action'=>'profile','id'=>$uservalue['user_id'])); ?>"><?php echo $uservalue['email']; ?></a></td>
+										<td><?php echo ucwords($uservalue['role_name']); ?></td>
+										<td>
+											<a href="<?php echo $this->url('administrator',array('controller'=>'administrator','action'=>'userstatus','id'=>$uservalue['user_id'])); ?>" class='state  <?php echo $uservalue['status']=='0' ? ' btn btn-xs btn-danger':' btn btn-xs btn-success';?>' rel='<?php echo $uservalue['status'];?>' >
+												<?php echo $uservalue['status']=='0' ? "Inactive" : "Active ";?>
+											</a>
+										</td>
+									  
+
+										<td>
+										
+										<div class="btn-group">
+										<button class="btn btn-info" type="button">Action</button>
+										<button data-toggle="dropdown" class="btn btn-info dropdown-toggle" type="button">
+										<span class="caret"></span>
+										<span class="sr-only">Toggle Dropdown</span>
+										</button>
+										<ul role="menu" class="dropdown-menu">
+										  <li><a href="javascript:void(0);" onclick="changepassword('<?php echo $uservalue['user_id']  ?>')">Change Password</a></li>
+										  <li><a href="javascript:void(0);" onclick="changerole('<?php echo $uservalue['user_id']  ?>','<?php echo $uservalue['role_id']; ?>')">Change Role</a></li>
+										  <li><a href="javascript:void(0);" onclick="deleteuser('<?php echo $uservalue['user_id'];?>');" >Delete</a></li>
+										
+										</ul>
+										</div>
+										
+										</td>
+									</tr>
+
+                                            
+                                            <?php $sn++;
+                                            endforeach;?>
+                                            
+                                        </tbody>
+                                        
+                                    </table>
+<div id="pagination_section">
+<?php  echo $this->paginationControl($this->users,'Sliding','partial/pagination', array('records_number' => $records_number)); ?>
+</div>
+                                    <?php endif;?>
+                                </div><!-- /.box-body -->
+                            </div><!-- /.box -->
+                        </div>
+                    </div>
+
+                </section><!-- /.content -->
+                
+                
+        <!-- start membership modal -->
+        
+        <div class="modal fade" id="addmembership-modal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title"><?php echo $this->translate('Add Category');?></h4>
+                    </div>
+                    <?php // echo $this->form()->openTag($form);?>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <?php  //echo $this->formRow($form->get('name')); ?>
+                                </div>
+                            </div>
+                          
+                        </div>
+                        <div class="modal-footer clearfix">
+
+                            <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+
+                            <?php  //echo $this->formSubmit($form->get('submit')); ?> 
+                        </div>
+                     <?php //echo $this->form()->closeTag(); ?>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+<!-- add membership end modal -->
+<script>
+function deleteuser(id)
+{
+    $('#deleteuser').attr('href',"<?php echo $this->url('administrator',array('controller'=>'administrator','action'=>'deleteuser')); ?>/"+id);
+    $('#deleteuser-modal').modal('show');
+}
+function changepassword(id)
+{
+  $('#change_password').attr('action',"<?php echo $this->url('administrator',array('controller'=>'administrator','action'=>'change-password')); ?>/"+id);
+  $('#changepassword-modal').modal('show');  
+} 
+ function changerole(id,role_id)
+{
+  $('#changerole').attr('action',"<?php echo $this->url('administrator',array('controller'=>'administrator','action'=>'change-role')); ?>/"+id);
+  $("#selectrole option[value=" + role_id+"]").attr("selected","selected") ;
+  $('#changerole-modal').modal('show');  
+} 
+</script>
+
+
+
+<!-- delete User modal -->
+    <div class="modal fade" id="deleteuser-modal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title"><?php echo $this->translate('Delete User Profile');?></h4>
+                    </div>
+                    
+                        <div class="modal-body">
+                         <?php echo $this->translate("Do you want to delete this User Profile ?"); ?>
+                        </div>
+                        <div class="modal-footer clearfix">
+
+                            <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> <?php echo $this->translate('Close'); ?></button>
+                          <a href="" id="deleteuser" class="btn btn-primary"><?php echo $this->translate('Delete'); ?></a>
+                             
+                        </div>
+                    
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+
+<!-- end delete user modal-->
+
+<!-- change user password modal -->
+    <div class="modal fade" id="changepassword-modal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <form method="post" action="" id="change_password">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title"><?php echo $this->translate('Change Password');?></h4>
+                    </div>
+                    
+                        <div class="modal-body">
+                            <div class="form-group">
+                             <div class="input-group">
+                                <label for="password" class="input-group-addon">New Password</label>
+                                <input type="password" value="" class="form-control" required="required"  name="password" />                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer clearfix">
+
+                            <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> <?php echo $this->translate('Close'); ?></button>
+                            <input type="submit" name="updatepassword" class="btn btn-primary" value="<?php echo $this->translate('Change Password'); ?>">
+                             
+                        </div>
+                        </form>
+                    
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+
+<!-- end chage password user modal-->
+
+<!-- change user role modal -->
+    <div class="modal fade" id="changerole-modal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <form method="post" action="" id="changerole">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title"><?php echo $this->translate('Change Role');?></h4>
+                    </div>
+                   
+                    <div class="modal-body">
+                        <div class="form-group">
+                          <div class="input-group">
+                            <label for="role" class="input-group-addon">Role</label>
+                              <select id="selectrole" class="form-control" name="role_id">
+                               <?php foreach($roles as $role):?>
+                                <option value="<?php echo $role['id'] ?>"> <?php echo ucwords($role['role_id']) ?></option>
+                               <?php endforeach; ?>
+                              </select>
+                                
+                          </div>
+                        </div>
+                    </div>
+                        <div class="modal-footer clearfix">
+
+                          <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> <?php echo $this->translate('Close'); ?></button>
+                          <input type="submit" name="updaterole" class="btn btn-primary" value="<?php echo $this->translate('Change Role'); ?>">
+                             
+                       </div>
+                   </form>
+                    
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+
+<!-- end change role user modal-->

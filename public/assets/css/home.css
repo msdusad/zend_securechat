@@ -1,0 +1,16 @@
+#top{background: none!important;margin-top:20px;padding-top: 0;}
+#top .top_bg{background: none!important;}
+.header-menu{margin: 10px 0 0!important;}
+.header-menu li.odd{margin: 0px 0 18px!important;}
+.header-menu li a, .imandir ul li a{color:#909090!important}
+.welcomemsg p{display: block}
+.imandir{border: 1px solid #dfdfdf;height:60px!important;margin: 10px 0 0 0!important;padding:0}
+.imandir img{margin-top:0!important;height:58px;}
+.imandir-img{background: url('../img/imandir.jpg') no-repeat top left;height: 58px;float: left;width: 60px;}
+.socialmedia{margin-top: 0px!important;width:100%}
+.header-menu li select{color: #909090!important}
+
+.imandir ul{list-style: none;margin:0;padding: 0 0 0 3px;float: left;}
+.imandir ul li{}
+.imandir ul li:first-child{padding-top: 0;margin-bottom: 1px;margin-top:-3px}
+.imandir ul li:last-child{padding: 0;}

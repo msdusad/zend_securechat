@@ -1,0 +1,93 @@
+<?php
+$this->headScript()->prependFile($this->basePath() . '/assets/js/main.js')
+        ->prependFile($this->basePath() . '/assets/lib/touch-punch/jquery.ui.touch-punch.min.js')
+        ->prependFile($this->basePath() . '/assets/lib/tablesorter/js/jquery.tablesorter.min.js')
+        ->prependFile($this->basePath() . '/assets/lib/datatables/DT_bootstrap.js')
+        ->prependFile($this->basePath() . '/assets/lib/datatables/jquery.dataTables.js');
+?>
+<div id="top"><?= $this->partial('layout/admin_top_menu', array('tittle' => 'Users')); ?></div>
+<div id="left"> <?= $this->partial('layout/left-menu', array('users' => 'active')); ?></div> 
+<div id="content"> 
+    <div class="outer">
+        <div class="inner">
+            <!--/span-->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="box">
+                        <header>
+                            <div class="icons"><i class="icon-move"></i></div>
+                            <h5>Users Table</h5>
+                        </header>
+                        <div id="collapse4" class="body">
+                            <?php if (count($this->paginator)): ?>
+                            <form name="dataform" method="POST" action="">
+                                <div class="action">
+                                    <select name="action" class="form-control">
+                                        <option value="">Select Action</option>
+                                        <option value="multidelete">Delete</option>                                        
+                                    </select>
+                                    <input type="submit" value="Submit" class="btn btn-default btn-sm"/>
+                                </div>
+                                <table id="dataTable" class="table table-bordered table-condensed table-hover table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th><input type="checkbox" name="sellectall" value=""></th>
+                                            <th>Email</th>
+                                            <th>Name</th>
+                                            <th>Created On</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php foreach ($this->paginator as $idx => $item): ?>
+                                            <tr>
+                                                <td><input class="case" type="checkbox" name="ids[]" value="<?php echo $item->id ?>"></td>
+                                                <td><?php
+                                            if ($item->email != '') {
+                                                echo $item->email;
+                                            } else {
+                                                echo 'TwitterRegistration';
+                                            }
+                                            ?></td>
+                                                <td><?php echo ucfirst($item->name); ?></td>                                   
+                                                <td><?php echo date('jS F Y', strtotime($item->created)); ?></td>
+                                                <td> 
+                                                    <a href="<?php echo $this->url('admin/users/', array('action' => 'delete', 'id' => $item->id));
+                                            ?>"><i class="fa fa-trash-o fa-fw"></i></a>
+                                                </td>
+
+                                            </tr>
+                                        <?php endforeach ?>
+                                    </tbody>
+                                </table>
+                            </form>
+                            <?php endif; ?>
+                            <?php
+                            // add at the end of the file after the table
+//                        echo $this->paginationControl(
+//                                // the paginator object
+//                                $this->paginator,
+//                                // the scrolling style; see http://zf2.readthedocs.org/en/release-2.1.4/modules/zend.paginator.usage.html#rendering-pages-with-view-scripts
+//                                'sliding',
+//                                // the partial to use to render the control
+//                                array('partial/paginator.phtml', 'users'),
+//                                // the route to link to when a user clicks a control link
+//                                array(
+//                            'route' => 'admin/users'
+//                                )
+//                        );
+                            ?>
+
+                        </div></div>
+                </div>
+                <!--/row-->
+            </div>
+            <!--/span-->
+        </div>
+        <!--/row-->
+    </div>
+    <?php $this->inlineScript()->captureStart() ?>
+    $(function() { metisTable(); metisSortable();});
+    <?php $this->inlineScript()->captureEnd() ?>
+
+</div>       

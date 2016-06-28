@@ -1,0 +1,23 @@
+<style>
+    .form-signin{background: none!important;padding: 0!important;margin: 0!important;}
+    .socialbuttons {width: 300px;margin: 20px 0 0 0;}
+    .fancybox{display:none;}
+</style>
+<div style="width:300px;margin: 0 auto;">
+    <?php
+    if ($this->options->getSocialLoginOnly() == false) {
+        echo $this->zfcUserLogin;
+    }
+    ?>
+    <div class="socialbuttons"><?php
+        echo '<ul>';
+
+        foreach ($this->options->getEnabledProviders() as $provider) {
+
+            echo $this->socialSignInButton($provider, $this->redirect);
+        }
+        echo '</ul>'
+        ?>
+
+    </div>
+</div>

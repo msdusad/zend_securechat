@@ -1,0 +1,29 @@
+
+<?php
+echo $this->partial('layout/top_links');
+?>
+
+<div class="row"> 
+    <div class="layout_nav">
+        <ul>
+            <li><a class="before" href="<?php echo $this->basePath('/'); ?>">Home &rsaquo; </a></li>
+            <li><a class="before" href="<?php echo $this->url('cremation-plans'); ?>">Cremation Planning &rsaquo;</a></li>
+            <li><a class="before" href="<?php echo $this->url('special-needs'); ?>">Special Needs &rsaquo;</a></li>
+            <li>Add Post</li> 
+        </ul>
+    </div>
+    <div class='clear'></div>
+    
+    <?php
+    $form = $this->form;
+    $form->setAttribute('action', $this->url('special-needs', array('action' => 'add')));
+    $form->prepare();
+    echo $this->form()->openTag($form);
+    echo $this->formCollection($form);
+    echo $this->form()->closeTag();
+    ?>
+
+</div>
+<?php $this->inlineScript()->captureStart() ?>
+$(function() {   });
+<?php $this->inlineScript()->captureEnd() ?>

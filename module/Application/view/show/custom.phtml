@@ -1,0 +1,116 @@
+<?php echo $this->doctype();?> 
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <?php echo $this->headTitle('Secure'. $this->translate('Chat'))->setSeparator(' - ')->setAutoEscape(false) ?>
+
+        <?php echo $this->headMeta()
+            ->appendName('viewport', 'width=device-width, initial-scale=1.0')
+            ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
+        ?>
+
+        <!-- Le styles -->
+	
+        <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => '/image/vnd.microsoft.icon', 'href' => $this->basePath() . '/addthis/images/favicon.ico'))
+                      //  ->prependStylesheet($this->basePath() . '/css/style.css')
+                        ->prependStylesheet($this->basePath() . '/addthis/css/jquery.datetimepicker.css')
+                        ->prependStylesheet($this->basePath() . '/addthis/css/font-awesome.css')
+                        ->prependStylesheet($this->basePath() . '/addthis/css/bootstrap-theme.min.css')
+                        ->prependStylesheet($this->basePath() . '/addthis/css/bootstrap.css') 
+                        ->prependStylesheet($this->basePath() . '/addthis/css/slidercss.css') ;?>
+
+        <!-- Scripts -->
+        <?php echo $this->headScript()
+            ->prependFile($this->basePath() . '/addthis/js/jquery.datetimepicker.js')
+            ->prependFile($this->basePath() . '/addthis/js/bootstrap.min.js')
+            ->prependFile($this->basePath() . '/addthis/js/jquery.min.js')
+            ->prependFile($this->basePath() . '/addthis/js/respond.min.js', 'text/javascript', array('conditional' => 'lt IE 9',))
+            ->prependFile($this->basePath() . '/addthis/js/html5shiv.js',   'text/javascript', array('conditional' => 'lt IE 9',))
+            ->prependFile($this->basePath() . '/addthis/js/jquery-1.9.1.min.js', 'text/javascript')
+            ->prependFile($this->basePath() . '/addthis/js/jssor.js','text/javascript')
+            ->prependFile($this->basePath() . '/addthis/js/jssor.slider.js','text/javascript'); ?>
+
+    </head>
+    <body>
+        <div class="wrapper">
+            <div class="container-fluid">
+              <!-- Header -->
+                <div class="header-top">
+                    <div class="col-md-4">
+                           <a href="<?php echo $this->basePath('/user'); ?>" style="text-decoration: none;"> <p class="logo-heading">Secure<i>Chat</i><span class="short-tag">.in</span>
+                                <span class="main-band">Live Life</span>
+                            </p> </a>
+                    </div>
+
+                    <div class="col-md-4">
+					
+                        <p class="set-language floatl">USA <span class="main-block">English</span></p>
+                        <p class="set-language floatl">San Fransisco <span class="main-block"><?php echo date('m/d/Y'); ?></span></p>
+                        <p class="set-language floatl">Friday <span class="main-block">9:30 AM</span></p>
+                       
+                    </div>
+                    <div class="col-md-4">
+                    
+                       
+                        <?php
+                       /* if($this->zfcUserIdentity()):
+                        $role =array(2,3);
+                        if(in_array($this->zfcUserIdentity()->getRoleId(),$role)):
+                        */
+                        ?>
+                        <a style="color:#fff;text-decoration: none;font-family: openFont2;padding-top: 6px;"  href="<?php echo $this->url('administrator') ?>">Administrator</a>
+                      <?php //endif; endif;  ?>
+                        <div class="admin-set floatr">
+                            
+                            <div class="floatl">
+                                 <img width="33px" src="<?php echo $this->basePath(); ?>/addthis/images/adminimage.jpg" />
+                            </div>
+                        <div class="floatl">
+                            <span class="main-bands">
+                            <?php if(!$this->zfcUserIdentity()):?>
+                            <a href="<?php echo $this->url('zfcuser/login');?>">Login</a>
+                            <?php else:?>
+                            <a href="<?php echo $this->url('zfcuser/logout');?>">Logout</a>
+                            <?php endif;?>
+                            
+                            </span>
+                            <span class="main-bands"><a href="page/about-us">About Us</a></span>
+                            <span class="main-bands"><a href="page/special-needs">Special Needs</a></span>
+                        </div>
+                     </div>
+                    </div>
+            <div class="clearfix"></div>
+        </div>
+        <!-- end header -->
+           <?php
+         
+           $messages = $this->flashMessenger()->getSuccessMessages();
+            foreach ($messages as $message):
+                echo '<div style = "display:block;color:green" id = "msg" class = "row-fluid text-center">
+                                <div class = "span12"><div class="alert alert-success">' . $this->translate($message) . '</div></div>
+                                </div>';
+            endforeach;
+			
+            $messages = $this->flashMessenger()->getErrorMessages();
+            foreach ($messages as $message):
+                echo '<div style = "display:block;color:red" id = "msg" class = "row-fluid text-center">
+        		                  <div class = "span12"><div class="alert alert-error">' . $this->translate($message) . '</div></div>
+        		                  </div>';
+            endforeach;
+            
+            
+            
+            
+            //$this->flashMessenger()->clearMessages();
+         
+         ?>
+            <?php echo $this->content; ?>
+
+            <?php echo $this->inlineScript() ?>
+            </div> <!-- container-fluid -->
+        </div> <!-- wrapper --> 
+    </body>
+</html>
+
+

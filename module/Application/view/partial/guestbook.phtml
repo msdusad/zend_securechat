@@ -1,0 +1,78 @@
+<form class="form-inline" method="post" action="<?php echo $link; ?>">
+	<div class="border-set">
+		<div class="col-md-12">
+			<div class="set-form">
+				<div class="row">
+                <div class="col-lg-1 col-md-2 col-sm-2 col-xs-3">
+                <label for="exampleInputEmail1">Email:</label>
+                </div>
+					<div class=" col-lg-9 col-md-8 col-sm-7 col-xs-6">
+						<div class="form-group-guest" style="display: block;">
+							 <input type="text" class="my-control" id="exampleInputEmail1"
+								placeholder="Enter your email" name="user[guest_email1]"
+								value="<?php echo $email;?>" required="required" />
+						</div>
+					</div>
+					<div class="col-md-2 col-sm-3 col-xs-3">
+                    <h4 class="time-series row">Time: <span><?php echo date('H:i:s',time()); ?></span></h4>
+                    
+                    </div>
+                    
+				</div>
+                <div class="row">
+                <div class="col-lg-1 col-md-2 col-sm-2 col-xs-3">
+                <label for="exampleInputPassword1">Message:</label>
+                </div>
+                <div class="col-lg-9 col-md-8 col-sm-7 col-xs-6">
+				<div class="form-group-guest" style="display: block;">
+					<textarea style="overflow:hidden" placeholder="Message here..." rows="22"
+						class="my-controls" name="user[guest_msg1]" required="required"><?php echo $message;?></textarea>
+				</div>
+                </div>
+                <div class="col-md-2 col-sm-3 col-xs-3 row" title="">
+                <div style="display: block; margin:0 6px 10px 6px;" class="greetings greetings-guest">
+                    <img src="<?php echo $this->basepath(). "/addthis/images/candlee.jpg";?>" class="inputs" title='light a candle'>
+                    <img src="<?php echo $this->basepath(). "/addthis/images/diya1.jpg";?>" class="inputs" title='light a diya'>
+						  <img src="<?php echo $this->basepath(). "/addthis/images/namste-offering.jpg";?>" class="inputs" title='namaskar'>
+                    <img src="<?php echo $this->basepath(). "/addthis/images/ome-offering.jpg";?>" class="inputs" title='om'>
+                    <img src="<?php echo $this->basepath(). "/addthis/images/thali.jpg";?>" class="inputs" title='thali'>
+                    <img src="<?php echo $this->basepath(). "/addthis/images/wreath.jpg";?>" class="inputs" title='wreath'>
+                    <img src="<?php echo $this->basepath(). "/addthis/images/dove.png";?>" class="inputs" title='release a dove'>
+                    <img src="<?php echo $this->basepath(). "/addthis/images/dayofdeath.png";?>" class="inputs" title='day of the dead'>
+                    <img src="<?php echo $this->basepath(). "/addthis/images/Growing-Tulsi-2.jpg";?>" class="inputs" title='plant a tree'>
+                    <img src="<?php echo $this->basepath(). "/addthis/images/candles.jpg";?>" class="inputs" title='floating candles'>
+                    <img src="<?php echo $this->basepath(). "/addthis/images/ashoka-chakra.jpg";?>"  class="inputs" title='ashoka chakra'>
+                    <img src="<?php echo $this->basepath(). "/addthis/images/havan.jpg";?>" class="inputs" title='havan kund'>
+                    </div>
+                </div>
+                </div>
+                <div class="clearfix"></div>
+			<p class="set-offering" style="float:left">Offerings</p> <span id="appendimg" style="margin-left:26px;"></span> 
+             <input type="hidden" name="user[offerimg]" id="offerimg" value=""/>
+             <input type="hidden" name="user[offertype]" id="offertype" value=""/>
+            
+			</div>
+		</div>
+		<div class="clearfix"></div>
+	</div>
+	<div>
+		<!--<button class="saveButton" type="submit">Save to my Draft</button>-->
+		<br>
+		 <button class="btn btn-block" type="submit" id="savetomyaccount">Save to MyAccount</button>
+           <button class="btn btn-block" name='sub' type="submit" id="send">Send</button>
+		
+<!--
+		<button class="saveButton" type="submit">Save to my account</button>
+         <span  class="flot_rght float-none"><a class="sendButton">Send</a></span>
+-->
+	</div>
+</form>
+<script>
+$(document).ready( function() {
+$('.inputs').hover( function() {
+        $(this).attr('title').fadeIn(300);
+    }, function() {
+        $(this).attr('title').fadeOut(100);
+    });
+});
+</script>

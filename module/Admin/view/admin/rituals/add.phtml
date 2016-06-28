@@ -1,0 +1,49 @@
+
+<div id="top"><?= $this->partial('layout/admin_top_menu', array('tittle' => 'Add new Traditional')); ?></div>
+<div id="left"> <?= $this->partial('layout/left-menu', array('rituals' => 'active')); ?></div> 
+<div id="content"> 
+    <div class="outer">
+        <div class="inner">
+
+            <?php
+            $form = $this->form;
+            $form->setAttribute('action', $this->url('admin/rituals', array('action' => 'add')));
+            $form->prepare();
+            echo $this->form()->openTag($form);
+            echo $this->formRow($form->get('traditional_id'));
+            echo $this->formCollection($form->get('content'));
+            ?>           
+            <div>
+                <span onclick="add_category()">Add a day</span>
+            </div>
+            <?php
+            echo '<br/>';
+            echo $this->formRow($form->get('cultural'));
+            echo $this->formRow($form->get('preference'));
+            echo $this->formRow($form->get('practical'));
+            echo $this->formRow($form->get('interfaith'));
+            echo $this->formRow($form->get('other'));
+            echo $this->formRow($form->get('id'));
+            echo $this->formRow($form->get('submit'));
+            echo $this->form()->closeTag();
+            ?>
+        </div>
+    </div>
+</div>
+
+
+<span class="template" data-template='<fieldset><legend>Content</legend><label><span>__title__</span><textarea class="form-control" name="content[__index__][content]"></textarea></label></fieldset>'></span>
+<script>
+ var day = 1;
+                        
+                    function add_category() {
+                        var currentCount = $('form > fieldset > fieldset').length;
+                        day = day+1;
+                        var template = $('.template').data('template');
+                        template = template.replace(/__index__/g, currentCount+1);
+                        template = template.replace(/__title__/g, 'Day ' + day);
+                        $('form > fieldset').append(template);
+
+                        return false;
+                    }
+</script>

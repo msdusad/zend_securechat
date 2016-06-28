@@ -1,0 +1,119 @@
+
+<?php
+echo $this->headLink()->prependStylesheet($this->basePath() . '/assets/css/rituals.css')
+        ->prependStylesheet($this->basePath() . '/assets/lib/CLEditor1_4_3/jquery.cleditor.css');
+$this->headScript()->prependFile($this->basePath() . '/assets/lib/CLEditor1_4_3/jquery.cleditor.min.js');
+echo $this->partial('layout/top_links');
+?>
+<div class="row">
+<div class="layout_nav" id="brecurmsdiv" >
+        <ul>
+           <!--  <li><a class="before" href="<?php //echo $this->basePath('/'); ?>">Home &rsaquo; </a></li> -->
+             <li id="menu_bredcurms"><a class="before" href="<?php echo $this->url('cremation-plans'); ?>">Cremation Planning &rsaquo;</a></li>
+            <li>Rituals</li> 
+        </ul>
+    </div>
+    <div class='clear'></div>
+    <div class="topbar">
+        <h3>Rituals</h3>
+        <form action='' method='POST' id='tradtionalform'>
+            <select name="tradtional_id" id="tradtional_id">
+                <?php foreach ($this->traditionalList as $traditionals) { ?>
+                    <option <?php if ($this->selected == $traditionals['value']) {
+                    echo 'selected';
+                } ?> value="<?php echo $traditionals['value']; ?>"><?php echo $traditionals['label']; ?></option>                        
+<?php } ?>
+				
+            </select>          
+        </form>
+        <a style="float: right;" href="<?php echo $this->basePath('/events/add'); ?>" class="btn btn-default">Create Event</a>
+    </div>
+
+    <div class="mainrituals">
+        <h4>Traditional</h4>      
+        <div id="rituallist"> 
+           
+<?php if (empty($this->ritualList)) { ?>
+                <ul>
+                    <li>
+                        No records
+                    </li>
+                </ul>
+
+                    <?php } else { ?>
+                <div id="tabs">
+                    <ul>
+                        <?php 
+
+$total=count($daysList);
+             if($total=='0'){
+  $width='';   
+                        }
+                        else{
+                       
+                         $width=100/$total;
+                        }
+                        foreach ($this->daysList as $key => $day) {  ?>
+
+
+                            <li style="width:<?=$width?>%"><a href="#fragment-<?php echo $key; ?>"><span>Day <?php echo $key + 1; ?></span></a></li>
+                    <?php } ?>
+                    </ul>
+                        <?php foreach ($this->daysList as $key => $day) { ?>
+                        <br>
+                        	
+                        <div id="fragment-<?php echo $key; ?>">
+                        <?php echo $day['content']; ?>
+
+                        </div>
+                <?php } ?>
+
+                </div>
+<?php } ?>
+        </div>
+
+
+        <div id="accordion">
+
+            <h3>Cultural</h3>
+            <div>
+<?php echo $this->ritualList['cultural']; ?>
+            </div>
+            <h3>Preference</h3>
+            <div>
+<?php echo $this->ritualList['preference']; ?>
+            </div>
+
+            <h3>Practical</h3>
+            <div>
+<?php echo $this->ritualList['practical']; ?>
+            </div>
+
+            <h3>Interfaith</h3>
+            <div>
+<?php echo $this->ritualList['interfaith']; ?>
+            </div>
+
+            <h3>Other</h3>
+            <div>
+<?php echo $this->ritualList['other']; ?>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<?php $this->inlineScript()->captureStart() ?>
+
+$(function(){
+$( "#datepicker" ).datepicker();
+$( "#tabs" ).tabs();
+$( "#accordion" ).accordion();
+$('#tradtional_id').change(function() {
+$('#tradtionalform').submit();
+});
+
+} );
+<?php $this->inlineScript()->captureEnd() ?>
+
+

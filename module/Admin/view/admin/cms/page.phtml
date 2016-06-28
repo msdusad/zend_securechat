@@ -1,0 +1,19 @@
+
+<?= $this->partial('layout/top_links'); ?>
+<div class="layout_nav">
+    <ul>
+        <li><a class="before" href="<?php echo $this->basePath('/'); ?>">Home &rsaquo; </a></li>             
+        <li><?php echo $this->page->title; ?></li> 
+    </ul>
+</div>
+<div class='clear'></div>
+<div class="row">
+    <div class="topbar">
+        <h3><?php echo $this->page->title; ?></h3>
+    </div>
+    <div class="cmspage">      
+
+        <?php echo stripslashes($this->page->content); ?>
+    </div>
+
+</div>

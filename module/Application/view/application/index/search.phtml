@@ -1,0 +1,1275 @@
+<?php $this->partial('layout/top_links'); ?>
+<?php echo $this->headLink()->prependStylesheet($this->basePath() . '/addthis/css/search.css'); ?>
+
+<div class="clear"></div>
+<div class="">
+<?php if ($this->message != '') { ?>
+                <div class="flash_message">
+                    <?php echo $this->message[0]; ?>
+                </div>
+ <?php } ?>
+ 
+    <div class="container">
+	  <div class="contact">
+		<form action="<?php echo $this->basePath('/searchfilter');?>" id="searchform" method="post">
+		
+		<div class="con-text">
+			<div class="search-fields">
+        	<div class="col-md-3 col-sm-3 col-xs-3 spacing leftspace">
+					<select name="country" id="country" required="required" class="form-control txt-height" onchange="getStates()">
+                    <option value="">Country</option>
+                    <?php
+                    asort($country);
+							foreach($country as $ck=>$cv){
+								if($cv!="") {
+							?>
+							<option value="<?php echo $ck;?>" <?php if($ck==$postdata['country'] || $ck==2){ echo 'selected';}?>> <?php echo $cv;?> </option>
+							<?php	
+						}						
+							}                    
+                    ?>
+               </select>	
+             </div>
+					
+             <div class="col-md-3 col-sm-3 col-xs-3 spacing">       
+                    <select name="state" id="states" placeholder="California" class="form-control txt-height" onchange="getCities()">
+                    <option value=""> State </option>
+                    <?php
+                    asort($states);
+							foreach($states as $k=>$v){
+								if($v!="") {
+							?>
+							<option value="<?php echo $k;?>" <?php if($k==$postdata['state']){ echo 'selected';}?>> <?php echo $v;?> </option>
+							<?php	
+						}						
+							}                    
+                    ?>
+                    </select>	
+             	</div> 
+						              
+              
+              <div class="col-md-3 col-sm-3 col-xs-3 spacing"> 
+                    <?php $citylist="";
+                     if($postdata['citylist']!=''){ $citylist=json_decode($postdata['citylist']);}
+                     ?>
+                    
+                    <select name="cities" id="cities" placeholder="All Cities" class="form-control txt-height" onchange="getPostalcode()">
+                    <option value="">City</option>
+                    <?php
+							foreach($citylist as $ky=>$va){
+							?>
+							<option value="<?php echo $ky;?>" <?php if($ky==$postdata['cities']){ echo 'selected';}?>> <?php echo $va;?> </option>
+							<?php							
+							}                    
+                    ?>
+                    </select>
+			 			</div>
+			 			
+                    <?php $postallist="";
+                     if($postdata['postallist']!=''){ $postallist=json_decode($postdata['postallist']);}
+                     ?>
+              <div class="col-md-3 col-sm-3 col-xs-3 spacing">
+              <div class="rightspace">          
+                    <select name="postalCode" id="postalCode" class="form-control txt-height">
+                 	<option value="">Zip/Postal Code </option>
+                    <?php
+							foreach($postallist as $pky=>$pva){
+							?>
+							<option value="<?php echo $pky;?>" <?php if($pky==$postdata['postalCode']){ echo 'selected';}?>> <?php echo $pva;?> </option>
+							<?php							
+							}                    
+                    ?>
+                    </select>	
+               </div> 
+             </div>   
+        
+        </div>		
+		
+		<!--	
+		<div class="con-text">
+        	<div class="col-lg-4 col-sm-12 col-xs-12 search-items-space">
+        	<label> Select Country   </label>
+					<select name="country" id="country" placeholder="USA" class="form-control select-country" >
+                    <option value="USA">USA</option>
+               </select>	
+             </div>
+	
+             <div class="col-lg-4 col-sm-12 col-xs-12 search-items-space">       
+                    <select name="state" id="states" placeholder="California" class="form-control select-city" onchange="getCities()">
+                    <option value=""> State </option>
+                     <?php 
+                    //array_map("unserialize", array_unique(array_map("serialize", $countries)));
+							asort($states);
+							//print_r($countries);exit;							
+								foreach($states as $key=>$val){
+									if($val!="") {
+							?>
+									<option value="<?php echo $key;?>"><?php echo $val;?></option>			
+							<?php										
+								}       
+								}             
+                    ?>
+                    </select>	
+                    
+                    
+                    <select name="cities" id="cities" placeholder="All Cities" class="form-control select-city pull-right" onchange="getPostalcode()">
+                    <option value="">City</option>
+                    
+                    </select>
+			 </div>
+                    
+              <div class="col-lg-4 col-sm-12 col-xs-12 search-items-space">      
+                    <select name="postalCode" id="postalCode" class="form-control">
+                 	<option value="">Postal Code </option>
+                    
+                    </select>	
+               </div>     
+                            			
+                    	
+        
+        </div>  -->
+       </div>
+        <div class="clearfix"> </div>
+        
+        
+        <div class="search-page-desing">
+        <div class="featured-block">
+        <div class="featured-obituaries">
+        	<h3> Featured Obituaries    </h3>
+				<div id="fobituaries">          
+          <?php
+          $cn=1;
+            foreach ($obituary as $ob) {
+        				$id=$ob['id'];
+        				$obid=$ob['obituary_id'];
+        				$img="dummy.jpg";
+        					if($ob['imageUrl']!="") {
+        					$img=$ob['imageUrl'];
+        				}
+							?>   
+            <div class="col-md-4 col-sm-4 col-xs-4 " title="<?php echo $ob['first_name']." ".$ob['middle_name']." ".$ob['last_name'];?>">
+            	<div class="abou-img" >
+                <a href="<?php echo $this->basePath('/view-account?id='.$id);?>">
+                <img src="<?php echo $this->basePath('/../module/Obituary/assets/images/'.$obid.'/'.$img);?>" alt=" " height="120px"/></a>
+                </div>
+                <p> <?php
+                if($ob['first_name']!="" || $ob['middle_name']!="" || $ob['last_name']!="") {
+                	$name=ucfirst($ob['first_name'])." ".ucfirst($ob['middle_name'])." ".ucfirst($ob['last_name']);
+                	
+                	if(strlen($name)>20) {
+							 echo substr($name, 0, 20).'...';          	
+                	}else {
+							echo $name;                	
+                	}
+                
+ 					 }else {
+						if($ob['gender']=='male') {
+							echo "Unknown Male"; 
+						}else {
+							echo "Unknown Female";						
+						} 					 
+ 					 }
+ 						?>                 
+                  </p>
+               
+            </div>
+<?php 
+if($cn==3) {
+	$cn=0;
+	?>
+	 <div class="clearfix">  </div>
+	<?php
+}
+?>            
+         
+            <?php 
+            $cn++;
+					 }
+					 ?>
+            </div>
+            <div class="clearfix"> </div>
+            <?php
+					$ocnt=6;          
+             if($ocnt<$obituaryCnt[0]['obCount']) { 
+             ?>
+            <span class="view-all"> <a href="<?php echo $this->basePath('/view-all-obituary');?>" >View All</a> </span>
+				<?php } ?>  
+				
+				 <div class="clearfix"> </div>
+            <!--<div class="page-nation-search">
+            <?php
+					$ocnt=6;          
+             if($ocnt<$obituaryCnt[0]['obCount']) { 
+             ?>
+            <div class="page-no left-pagenation">
+             <ul class="pagination pagination-sm" id="obpagination" style="text-align:center;">
+              <li class="obpag prev" style="display:none"><a href="javascript:void(0)" onclick="prevPagination(this)">Previous</a></li>
+             <?php 
+					
+					for($i=1;$i<=ceil($obituaryCnt[0]['obCount']/6);$i++) {             
+             ?>
+             <?php
+						if($i<=2) {
+				?>
+				<li  class="obpag <?php if($i==1){ echo 'active';} ?>"><a href="javascript:void(0)" onclick="obituaryPagination(this,<?php echo $i;?>)"><?php echo $i;?></a></li>
+				<?php										
+						}else {
+				?>
+				<li  class="obpag <?php if($i==1){ echo 'active';} ?>" style="display:none"><a href="javascript:void(0)" onclick="obituaryPagination(this,<?php echo $i;?>)"><?php echo $i;?></a></li>
+				<?php						
+						}            
+             ?>
+              
+              
+              <?php 
+					}
+              ?>
+				<li class="obpag next"><a href="javascript:void(0)" onclick="nextPagination(this)">Next</a></li>
+            </ul>
+            </div>
+            <?php } ?>
+            </div>-->
+        </div>
+        </div>
+		
+        <div class="adv-search-block">
+        <div class="advance-search">
+        	<h3 style="margin-top:0px"> Search obituaries & memorials</h3>
+            <div class="col-md-12 col-sm-12 col-xs-12 spacing">
+        	<input type="text" name="firstname" value="" id="firstname" placeholder="First Name" class="form-control txt-height"/>
+            </div>
+            
+            <div class="col-md-12 col-sm-12 col-xs-12 spacing">
+        	<input type="text" name="middlename" value="" id="middlename" placeholder="Middle Name" class="form-control txt-height"/>
+            </div>
+            <div class="col-md-12 spacing">
+        	<input type="text" name="lastname" value="" id="lastname" placeholder="Last Name" class="form-control txt-height"/>
+            </div>
+
+            <div class="col-md-12 col-sm-12 col-xs-12 spacing">
+        
+				<select name="gender" id="gender" class="form-control txt-height" style="padding: 0 12px;">
+							
+				<option class="placeholder-cls" value="">--Gender--</option>
+				<option value="male">Male</option>
+				<option value="female">Female</option>
+				<option value="other">Other</option>			          
+            </select>          
+            </div>
+            <div class="col-md-12 col-sm-12 col-xs-12 spacing">
+        	<input type="text" name="nationality" value="" id="nationality" placeholder="Nationality" class="form-control txt-height"/>
+            </div>
+            <div class="col-md-12 spacing">
+        	<input type="text" name="keywords" value="" id="Keywords" placeholder="Keywords" class="form-control txt-height txt-search"/>
+            </div>
+
+            <div class="col-md-12 col-sm-12 col-xs-12 spacing">
+            <select name="pastdays" id="pastdays" class="form-control txt-height" style="padding: 0 12px;">
+				<option value="">Recently Added</option>
+				<option value="5">Past 5 days</option>
+				<option value="15">Past 15 days</option>
+				<option value="30">Past 30 days</option>
+				<option value="90">Past 90 days</option>
+				<option value="365">Up to 365 days</option>
+				<option value=">365">More than 365 days</option>
+				          
+            </select>
+        	   </div>
+            <div class="col-md-12 col-sm-12 col-xs-12 spacing">
+            <select name="causeofdeath" id="causeofdeath" class="form-control txt-height" style="padding: 0 12px;">
+				<option value="">--Cause Of Death--</option>
+				<?php 
+					foreach($deathcause as $dcause) {
+				?>
+				<option value="<?php echo $dcause['id'];?>"><?php echo $dcause['name'] ?></option>
+				<?php
+					}				
+				?> 
+            </select>
+        	   </div>
+
+            <div class="col-md-12 spacing">
+            <select name="specialMention" id="specialMention" class="form-control txt-height" style="padding: 0 12px;">
+				<option value="">--Special Mention--</option>
+				<?php 
+					foreach($spmention as $scat) {
+				?>
+				<option value="<?php echo $scat['id'];?>"><?php echo $scat['sp_name'] ?></option>
+				<?php
+					}				
+				?>            
+            </select>
+        	<!--<input type="text" name="specialMention" value="" id="specialMention" placeholder="Special Mentions category" class="form-control txt-height"/>-->
+            </div>
+            
+             <div class="col-md-12 spacing master-page">
+            	<div class=" search-btn">
+            	<button type="submit" id="searchbtn" class="btn-search-page" >Search</button>  
+            	</div>
+                <!--<div class=" search-reset">
+            	<button type="submit" id="searchbtn" class="btn-search-page" >Reset</button>  
+            	</div>-->
+                <div class="search-reset"> 
+                <input type="reset" id="resetBtn" class="reset pull-right" style="display:none"/>
+               <i class="fa fa-refresh" title="Reset" onclick="resetFn()"></i>
+
+                </div>
+            </div>
+            
+        </div>
+        </div>
+        
+        <div class="memories-block">	
+        <div class="featured-memorits"> 
+        	<h3> Featured Memorials    </h3>
+          <div id="fmemorials">
+             <?php
+               $mn=1;
+         foreach ($memorial as $memo) {
+        					$mid=$memo['id'];
+        					$memoralizeid=$memo['memoralize_id'];
+        					$mimg="dummy.jpg";
+        					if($memo['imageUrl']!="") {
+        					$mimg=$memo['imageUrl'];
+        				}
+							?> 
+            <div class="col-md-4 col-sm-4 col-xs-4 " title="<?php echo $memo['first_name']." ".$memo['middle_name']." ".$memo['last_name'];?>">
+            	<div class="abou-img" >
+                	<a href="<?php echo $this->basePath('/view-account?id='.$mid);?>">
+                	<img src="<?php echo $this->basePath('/../module/Memoralize/assets/images/'.$memoralizeid.'/'.$mimg);?>" alt=" " height="120px"/></a>
+                </div>
+                <p> 
+				<?php
+                if($memo['first_name']!="" || $memo['middle_name']!="" || $memo['last_name']!="") {
+						$mname=ucfirst($memo['first_name'])." ".ucfirst($memo['middle_name'])." ".ucfirst($memo['last_name']);
+                	
+                	if(strlen($mname)>20) {
+							 echo substr($mname, 0, 20).'...';          	
+                	}else {
+							echo $mname;                	
+                	}                 
+               
+ 					 }else {
+						if($memo['gender']=='male') {
+							echo "Unknown Male"; 
+						}else {
+							echo "Unknown Female";						
+						} 					 
+ 					 }
+ 						?>                 
+                </p>
+            </div>
+            <?php
+            if($mn==3) {
+            	$mn=0;
+?>
+<div class="clearfix"> </div>
+<?php            
+            }
+            ?>
+           <?php 
+					$mn++;
+           } ?>
+           </div> 
+             <div class="clearfix"> </div>
+			<?php
+					$mcnt=6; 
+					      
+             if($mcnt<$memorialCnt[0]['mCount']) { 
+             ?>
+             <span class="view-all-secondbutton"><a href="<?php echo $this->basePath('/view-all-memorial');?>" class="se" >View All</a> </span>
+				<?php
+			}
+			?>            
+             <!--<div class="page-nation-search">
+            <?php
+					$mcnt=6; 
+					      
+             if($mcnt<$memorialCnt[0]['mCount']) { 
+             ?>
+            <div class="page-no right-page">
+             <ul class="pagination pagination-sm" id="mmpagination" style="text-align:center;">
+              <li class="memopag mmprev" style="display:none"><a href="javascript:void(0)" onclick="prevMmPagination(this)">Previous</a></li>
+             <?php 
+					
+					for($i=1;$i<=ceil($memorialCnt[0]['mCount']/6);$i++) {             
+             ?>
+             <?php
+						if($i<=2) {
+				?>
+				 <li  class="memopag <?php if($i==1){ echo 'active';} ?>"><a href="javascript:void(0)" onclick="memorialPagination(this,<?php echo $i;?>)"><?php echo $i;?></a></li>
+				<?php										
+						}else {
+				?>
+				 <li  class="memopag <?php if($i==1){ echo 'active';} ?>"><a href="javascript:void(0)" onclick="memorialPagination(this,<?php echo $i;?>)" style="display:none"><?php echo $i;?></a></li>
+				<?php						
+						}            
+             ?>
+             
+              
+              <?php 
+					}
+              ?>
+				<li class="memopag mmnext"><a href="javascript:void(0)"  onclick="nextMmPagination(this)">Next</a></li>
+            </ul>
+            </div>
+            <?php } ?>
+            </div>-->
+        </div>                            
+        </div>
+        
+        </div>
+        </form>
+        <div class="clearfix"></div>
+        
+        
+        
+        <div class="special-memorites">
+        <h3 class="spl-memo" align="center" >Special Mentions</h3>
+        <div class="col-md-12">
+            <div class="panel with-nav-tabs panel-default">
+                <div class="panel-heading searchpage-tab">
+                        <ul class="nav nav-tabs">
+                        <?php 
+                        $spcnt=1;
+                      		foreach($spmention as $sp){
+										?>
+									<li class="<?php if($spcnt==1){echo 'active';}?>"><a href="#tab<?php echo $spcnt;?>default" data-toggle="tab" onclick="sp_category(<?php echo $spcnt;?>,<?php echo $sp['id'];?>)"><?php echo $sp['sp_name'];?></a></li>
+<?php							
+$spcnt++;
+									}                        
+                        ?>
+                            
+                            
+                            <!--<li class="dropdown">
+                                <a href="#" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="#tab4default" data-toggle="tab">Default 4</a></li>
+                                    <li><a href="#tab5default" data-toggle="tab">Default 5</a></li>
+                                </ul>
+                            </li>-->
+                        </ul>
+                        
+                        <div class="clear"> </div>
+                </div>
+                <div class="panel-body">
+                	<div class="tab-content-place">
+                	<div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="tab-content row">
+                    <?php 
+                        $spcnt2=1;
+                      		foreach($spmention as $sp){
+										?>
+                        <div class="tab-pane fade<?php if($spcnt2==1){echo ' in active';}?>" id="tab<?php echo $spcnt2;?>default" >
+              
+		
+                            <div class="Memoria-ls" style="width:100%; display:table;">
+                            <h3 style="float:left; margin:10px 0px;">
+                            <span class="special-obi-memo-tab1 active" id="showob<?php echo $spcnt2;?>" onclick="showObituary(<?php echo $spcnt2;?>,<?php echo $sp['id']; ?>)">Obituaries</span> 
+                       		<span class="special-obi-memo-tab2 " id="showmm<?php echo $spcnt2;?>" onclick="showMemorials(<?php echo $spcnt2;?>,<?php echo $sp['id']; ?>)">Memorials</span></h3>
+                            
+                            <h3 class="special-view-all-memo"><span class="view-all3" id="spmorebtn-<?php echo $spcnt2;?>" onclick="viewAll_ob_sp(<?php if($spcnt2==1){echo $sp['id'];}?>)">View All</span></h3>
+                            </div>
+                            <div class="clear"> </div>
+                            
+                            <div class="row spobituary" id="spobituary" style="margin:-3px;">
+                            <?php
+                            $ncnt=0;
+                              $nmcnt=0;
+								foreach($spObituary as $ob) {
+								
+									if($ob['special_mention_id']==$sp['id']) {
+										$obiid=$ob['id'];
+										$spobituaryid=$ob['obituary_id'];
+										$spobimg="dummy.jpg";
+        								if($ob['imageUrl']!="") {
+        									$spobimg=$ob['imageUrl'];
+        								}
+							?>  
+									<div class="col-lg-2 col-md-2 col-xs-4" id="obitem-<?php echo $ob['special_mention_id'];?>-<?php echo $ncnt;?>">
+										<div class="special-memory-imgs special-memory-imgs-ob" style="border:1px solid #f79647" title="<?php echo $ob['first_name']." ".$ob['middle_name']." ".$ob['last_name'];?>">
+											<div class="special-persons" >
+                                      <a href="<?php echo $this->basePath('/view-account?id='.$obiid);?>">
+                                      
+                                                  <img src="<?php echo $this->basePath('/../module/Obituary/assets/images/'.$spobituaryid.'/'.$spobimg);?>" /></a>
+                                            <p style="text-align:center">
+				<?php
+                if($ob['first_name']!="" || $ob['middle_name']!="" || $ob['last_name']!="") {
+                 $sponame= ucfirst($ob['first_name'])." ".ucfirst($ob['middle_name'])." ".ucfirst($ob['last_name']);
+						if(strlen($sponame)>20) {
+							 echo substr($sponame, 0, 20).'...';          	
+                	}else {
+							echo $sponame;                	
+                	}  
+ 					 }else {
+						if($ob['gender']=='male') {
+							echo "Unknown Male"; 
+						}else {
+							echo "Unknown Female";						
+						} 					 
+ 					 }
+
+                         ?>                  
+                                            
+                                            </p>
+                                  
+                                    </div>
+       						   
+                              </div>
+                                    </div>
+                                   <?php $ncnt++;}
+                                }
+                                 if($ncnt==0) {
+                                   		$ncnt=0;
+                                   		?>
+                                   		<span style="margin-left: 30px;display:table;width:100%">No Records Found</span>
+												                                   
+                                   <?php		
+														
+												}
+                                ?>
+                                </div>
+                                
+<div class="clearfix"> </div>
+                                  <!--<div><h3 style="color:#f79647">Memorials</h3></div>-->
+                                  <div class="row spmemorial" id="spmemorial" style="margin-left: 0;display:none; margin:-3px;">
+                                 <?php
+								foreach($spMemorial as $m) {
+									if($m['special_mention_id']==$sp['id']) {
+										$mmid=$m['id'];
+										$spmemorialid=$m['memoralize_id'];
+										$spmimg="dummy.jpg";
+        								if($m['imageUrl']!="") {
+        									$spmimg=$m['imageUrl'];
+        								}
+							?>  
+							 <div class="col-lg-2 col-md-2 col-xs-4" id="mmitem-<?php echo $m['special_mention_id'];?>-<?php echo $nmcnt;?>">
+										<div class="special-memory-imgs special-memory-imgs-mm" style="border:1px solid #3eac29" title="<?php echo $m['first_name']." ".$m['middle_name']." ".$m['last_name']; ?>">
+											<div class="special-persons"  >
+                                      <a href="<?php echo $this->basePath('/view-account?id='.$mmid);?>">
+                                                  <img src="<?php echo $this->basePath('/../module/Memoralize/assets/images/'.$spmemorialid.'/'.$spmimg);?>" height="120px"/></a>
+                                          <p style="text-align:center">
+<?php
+                if($m['first_name']!="" || $m['middle_name']!="" || $m['last_name']!="") {
+                 $spmname= ucfirst($m['first_name'])." ".ucfirst($m['middle_name'])." ".ucfirst($m['last_name']);
+						if(strlen($spmname)>20) {
+							 echo substr($spmname, 0, 20).'...';          	
+                	}else {
+							echo $spmname;                	
+                	} 
+ 					 }else {
+						if($m['gender']=='male') {
+							echo "Unknown Male"; 
+						}else {
+							echo "Unknown Female";						
+						} 					 
+ 					 }
+ 						?>                                             
+            
+                                          
+                                          </p>
+                                    </div>
+                                    </div>
+                                    </div>
+                                   <?php $nmcnt++;}
+                                }
+                                
+                                if($nmcnt==0) {
+                                   		$nmcnt++;
+                                   		?>
+                                   		<span style="margin-left: 30px;display:table;width:100%">No Records Found</span>
+                                   <?php		
+														
+												
+	                                   
+                                   }
+                                   ?>
+                                </div>
+                                <?php
+                                
+                                    $ncnt=0;
+$nmcnt=0;
+                                 ?> 
+                               
+                                </div>
+                                
+                
+                        
+                     
+                  
+                        
+                        
+<?php							
+$spcnt2++;
+									}                        
+                        ?>    
+                         	                
+                    </div>
+                    </div>
+                    </div>
+                    
+                   
+                </div>
+            </div>
+        </div>
+        </div>
+        
+        
+        
+   </div>
+   </div>     
+        
+</div>
+
+<script type="text/javascript">
+$(document).ready(function(){
+getStates();
+getCities();
+getPostalcode();
+});
+function resetFn() {
+	$("#resetBtn").click();
+}
+$(document).ready(function () {
+	
+	$('#Keywords').autocomplete({
+		      	source: function( request, response ) {
+		      	
+		      		$.ajax({
+		      			url : '<?php echo $this->basePath('/getkeywords');?>',
+		      			dataType: "json",
+		      			type:"post",
+		      			data: {
+						   keywords: $("#Keywords").val()
+						   },
+						 success: function( data ) {
+						 	//alert(data);
+						 	$(".ui-helper-hidden-accessible").hide();
+							 response( $.map( data, function( item ) {
+								return {
+									label: item,
+									value: item
+								}
+							}));
+						},
+error:function(data){
+//alert(data.toSource());
+data=data.responseText;
+var result = data.substring(1, data.length-1);
+data=result.split(",");
+//alert(data[0]);
+//data=JSON.parse("[" + data.responseText + "]");
+$(".ui-helper-hidden-accessible").hide();
+							 response( $.map( data, function( item ) {
+var it=item.split(":");
+var reslt = it[1].substring(1, it[1].length-1);
+//alert(data[0].toSource());
+								return {
+									label: reslt,
+									value: reslt
+								}
+							}));
+}
+		      		});
+		      		
+		      	},
+		      	autoFocus: true,
+		      	minLength: 0      	
+		      });
+//$(".searchbtn").click(function () {
+//	var sm=$("#specialMention").val();
+//	if (sm!="") {
+//		$("#searchform").attr("action","<?php echo $this->basePath('/searchfilter');?>");
+//	}else {
+//		$("#searchform").attr("action","<?php echo $this->basePath('/searchfilter');?>");
+//	}	
+//		
+//});  
+});
+
+var obminimum=0;
+var obmaximum=1;
+var mmminimum=0;
+var mmmaximum=1;
+function nextPagination(d) {
+	var activeNum=0;
+	var pagnum=0;
+
+var obcount=<?php echo ceil($obituaryCnt[0]['obCount']/6);?>;
+
+	var cls=$(d).parent().attr("class").split(" ");
+	$("."+cls[0]).each(function (e) {
+	
+		if($(this).attr("class")==cls[0]+" active"){
+				activeNum=parseInt($(this).children("a").html());	
+				if (obcount>obmaximum) {
+					obminimum = activeNum;
+					obmaximum= activeNum+1;
+				}
+		}
+	});
+	
+		$("."+cls[0]).each(function (e) {
+		pagnum=parseInt($(this).children("a").html());
+			if (pagnum>=obminimum && pagnum<=obmaximum ) {
+			$(this).css("display","");
+		}else {
+			$(this).css("display","none");
+		}
+		$(".prev").show();
+		if (obcount==(activeNum+1)) {
+				$(".next").hide();
+			}else {
+				$(".next").show();
+			}
+		if ($(this).children("a").html()==(activeNum+1)) {
+			$("."+cls[0]).removeClass("active");
+			$(this).addClass("active");
+			
+	var data="count="+parseInt(activeNum*6)+"&limit=6";
+	$.ajax({
+		url:"<?php echo $this->basePath('/obituaryPagination');?>",
+		data:	data,
+		type:"post",
+		async:false,
+		success:function (res) {
+			$("#fobituaries").empty();
+			var resul=$.parseJSON(res);
+			var opt="";
+			$.each(resul, function (k,v) {
+				var oid=v['id'];
+				var obimg="dummy.jpg";
+        		if(v['imageUrl']!="") {
+        			obimg=v['imageUrl'];
+        		}
+				var olink='viewobituary/'+oid;
+				opt +="<div class='col-md-4 col-sm-4 col-xs-4 '>";
+				opt +="<div class='abou-img' >";
+				opt +="<a href='<?php echo $this->basePath('"+olink+"');?>'>";
+				opt +="<img src='<?php echo $this->basePath('/uploads/'+obimg);?>' alt='' height='120px'/></a>";
+				opt +="</div>";
+				var pname="";
+                if(v['first_name']!="" || v['middle_name']!="" || v['last_name']!="") {
+                 pname= v['first_name']+" "+v['middle_name']+" "+v['last_name'];
+                 
+ 					 }else {
+						if(v['gender']=='male') {
+							pname= "Unknown Male"; 
+						}else {
+							pname= "Unknown Female";						
+						} 					 
+ 					 }
+ 					
+				opt +="<p> "+pname+"</p>";
+            	opt +="</div>";
+			});
+			$("#fobituaries").append(opt);
+		}
+	});
+}
+});
+}
+function prevPagination(d) {
+	var activeNum=0;
+	var pagnum=0;
+
+var obcount=<?php echo ceil($obituaryCnt[0]['obCount']/6);?>;
+
+	var cls=$(d).parent().attr("class").split(" ");
+	$("."+cls[0]).each(function (e) {
+		
+		if($(this).attr("class")==cls[0]+" active"){
+				activeNum=parseInt($(this).children("a").html());	
+				if (1<obminimum) {
+					obminimum = activeNum-1;
+					obmaximum =activeNum;
+				}
+		}
+	});
+	
+		
+		$("."+cls[0]).each(function (e) {
+			pagnum=parseInt($(this).children("a").html());
+			if (pagnum>=obminimum && pagnum<=obmaximum ) {
+				$(this).css("display","");
+			}else {
+				$(this).css("display","none");
+			}
+		$(".next").show(); 
+		if ($(this).children("a").html()==(activeNum-1)) {
+			$("."+cls[0]).removeClass("active");
+			
+			$(this).addClass("active");
+			if (activeNum==2) {
+				$(".prev").hide();
+			}else {
+				$(".prev").show();
+			}
+var data="count="+parseInt((activeNum-2)*6)+"&limit=6";
+	$.ajax({
+		url:"<?php echo $this->basePath('/obituaryPagination');?>",
+		data:	data,
+		type:"post",
+		async:false,
+		success:function (res) {
+			$("#fobituaries").empty();
+			var resul=$.parseJSON(res);
+			var opt="";
+			$.each(resul, function (k,v) {
+				var oid=v['id'];
+				var obimg="dummy.jpg";
+        		if(v['imageUrl']!="") {
+        			obimg=v['imageUrl'];
+        		}
+				var olink='viewobituary/'+oid;
+				opt +="<div class='col-md-4 col-sm-4 col-xs-4 '>";
+				opt +="<div class='abou-img'>";
+				opt +="<a href='<?php echo $this->basePath('"+olink+"');?>'>";
+				opt +="<img src='<?php echo $this->basePath('/uploads/'+obimg);?>' alt='' height='120px'/></a>";
+				opt +="</div>";
+				var pname="";
+                if(v['first_name']!="" || v['middle_name']!="" || v['last_name']!="") {
+                 pname= v['first_name']+" "+v['middle_name']+" "+v['last_name'];
+ 					 }else {
+						if(v['gender']=='male') {
+							pname= "Unknown Male"; 
+						}else {
+							pname= "Unknown Female";						
+						} 					 
+ 					 }
+				opt +="<p> "+pname+" </p>";
+            	opt +="</div>";
+			});
+			$("#fobituaries").append(opt);
+		}
+	});
+		}
+	});
+	
+}
+function obituaryPagination(d,c) {
+	var cnt=parseInt((c-1)*6);
+	var data="count="+parseInt((c-1)*6)+"&limit=6";
+	if (cnt!=0) {
+		$(".prev").show();
+		$(".next").show();
+	}else {
+		$(".prev").hide();
+		$(".next").show();
+	}
+	var obcount=<?php echo ceil($obituaryCnt[0]['obCount']/6);?>;
+	if(obcount==c){
+	$(".next").hide();
+	
+	}
+	$.ajax({
+		url:"<?php echo $this->basePath('/obituaryPagination');?>",
+		data:	data,
+		type:"post",
+		async:false,
+		success:function (res) {
+			
+			$("#fobituaries").empty();
+			var resul=$.parseJSON(res);
+			//alert(resul.toSource());
+var opt="";
+			$.each(resul, function (k,v) {
+				var oid=v['id'];
+				var obimg="dummy.jpg";
+        		if(v['imageUrl']!="") {
+        			obimg=v['imageUrl'];
+        		}
+				var olink='viewobituary/'+oid;
+				opt +="<div class='col-md-4 col-sm-4 col-xs-4 '>";
+				opt +="<div class='abou-img'>";
+				opt +="<a href='<?php echo $this->basePath('"+olink+"');?>'>";
+				opt +="<img src='<?php echo $this->basePath('/uploads/'+obimg);?>' alt='' height='120px'/></a>";
+				opt +="</div>";
+				var pname="";
+                if(v['first_name']!="" || v['middle_name']!="" || v['last_name']!="") {
+                 pname= v['first_name']+" "+v['middle_name']+" "+v['last_name'];
+ 					 }else {
+						if(v['gender']=='male') {
+							pname= "Unknown Male"; 
+						}else {
+							pname= "Unknown Female";						
+						} 					 
+ 					 }
+				opt +="<p> "+pname+" </p>";
+            	opt +="</div>";
+			});
+			$("#fobituaries").append(opt);
+$("#obpagination > li").removeClass('active');
+			$(d).parent().addClass("active");
+		}
+	});
+}
+function nextMmPagination(d) {
+	var activeNum=0;
+	var pagnum=0;
+	var mCount=<?php echo ceil($memorialCnt[0]['mCount']/6);?>;
+	var cls=$(d).parent().attr("class").split(" ");
+	$("."+cls[0]).each(function (e) {
+		if($(this).attr("class")==cls[0]+" active"){
+				activeNum=parseInt($(this).children("a").html());	
+				if (mCount>mmmaximum) {
+					mmminimum = activeNum;
+					mmmaximum= activeNum+1;
+				}
+		}
+	});
+	
+		$("."+cls[0]).each(function (e) {
+		pagnum=parseInt($(this).children("a").html());
+			if (pagnum>=mmminimum && pagnum<=mmmaximum ) {
+				$(this).css("display","");
+			}else {
+				$(this).css("display","none");
+			}
+			$(".mmprev").show();
+			if (mCount==(activeNum+1)) {
+				$(".mmnext").hide();
+			}else {
+				$(".mmnext").show();
+			}
+			//alert($(this).children("a").html()+" "+(activeNum+1));
+		if ($(this).children("a").html()==(activeNum+1)) {
+			$("."+cls[0]).removeClass("active");
+			
+			
+			$(this).addClass("active");
+			//if (activeNum==1) {
+				//$(".mmprev").show();
+			//}
+	var data="count="+parseInt(activeNum*6)+"&limit=6";
+	$.ajax({
+		url:"<?php echo $this->basePath('/memorialPagination');?>",
+		data:	data,
+		type:"post",
+		async:false,
+		success:function (res) {
+			$("#fmemorials").empty();
+			var resul=$.parseJSON(res);
+			var opt="";
+			$.each(resul, function (k,v) {
+				var mid=v['id'];
+				var obimg="dummy.jpg";
+        		if(v['imageUrl']!="") {
+        			obimg=v['imageUrl'];
+        		}
+				var mlink='view-memorial?id='+mid;
+				opt +="<div class='col-md-4 col-sm-4 col-xs-4 '>";
+				opt +="<div class='abou-img'>";
+				opt +="<a href='<?php echo $this->basePath('"+mlink+"');?>'>";
+				opt +="<img src='<?php echo $this->basePath('/uploads/'+obimg);?>' alt='' height='120px'/></a>";
+				opt +="</div>";
+			var pname="";
+                if(v['first_name']!="" || v['middle_name']!="" || v['last_name']!="") {
+                 pname= v['first_name']+" "+v['middle_name']+" "+v['last_name'];
+ 					 }else {
+						if(v['gender']=='male') {
+							pname= "Unknown Male"; 
+						}else {
+							pname= "Unknown Female";						
+						} 					 
+ 					 }
+				opt +="<p> "+pname+" </p>";
+            	opt +="</div>";
+			});
+			$("#fmemorials").append(opt);
+		}
+	});
+}
+});
+}
+function prevMmPagination(d) {
+	var activeNum=0;
+	var pagnum=0;
+	var mCount=<?php echo ceil($memorialCnt[0]['mCount']/6);?>;
+	var cls=$(d).parent().attr("class").split(" ");
+	$("."+cls[0]).each(function (e) {
+		if($(this).attr("class")==cls[0]+" active"){
+				activeNum=$(this).children("a").html();	
+				if (1<mmminimum) {
+					mmminimum = activeNum-1;
+					mmmaximum =activeNum;
+				}
+		}
+	});
+	
+		$("."+cls[0]).each(function (e) {
+			pagnum=parseInt($(this).children("a").html());
+			if (pagnum>=mmminimum && pagnum<=mmmaximum ) {
+				$(this).css("display","");
+			}else {
+				$(this).css("display","none");
+			}
+			$(".mmnext").show();
+		if ($(this).children("a").html()==(activeNum-1)) {
+			$("."+cls[0]).removeClass("active");
+			
+			//if (mCount==activeNum) {
+				//$(".mmnext").show();
+			//}
+			$(this).addClass("active");
+			if (activeNum==2) {
+				$(".mmprev").hide();
+			}else {
+				$(".mmprev").show();
+			}
+var data="count="+parseInt((activeNum-2)*6)+"&limit=6";
+	$.ajax({
+		url:"<?php echo $this->basePath('/memorialPagination');?>",
+		data:	data,
+		type:"post",
+		async:false,
+		success:function (res) {
+			$("#fmemorials").empty();
+			var resul=$.parseJSON(res);
+			var opt="";
+			$.each(resul, function (k,v) {
+				var mid=v['id'];
+				var obimg="dummy.jpg";
+        		if(v['imageUrl']!="") {
+        			obimg=v['imageUrl'];
+        		}
+				var mlink='view-memorial?id='+mid;
+				opt +="<div class='col-md-4 col-sm-4 col-xs-4 '>";
+				opt +="<div class='abou-img'>";
+				opt +="<a href='<?php echo $this->basePath('"+mlink+"');?>'>";
+				opt +="<img src='<?php echo $this->basePath('/uploads/'+obimg);?>' alt='' height='120px'/></a>";
+				opt +="</div>";
+				var pname="";
+                if(v['first_name']!="" || v['middle_name']!="" || v['last_name']!="") {
+                 pname= v['first_name']+" "+v['middle_name']+" "+v['last_name'];
+ 					 }else {
+						if(v['gender']=='male') {
+							pname= "Unknown Male"; 
+						}else {
+							pname= "Unknown Female";						
+						} 					 
+ 					 }
+				opt +="<p> "+pname+" </p>";
+            	opt +="</div>";
+			});
+			$("#fmemorials").append(opt);
+		}
+	});
+		}
+	});
+	
+}
+function memorialPagination(d,c) {
+	var cnt=parseInt((c-1)*6);
+	var data="count="+parseInt((c-1)*6)+"&limit=6";
+	if (cnt!=0) {
+		$(".mmprev").show();
+		$(".mmnext").show();
+	}else {
+		$(".mmprev").hide();
+$(".mmnext").show();
+	}
+	var obcount=<?php echo ceil($memorialCnt[0]['mCount']/6);?>;
+	if(obcount==c){
+	$(".mmnext").hide();
+	
+	}
+	
+	$.ajax({
+		url:"<?php echo $this->basePath('/memorialPagination');?>",
+		data:	data,
+		type:"post",
+		async:false,
+		success:function (res) {
+			
+			$("#fmemorials").empty();
+			var resul=$.parseJSON(res);
+			//alert(resul.toSource());
+		var opt="";
+			$.each(resul, function (k,v) {
+				var mid=v['id'];
+				var obimg="dummy.jpg";
+        		if(v['imageUrl']!="") {
+        			obimg=v['imageUrl'];
+        		}
+				var mlink='view-memorial?id='+mid;
+				opt +="<div class='col-md-4 col-sm-4 col-xs-4 '>";
+				opt +="<div class='abou-img'>";
+				opt +="<a href='<?php echo $this->basePath('"+mlink+"');?>'>";
+				opt +="<img src='<?php echo $this->basePath('/uploads/'+obimg);?>' alt='' height='120px'/></a>";
+				opt +="</div>";
+			var pname="";
+                if(v['first_name']!="" || v['middle_name']!="" || v['last_name']!="") {
+                 pname= v['first_name']+" "+v['middle_name']+" "+v['last_name'];
+ 					 }else {
+						if(v['gender']=='male') {
+							pname= "Unknown Male"; 
+						}else {
+							pname= "Unknown Female";						
+						} 					 
+ 					 }
+				opt +="<p> "+pname+" </p>";
+            	opt +="</div>";
+			});
+			$("#fmemorials").append(opt);
+$("#mmpagination > li").removeClass('active');
+			$(d).parent().addClass("active");
+		}
+	});
+}
+function getStates() {
+   var country=$("#country").val();
+	var data="country="+country;
+	//alert(country);
+	if (country=="") {
+		$("#states").empty().append("<option value=''> State </option>");
+			$("#cities").empty().append("<option value=''> City </option>");
+			$("#postalCode").empty().append("<option value=''> Postal Code </option>");
+	}else {
+	$.ajax({
+		url:"<?php echo $this->basePath('/states');?>",
+		data:	data,
+		type:"post",
+		async:false,
+		success:function (res) {
+			//alert(res);
+			$("#states").empty();
+			$("#cities").empty().append("<option value=''> City </option>");
+			$("#postalCode").empty().append("<option value=''> Zip/Postal Code </option>");
+			var resul=$.parseJSON(res);
+			var opt="<option value=''> State </option>";
+			$.each(resul, function (k,v) {
+				opt +="<option value='"+k+"'>"+v+"</option>";
+			}); 
+			$("#states").append(opt);
+		},
+error:function(res){
+res=res.responseText;
+$("#states").empty();
+			$("#cities").empty().append("<option value=''> City </option>");
+			$("#postalCode").empty().append("<option value=''> Zip/Postal Code </option>");
+			var resul=$.parseJSON(res);
+			var opt="<option value=''> State </option>";
+			$.each(resul, function (k,v) {
+				opt +="<option value='"+k+"'>"+v+"</option>";
+			}); 
+			$("#states").append(opt);
+}
+	});
+}
+}
+function getCities() {
+	var state=$("#states").val();
+	//var country=$("#country").val();
+	var data="state="+state;
+	$.ajax({
+		url:"<?php echo $this->basePath('/city');?>",
+		data:	data,
+		type:"post",
+		async:false,
+		success:function (res) {
+			$("#cities").empty();
+			$("#postalCode").empty().append("<option value=''> Zip/Postal Code </option>");
+			var resul=$.parseJSON(res);
+			var opt="<option value=''> City </option>";
+			$.each(resul, function (k,v) {
+				opt +="<option value='"+k+"'>"+v+"</option>";
+			}); 
+			$("#cities").append(opt);
+		},
+error:function(res){
+res=res.responseText;
+$("#cities").empty();
+			$("#postalCode").empty().append("<option value=''> Zip/Postal Code </option>");
+			var resul=$.parseJSON(res);
+			var opt="<option value=''> City </option>";
+			$.each(resul, function (k,v) {
+				opt +="<option value='"+k+"'>"+v+"</option>";
+			}); 
+			$("#cities").append(opt);
+}
+	});
+}
+
+function getPostalcode() {
+	var state=$("#states").val();
+	var city=$("#cities").val();
+	var data="state="+state+"&city="+city;
+	$.ajax({
+		url:"<?php echo $this->basePath('/postalcode');?>",
+		data:	data,
+		type:"post",
+		async:false,
+		success:function (res) {
+			//alert(res);
+			$("#postalCode").empty();
+			var resul=$.parseJSON(res);
+			var opt="<option value=''> Zip/Postal Code </option>";
+			$.each(resul, function (k,v) {
+				opt +="<option value='"+k+"'>"+v+"</option>";
+			}); 
+			$("#postalCode").append(opt);
+		},
+error:function(res){
+res=res.responseText;
+$("#postalCode").empty();
+			var resul=$.parseJSON(res);
+			var opt="<option value=''> Zip/Postal Code </option>";
+			$.each(resul, function (k,v) {
+				opt +="<option value='"+k+"'>"+v+"</option>";
+			}); 
+			$("#postalCode").append(opt);
+}
+	});
+}
+function showObituary(cnt,id) {
+	$(".spobituary").show();
+	$(".spmemorial").hide();
+	$(".special-obi-memo-tab1").addClass("active");
+	$(".special-obi-memo-tab2").removeClass("active");
+	//$("#showmm"+cnt).removeClass("active");
+	//$("#showob"+cnt).addClass("active");
+	$("#spmorebtn-"+cnt).removeAttr("onclick");
+	$("#spmorebtn-"+cnt).removeClass("secondbutton3");
+	$("#spmorebtn-"+cnt).attr("onclick","viewAll_ob_sp("+id+")");
+}
+function showMemorials(cnt,id) {
+	$(".spobituary").hide();
+	$(".spmemorial").show();
+	$(".special-obi-memo-tab1").removeClass("active");
+	$(".special-obi-memo-tab2").addClass("active");
+	//$("#showob"+cnt).removeClass("active");
+	//$("#showmm"+cnt).addClass("active");
+	$("#spmorebtn-"+cnt).removeAttr("onclick");
+	$("#spmorebtn-"+cnt).addClass("secondbutton3");
+	$("#spmorebtn-"+cnt).attr("onclick","viewAll_mm_sp("+id+")");
+}
+function sp_category(cnt,spid) {
+	
+	if ($( "#showmm"+cnt ).hasClass( "active" )) {
+		
+		$("#spmorebtn-"+cnt).removeAttr("onclick");
+	   $("#spmorebtn-"+cnt).addClass("secondbutton3");
+	   $("#spmorebtn-"+cnt).attr("onclick","viewAll_mm_sp("+spid+")");
+	}
+	if ($( "#showob"+cnt ).hasClass( "active" )) {
+
+		$("#spmorebtn-"+cnt).removeAttr("onclick");
+	   $("#spmorebtn-"+cnt).removeClass("secondbutton3");
+	   $("#spmorebtn-"+cnt).attr("onclick","viewAll_ob_sp("+spid+")");
+	}
+	//$(".spobituary").show();
+	//$(".spmemorial").hide();
+	//$("#showmm"+cnt).removeClass("active");
+	//$("#showob"+cnt).addClass("active");
+	//$("#spmorebtn-"+cnt).removeAttr("onclick");
+	//$("#spmorebtn-"+cnt).removeClass("secondbutton3");
+	//$("#spmorebtn-"+cnt).attr("onclick","viewAll_ob_sp("+spid+")");
+}
+function viewAll_ob_sp(id) {
+	window.location="<?php echo $this->basePath('/view-all-sp-obituary?id="+id+"');?>";
+}
+function viewAll_mm_sp(id) {
+	window.location="<?php echo $this->basePath('/view-all-sp-memorial?id="+id+"');?>";
+}
+</script>

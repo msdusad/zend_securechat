@@ -1,0 +1,81 @@
+
+<?php if ($this->pageCount){ ?>
+<div class="account-page">
+<ul class="pagination">
+<!-- Previous page link -->
+<li>
+<?php if (isset($this->previous)){ ?>
+
+	<?php if(isset($_POST['text'])){ ?>
+
+  <a href="javascript:paginationbutton('<?php echo $this->previous; ?>');">
+     Previous
+  </a> 
+  <?php }else{ ?>
+  
+   <a  href="javascript:paginationbutton('<?php echo $this->previous; ?>');">
+     Previous
+  </a>
+  
+  
+  <?php } ?>
+  
+  
+  
+  
+<?php }else{ ?>
+  <a href = "#" > Previous</a> 
+<?php } ?>
+</li>
+<!-- Numbered page links -->
+<?php foreach ($this->pagesInRange as $page){ ?>
+<li>
+  <?php if ($page != $this->current){ ?>
+  <li class = "">
+  <?php if(isset($_POST['text'])){ ?>
+    <a href="javascript:paginationbutton('<?php echo $page; ?>','<?php echo $type; ?>');">
+        <?php echo $page; ?>
+    </a> 
+	<?php }else{ ?>
+	
+	 <a href="javascript:paginationbutton('<?php echo $page; ?>','<?php echo $type; ?>');">
+        <?php echo $page; ?>
+    </a> 
+	
+	<?php } ?>
+    </li>
+  <?php }else{ ?>
+  <li class = "active">
+    <a href = "#"   ><?php echo $page; ?></a> 
+    </li>
+  <?php } ?>
+  
+<?php } ?>
+
+<!-- Next page link -->
+<li>
+<?php if (isset($this->next)){ ?>
+
+	<?php if(isset($_POST['text'])){ ?>
+
+  <a href="javascript:paginationbutton('<?php echo $this->next; ?>','<?php echo $type; ?>');">
+    Next 
+  </a>
+  
+  <?php }else{ ?>
+   
+  <a href="javascript:paginationbutton('<?php echo $this->next; ?>','<?php echo $type; ?>');">
+    Next 
+  </a>
+  
+  <?php } ?>
+  
+  
+  
+<?php }else{ ?>
+  <a href = "#" >Next </a>
+<?php } ?>
+</li>
+</ul>
+</div>
+<?php } ?>

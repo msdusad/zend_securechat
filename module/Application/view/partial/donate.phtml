@@ -1,0 +1,254 @@
+<?php
+$this->headLink()->prependStylesheet($this->basePath() . '/assets/css/rituals.css');
+?>
+<script src="<?php echo $this->basePath() . '/assets/lib/bootstrap/js/bootstrap.js';?>"></script>
+<div class="border-set">
+	<div class="col-md-12">
+		<div class="set-form">
+			<h4 class="new-text">In memory of the person, please make an impact through donations to</h4>
+      <div class="button-radio1">
+		<div class="donate-radio-btn">	<input type="radio" class="radio-button" id="suggestions"  name="donation" checked="checked"> <label class="radGroup2">Antimsanskar default suggestion</label>  </div>          
+        <div class="donate-radio-btn"> <input type="radio" class="radio-button1" id="donations"  name="donation"> <label class="radGroup3">My Causes</label> </div>
+        <div class="donate-radio-btn"> <input type="radio" class="radio-button1" id="mydonationsradio"  name="donation"> <label class="radGroup3">My Donations</label> </div>
+		</div>
+			 <form method="POST" action="<?php echo $link;?>">
+            <div id="suggestion" class="dotanted-list-item">
+            <h3 class="new-fonts">Antimsanskar Suggestion</h3>
+            <div class="suggestions-outline">
+            <div class="row">
+            <h4 class="note-important">Note: <span>Donated amount will be distributed in equal amount for all the causes listed below or you can select any individual causes</span></h4>
+				<div class="col-md-4 value1">
+				<input type='hidden' name='user[category1]' value='default suggestions'/>
+                 <input type='checkbox' name='value' name="user[suggestion1]" value='Cleaning Holy Rivers'><a class="viewfile-color1"  style="height:88px" data="Lorem ipsum dolor sit amet" href="javascript:void(0)">Cleaning Holy Rivers</a>
+					<!--<a class="view" href="#">Soup Chicken, Food &amp; Shelter</a>-->
+				</div>
+				<div class="col-md-4 value1">
+                 <input type='checkbox' name='value' name="user[suggestion2]" value='Honoring the deceased'><a class="viewfile-color1"  style="height:88px" data="Lorem ipsum dolor sit amet" href="javascript:void(0)">Building Crematorium </a>
+					<!--<a class="view" href="#">Scholarships and Education</a>-->
+				</div>
+				<div class="col-md-4 value1">
+                 <input type='checkbox' name='value' name="user[suggestion3]" value='Educating children'><a class="viewfile-color1"  style="height:88px" data="Lorem ipsum dolor sit amet" href="javascript:void(0)">Educating children</a>
+					<!--<a class="view" href="#">Research and Development</a>-->
+				</div>
+            </div>
+			<div class="row">
+				<div class="col-md-4 value1">
+                 <input type='checkbox' name='value' name="user[suggestion4]" value='Research and Development'><a class="viewfile-color1"  style="height:88px" data="Lorem ipsum dolor sit amet" href="javascript:void(0)">Research and Development </a>
+					<!--<a class="view" href="#">Cleaning holy rivers</a>-->
+				</div>
+				<div class="col-md-4 value1">
+                 <input type='checkbox' name='value' name="user[suggestion5]" value='Food and Shelter'><a class="viewfile-color1"  style="height:88px" data="Lorem ipsum dolor sit amet" href="javascript:void(0)">Food and Shelter </a>
+					<!--<a class="view" href="#">Cause of death related - like Cancer Heart Disease</a>-->
+				</div>
+				<div class="col-md-4 value1">
+                 <input type='checkbox' name='value' name="user[suggestion6]" value='Animals'><a class="viewfile-color1"  style="height:88px" data="Lorem ipsum dolor sit amet" href="javascript:void(0)">Animals </a>
+					<!--<a class="view" href="#">Religious Beliefs</a>-->
+				</div>
+				
+			</div>
+			<div class="mydonateform">
+                   <p>
+                     <select id="amount" name="user[currency]" class="usd-amount">
+                        <option value="USD">USD</option>
+                         <option value="INR">INR</option>
+                     </select>
+                     <input type="text" placeholder="Please enter the amount" value="" id="suggamount" onkeyup="checkamount()" class="amount-value" name="user[amount]">
+                      <input type='text' class="amount-value-sec" name='user[securitynum]'   value='' id='securitycard' style="display:none;" placeholder="Social Security Number / Pancard Number"><a class="viewfile-color1"  style="height:88px" data="Lorem ipsum dolor sit amet" href="javascript:void(0)"> </a>
+                        </p>  
+                
+                 <br /> <br /> <div class="clear"> </div> 
+                        <div class="clear"> </div>
+                        <br />
+            </div>
+         
+			</div>
+			<div>
+	<!--<button class="saveButton" type="submit">Save to my Draft</button>-->
+				
+				<br>
+		 <button class="btn btn-block" type="submit" id="savetomyaccount">Save to MyAccount</button>
+           <button class="btn btn-block" name='sub' type="submit" id="send">Send</button>
+<!--
+				
+	<button class="saveButton" type="submit">Save to my account</button>
+     <span class="flot_rght float-none"> <a class="sendButton">Send</a></span>
+-->
+</div>
+            </div>
+            </form>
+            
+            <div class="clearfix"></div>
+            <div id="mydonations" style="display:none">
+			<!--<a href="#" class="fastButton"> <span>Mydonations :</span> Click here to choose from a complete list of impact categories</a>-->
+            <div class="">
+            <h3 class="new-fonts">My Causes </h3>
+            <div class="suggestions-outline">
+           <ul role="tablist" class="nav nav-tabs navs newLayout causesTab" id="myTab">
+                <li role="presentation" class="active"><a aria-expanded="true" aria-controls="cash" data-toggle="tab" role="tab" id="cash-tab" href="#cash">Cash</a></li>
+                <li role="presentation"><a aria-controls="diseased" data-toggle="tab" id="diseased-tab" role="tab" href="#diseased" aria-expanded="false">Diseased</a></li>
+                <li role="presentation" ><a aria-controls="other" data-toggle="tab" id="other-tab" role="tab" href="#other" aria-expanded="false">Non Cash Gifts</a></li>
+                <li role="presentation"><a aria-controls="resourse" data-toggle="tab" id="resourse-tab" role="tab" href="#resourse" aria-expanded="false">Resources</a></li>
+      	  </ul>
+      <div class="tab-content" id="myTabContent">
+         <div aria-labelledby="cash-tab" id="cash" class="active" role="tabpanel"> 
+          <div class="row">
+				<div class="col-md-4 value1">
+                 <input type='checkbox' name='value' id='set' value=''><a class="viewfile-color1"  style="height:88px" data="Lorem ipsum dolor sit amet" href="javascript:void(0)">Cleaning Holy Rivers</a>
+					<!--<a class="view" href="#">Soup Chicken, Food &amp; Shelter</a>-->
+				</div>
+				<div class="col-md-4 value1">
+                 <input type='checkbox' name='value' id='set' value=''><a class="viewfile-color1"  style="height:88px" data="Lorem ipsum dolor sit amet" href="javascript:void(0)">Honoring the deceased </a>
+					<!--<a class="view" href="#">Scholarships and Education</a>-->
+				</div>
+				<div class="col-md-4 value1">
+                 <input type='checkbox' name='value' id='set' value=''><a class="viewfile-color1"  style="height:88px" data="Lorem ipsum dolor sit amet" href="javascript:void(0)">Educating children</a>
+					<!--<a class="view" href="#">Research and Development</a>-->
+				</div>
+           </div>
+                
+                <div class="row">
+				<div class="col-md-4 value1">
+                <input type='checkbox' name='value' id='set' value=''><a class="viewfile-color1"  style="height:88px" data="Lorem ipsum dolor sit amet" href="javascript:void(0)">Research and Development </a>
+					<!--<a class="view" href="#">Cleaning holy rivers</a>-->
+				</div>
+				<div class="col-md-4 value1">
+                 <input type='checkbox' name='value' id='set' value=''><a class="viewfile-color1"  style="height:88px" data="Lorem ipsum dolor sit amet" href="javascript:void(0)">Food and Shelter </a>
+					<!--<a class="view" href="#">Cause of death related - like Cancer Heart Disease</a>-->
+				</div>
+				<div class="col-md-4 value1">
+                 <input type='checkbox' name='value' id='set' value=''><a class="viewfile-color1"  style="height:88px" data="Lorem ipsum dolor sit amet" href="javascript:void(0)"> Mothers against Drunk Driving</a>
+					<!--<a class="view" href="#">Religious Beliefs</a>-->
+				</div>
+			</div>
+            
+            <div class="row">
+				<div class="col-md-4 value1">
+                 <input type='checkbox' name='value' id='set' value=''><a class="viewfile-color1"  style="height:88px" data="Lorem ipsum dolor sit amet" href="javascript:void(0)">Health and Wellness </a>
+					<!--<a class="view" href="#">Soup Chicken, Food &amp; Shelter</a>-->
+				</div>
+				<div class="col-md-4 value1">
+                 <input type='checkbox' name='value' id='set' value=''><a class="viewfile-color1"  style="height:88px" data="Lorem ipsum dolor sit amet" href="javascript:void(0)">Animals </a>
+					<!--<a class="view" href="#">Scholarships and Education</a>-->
+				</div>
+				<div class="col-md-4 value1">
+                 <input type='checkbox' name='value' id='set' value=''><a class="viewfile-color1"  style="height:88px" data="Lorem ipsum dolor sit amet" href="javascript:void(0)">Building Crematorium </a>
+					<!--<a class="view" href="#">Research and Development</a>-->
+				</div>
+                </div>
+                
+                <div class="mydonateform">
+                <form method="POST" action="/Antimsanskar1/public/donation/donate/13/obituary">
+                  <p>
+                     <select id="charity" name="charity_id">
+                        <option value="">Please selcet a charity</option>
+                     </select>
+                        </p> <br /> <br /> <div class="clear"> </div> 
+                        <p>
+                     <select id="amount" name="currency" class="usd-amount" >
+                        <option value="USD">USD</option>
+                         <option value="INR">INR</option>
+                     </select>
+                    <input type="text" placeholder="Please enter the amount" id="mycauseamount" onkeyup="checkmycauseamount()" value="" name="amount" class="amount-value">
+                    <input type="text" placeholder="Social Security Number / Pancard Number" value="" name="amount" style=" display:none;" id="securitypancard" class="amount-value-sec">
+                        </p>  <br /> <br /> <div class="clear"> </div> 
+                        <p>
+                            <input type="submit" value="Add to" class="btn btn-danger btn-sm btn-addto button-left-align" >
+                        </p>
+                        <div class="clear"> </div>
+                        <br />
+                </form>
+            </div>
+                
+          </div>
+        <div aria-labelledby="diseased-tab" id="diseased" class="tab-pane" role="tabpanel">   
+       &nbsp;
+        </div>
+        <div aria-labelledby="other-tab" id="other" class="tab-pane" role="tabpanel">   
+       &nbsp;
+        </div>
+        <div aria-labelledby="cash-tab" id="resourse" class="tab-pane" role="tabpanel">   
+        &nbsp;
+        </div>
+          </div>
+              	
+            <div class="clear"> </div>
+                          
+			</div>
+            
+</div>
+            </div>
+            
+            <div id="mydonations1" style="display:none">
+			<!--<a href="#" class="fastButton"> <span>Mydonations :</span> Click here to choose from a complete list of impact categories</a>-->
+            <div class="">
+            <h3 class="new-fonts">My Donations</h3>
+				<div class="suggestions-outline">
+            <div class="row">
+            <h4 class="note-important">Note: <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vitae tempor libero. Proin eget urna id nibh</span></h4>
+				<div class="col-md-4 value1">
+                 <input type='checkbox' name='value' id='set' value=''><a class="viewfile-color1"  style="height:88px" data="Lorem ipsum dolor sit amet" href="javascript:void(0)">Cleaning Holy Rivers</a>
+					<!--<a class="view" href="#">Soup Chicken, Food &amp; Shelter</a>-->
+				</div>
+				<div class="col-md-4 value1">
+                 <input type='checkbox' name='value' id='set' value=''><a class="viewfile-color1"  style="height:88px" data="Lorem ipsum dolor sit amet" href="javascript:void(0)">Honoring the deceased </a>
+					<!--<a class="view" href="#">Scholarships and Education</a>-->
+				</div>
+				<div class="col-md-4 value1">
+                 <input type='checkbox' name='value' id='set' value=''><a class="viewfile-color1"  style="height:88px" data="Lorem ipsum dolor sit amet" href="javascript:void(0)">Educating children</a>
+					<!--<a class="view" href="#">Research and Development</a>-->
+				</div>
+                </div>
+			<div class="row">
+				<div class="col-md-4 value1">
+                <input type='checkbox' name='value' id='set' value=''><a class="viewfile-color1"  style="height:88px" data="Lorem ipsum dolor sit amet" href="javascript:void(0)">Research and Development </a>
+					<!--<a class="view" href="#">Cleaning holy rivers</a>-->
+				</div>
+				<div class="col-md-4 value1">
+                 <input type='checkbox' name='value' id='set' value=''><a class="viewfile-color1"  style="height:88px" data="Lorem ipsum dolor sit amet" href="javascript:void(0)">Food and Shelter </a>
+					<!--<a class="view" href="#">Cause of death related - like Cancer Heart Disease</a>-->
+				</div>
+				<div class="col-md-4 value1">
+                 <input type='checkbox' name='value' id='set' value=''><a class="viewfile-color1"  style="height:88px" data="Lorem ipsum dolor sit amet" href="javascript:void(0)">Animals </a>
+					<!--<a class="view" href="#">Religious Beliefs</a>-->
+				</div>
+			</div>
+			<div class="mydonateform">
+                <form method="POST" action="/Antimsanskar1/public/donation/donate/13/obituary">
+                  <p>
+                   
+                     <select id="amount" name="currency" style="width:20%;">
+                        <option value="USD">USD</option>
+                         <option value="INR">INR</option>
+                     </select>
+                    <input type="text" placeholder="Please enter the amount" value="" name="amount" style="width:39%;">
+                        </p>  <br /> <br /> <div class="clear"> </div> 
+                       
+                        <div class="clear"> </div>
+                        <br />
+                </form>
+            </div>
+         
+			</div>
+            </div>
+            </div>
+		</div>
+	</div>
+	<div class="clearfix"></div>
+</div>
+<style type="text/css">
+.causesTab > li > a {
+background: #949494 !important;
+color:#fff !important;
+}
+
+</style>
+<script type="text/javascript">
+function checkmycauseamount() {
+ var amount=$("#mycauseamount").val();
+ if (parseInt(amount)>1000) {
+	$("#securitypancard").show();
+}else {
+	$("#securitypancard").hide();
+	}
+}
+</script>

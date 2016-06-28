@@ -1,0 +1,225 @@
+
+<?php 
+require_once('config/autoload/conn.php');
+class DBController {
+	function runQuery($query) {
+		$result = mysql_query($query);
+		while($row=mysql_fetch_assoc($result)) {
+			$resultset[] = $row;
+		}		
+		if(!empty($resultset))
+			return $resultset;
+	}
+	
+	function numRows($query) {
+		$result  = mysql_query($query);
+		$rowcount = mysql_num_rows($result);
+		return $rowcount;	
+	}
+}
+$db_handle = new DBController();
+
+if(isset($_POST["country_id"]) && !isset($_POST["state_id"])) {
+		$country=$_POST['country_id']; 
+	   //$menu=$_POST["srch_menu"];
+	    // $sub_menu=$_POST["srch_sub_menu"];
+	
+	$query ="SELECT * FROM  states WHERE country_id = '" . $_POST["country_id"] . "' ";
+	$results = $db_handle->runQuery($query);
+echo "<div id='result'><option value=''>Select State</option>";
+	foreach($results as $state) {
+?>
+	<option value="<?php echo $state['id']; ?>"><?php echo $state['name']; ?></option>
+<?php
+	}
+	echo "</div>";
+	// code for feaching form,artical,tool,checklist according country
+
+	 $query="select provider_image, provider_link from provider where country='".$country."'";
+                    $r=mysql_query($query);
+echo "<div id='left'>";
+                    while($data=mysql_fetch_array($r))
+                    { 
+                     echo '<a href="'.( $data['provider_link'] ).'" target="_blank"/>';    
+                     echo '<img src="data:image/jpeg;base64,'.base64_encode( $data['provider_image'] ).'" class="morph pic"/>';
+                     echo '</a>';    
+                    }
+
+echo "</div>";
+    
+    
+      echo "<div id='sponser'>";
+     $query="select sponcer_url from sponcer where country='$country'";
+                    $r=mysql_query($query);
+                    while($data=mysql_fetch_array($r))
+                    { 
+                        $sponser_url=$data['sponcer_url'];
+                     echo "<iframe src='$sponser_url'' class='data'>";
+                     echo '</iframe>';    
+                    }
+
+echo "</div>";
+    
+    
+                     $query="select airline_image, airline_link from airlines where country='".$country."'";
+                    $r=mysql_query($query);
+echo "<div id='right'>";
+                    while($data=mysql_fetch_array($r))
+                    { 
+                     echo '<a href="'.( $data['airline_link'] ).'" target="_blank"/>';    
+                     echo '<img src="data:image/jpeg;base64,'.base64_encode( $data['airline_image'] ).'" class="tilt pic"/>';
+                    echo '</a>';    
+                    }
+echo "</div>";
+	
+	//end hear
+}
+
+// Second condition for country and  state  match data
+
+
+elseif(isset($_POST["country_id"]) && isset($_POST["state_id"])) {
+	$state=$_POST["state_id"];
+	$country=$_POST["country_id"];
+	  // $menu=$_POST["srch_menu"];
+	    // $sub_menu=$_POST["srch_sub_menu"];
+	
+	$query ="SELECT * FROM  cities WHERE state_id = '" . $_POST["state_id"] . "'";
+	$results = $db_handle->runQuery($query);
+?>
+<div id="cities">
+	
+<option value="">Select City</option>
+<?php
+	foreach($results as $city) {
+?>
+	<option value="<?php echo $city["id"]; ?>"><?php echo $city["name"]; ?></option>
+<?php
+	}
+		?>
+	</div>
+	<?php
+	
+	 $query="select provider_image, provider_link from provider where country='".$country."' && state='$state' ";
+                    $r=mysql_query($query);
+echo "<div id='left'>";
+                    while($data=mysql_fetch_array($r))
+                    { 
+                     echo '<a href="'.( $data['provider_link'] ).'" target="_blank"/>';    
+                     echo '<img src="data:image/jpeg;base64,'.base64_encode( $data['provider_image'] ).'" class="morph pic"/>';
+                     echo '</a>';    
+                    }
+
+echo "</div>";
+    
+    echo "<div id='sponser'>";
+     $query="select sponcer_url from sponcer where country='$country' && state='$state'";
+                    $r=mysql_query($query);
+                    while($data=mysql_fetch_array($r))
+                    { 
+     $sponser_url=$data['sponcer_url'];
+                     echo "<iframe src='$sponser_url' class='data'>";
+                     echo '</iframe>';    
+                    }
+
+echo "</div>";
+    
+                     $query="select airline_image, airline_link from airlines where country='".$country."'  && state='$state'";
+                    $r=mysql_query($query);
+echo "<div id='right'>";
+                    while($data=mysql_fetch_array($r))
+                    { 
+                     echo '<a href="'.( $data['airline_link'] ).'" target="_blank"/>';    
+                     echo '<img src="data:image/jpeg;base64,'.base64_encode( $data['airline_image'] ).'" class="tilt pic"/>';
+                    echo '</a>';    
+                    }
+echo "</div>";
+	
+}
+
+
+
+// third condition for country , state and city match
+
+elseif(isset($_POST["country_id"]) && isset($_POST["state_id"]) && isset($_POST["city_id"])) {
+	$city_id=$_POST["city_id"];
+    $state=$_POST["state_id"];
+	$country=$_POST["country_id"];
+	//$menu=$_POST["srch_menu"];
+	//$sub_menu=$_POST["srch_sub_menu"];
+	
+	 $query="select provider_image, provider_link from provider where country='".$country."' && state='$state' && city='$city_id'";
+                    $r=mysql_query($query);
+echo "<div id='left'>";
+                    while($data=mysql_fetch_array($r))
+                    { 
+                     echo '<a href="'.( $data['provider_link'] ).'" target="_blank"/>';    
+                     echo '<img src="data:image/jpeg;base64,'.base64_encode( $data['provider_image'] ).'" class="morph pic"/>';
+                     echo '</a>';    
+                    }
+
+echo "</div>";
+    
+    
+      echo "<div id='sponser'>";
+     $query="select sponcer_url from sponcer where country='$country' && state='$state' && city='$city_id' ";
+                    $r=mysql_query($query);
+                    while($data=mysql_fetch_array($r))
+                    { 
+                      $sponser_url=$data['sponcer_url'];
+                     echo "<iframe src='$sponser_url' class='data'>";
+                     echo '</iframe>';    
+                    }
+
+echo "</div>";
+    
+    
+    
+    
+                     $query="select airline_image, airline_link from airlines where country='".$country."' && state='$state' && city='$city_id'";
+                    $r=mysql_query($query);
+echo "<div id='right'>";
+                    while($data=mysql_fetch_array($r))
+                    { 
+                     echo '<a href="'.( $data['airline_link'] ).'" target="_blank"/>';    
+                     echo '<img src="data:image/jpeg;base64,'.base64_encode( $data['airline_image'] ).'" class="tilt pic"/>';
+                    echo '</a>';    
+                    }
+echo "</div>";
+
+}
+
+//else{
+//class FormChecklistLink{
+//	
+//public function viewdata(){
+//$sql=mysql_query("select * from preplanning_type where country='231' limit 6");
+//$chcklist=array();
+//while($row=mysql_fetch_array($sql)){
+//	 $chcklist[]=$row;
+//}
+//return $chcklist;
+//}
+//	
+//public function adsdata(){	
+//$adssql=mysql_query("select * from ads where country='231' limit 6");
+//$fixads=array();
+//while($viewads=mysql_fetch_array($adssql)){
+//	 $fixads[]=$viewads;
+//}
+//return $fixads;	
+//}
+//	
+//	
+//public function middlecontent(){	
+//$contsql=mysql_query("select * from preplanning where category_id='25' && country='231' limit 6");
+//$contant=array();
+//while($contantrow=mysql_fetch_array($contsql)){
+//	 $contant[]=$contantrow;
+//}
+//return $contant;	
+//}		
+//}
+//}
+//                    
+?>

@@ -1,0 +1,25 @@
+<?php
+$this->headLink()->prependStylesheet($this->basePath() . '/assets/lib/CLEditor1_4_3/jquery.cleditor.css');
+
+$this->headScript()->prependFile($this->basePath() . '/assets/lib/CLEditor1_4_3/jquery.cleditor.min.js');
+ ?>
+<div id="top"><?= $this->partial('layout/admin_top_menu', array('tittle' => 'Add new Protect')); ?></div>
+<div id="left"> <?= $this->partial('layout/left-menu', array('protect' => 'active')); ?></div> 
+<div id="content"> 
+    <div class="outer">
+        <div class="inner">
+            <?php
+            $form = $this->form;
+            $form->setAttribute('action', $this->url('admin/protect', array('action' => 'add')));
+            $form->prepare();
+
+            echo $this->form()->openTag($form);
+            echo $this->formCollection($form);
+            echo $this->form()->closeTag();
+            ?>
+        </div>
+    </div>
+</div>
+<?php $this->inlineScript()->captureStart() ?>
+$(function() {    $("textarea").cleditor(); });
+<?php $this->inlineScript()->captureEnd() ?>

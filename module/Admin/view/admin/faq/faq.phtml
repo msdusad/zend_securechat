@@ -1,0 +1,33 @@
+<?php echo $this->headLink()->prependStylesheet($this->basePath() . '/assets/css/rituals.css');?>
+<?= $this->partial('layout/top_links'); ?>
+<div class="layout_nav">
+    <ul>
+        <li><a class="before" href="<?php echo $this->basePath('/'); ?>">Home &rsaquo; </a></li>
+        <li>Faq</li>       
+    </ul>
+</div>
+<div class="clear"></div>
+ <?php  foreach($this->faqList as $key =>$category){?>
+<h4><?php echo $key;?></h4>
+<div class="faqmain accordion">
+    
+      <?php  foreach($category as $faq){
+          echo '<h4>'.$faq['question'].'</h4>';
+             echo '<p>'.$faq['answer'].'</p>';
+      }
+?>
+    
+</div>
+ <?php }?>
+
+<?php $this->inlineScript()->captureStart() ?>
+$(function(){
+
+$( ".accordion" ).accordion();
+
+} );
+
+
+<?php $this->inlineScript()->captureEnd() ?>
+        
+       

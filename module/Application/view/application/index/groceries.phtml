@@ -1,0 +1,240 @@
+<?php 
+echo $this->headLink()->prependStylesheet($this->basePath() . '/assets/css/rituals.css')
+        ->prependStylesheet($this->basePath() . '/assets/lib/CLEditor1_4_3/jquery.cleditor.css');
+$this->headScript()->prependFile($this->basePath() . '/assets/lib/CLEditor1_4_3/jquery.cleditor.min.js');
+echo $this->partial('layout/top_links');
+require_once('config/autoload/conn.php');
+session_start();
+//session_start();
+include('functions.phtml');
+
+if($_REQUEST['command']=='add' && $_REQUEST['productid']>0){
+        $pid=$_REQUEST['productid'];
+        addtocart($pid,1);
+
+    echo "<script type='text/javascript'>window.location=document.getElementById('redirecthere').href; </script>";
+        //exit();
+    }
+   
+?>
+<html>
+    <head>
+<link rel="stylesheet" href="<?php echo $this->basePath() . '/assets/css/groceries.css';?>"/>
+ <script src="<?php echo $this->basePath() . '/assets/js/function.js';?>"></script>
+<script src="<?php echo $this->basePath() . '/assets/js/jquery.carouFredSel-6.1.0-packed.js';?>"></script>
+   <script src="<?php echo $this->basePath() . '/assets/js/tms-0.4.1.js';?>"></script>
+    
+    <script type="text/javascript"> //filter sub category////
+function showData(cat)
+{
+  var selector = '.navcontainer li';
+
+$(selector).on('click', function(){
+    $(selector).removeClass('active');
+    $(this).addClass('active');
+});
+
+     $.ajax({
+     
+          type: "POST",
+          data: { cat:cat},
+          url: "<?php echo $this->url('getdata'); ?>",
+          
+          success: function(data) 
+          {             
+              var ss=$('#hide').html(jQuery(data).find('#hide').html()); 
+              //$("#hide").html(data);  
+          }
+        });
+    
+}
+</script>
+</head>
+<body>
+<div class="layout_nav" id="brecurmsdiv">
+        <ul>
+           <!--  <li><a class="before" href="<?php //echo $this->basePath('/'); ?>">Home &rsaquo; </a></li> -->
+             <li id="menu_bredcurms"><a class="before" href="<?php echo $this->url('cremation-plans'); ?>">Cremation Planning &rsaquo;</a></li>
+            <li>Groceries</li> 
+        </ul>
+    </div>
+<div id="main_cat">
+<?php
+$qry=mysql_query("select * from grocries_filter_category");
+while($row=mysql_fetch_array($qry)){
+$id=$row[id];
+$cat_name=$row['name'];
+echo "<div  id='filterbox'><h4>$cat_name</h4><br>";
+$qry1=mysql_query("select * from grocries_filter_sub_category where category_id='$id'");
+while($row1=mysql_fetch_array($qry1)){
+  $sub_name=$row1['sub_name'];
+ echo  "<input type='checkbox' name='' value=''> $sub_name<br>";
+}
+echo "</div><br><br>";
+ 
+}
+?>
+   
+ <!-- <select class="btn btn-info" style="width:15%;" onchange="brandfilter(this.value)">
+  <option value="">Select Brand</option>
+   <option value="adidas">Brand1</option>
+   <option value="brand2">Brand2</option>
+   <option value="brand3">Brand3</option>
+</select> -->
+
+
+<!--  <select class="btn btn-info" style="width:15%;" onchange="brandfilter(this.value)">
+  <option value="">Select Price</option>
+   <option value="adidas">Brand1</option>
+   <option value="brand2">Brand2</option>
+   <option value="brand3">Brand3</option>
+</select> -->
+
+
+</div>
+
+
+<div class="container">
+<a id="redirecthere" href="<?php echo $this->url('groceries') ?>" style="display: none;"></a>
+    <div class="header" style="margin-top: 30px;background-color: white;">
+                <form  name="form1" class="form-group">
+                    <input type="hidden" name="productid" />
+                    <input type="hidden" name="command" />
+                </form>
+
+<?php 
+    $query=mysql_query("select * from categorys");
+       if($query && mysql_num_rows($query)>0)
+        { 
+?>
+<div class="navcontainer" >        
+<ul id="ajax_cat_val" class="nav nav-tabs"> 
+ 
+ <li style="float:right;" >
+            <?php
+             if(is_array($_SESSION['cart'])){
+                $max=count($_SESSION['cart']);
+                for($i=0;$i<$max;$i++){
+                    $pid=$_SESSION['cart'][$i]['productid'];
+                    $q=$_SESSION['cart'][$i]['qty'];
+                    if($q==0) continue;     
+                } } ?>
+            <a  href="<?php echo $this->url('shoppingcart');?>" class="cart" title="View Cart"><?=$i++;?></a>
+        </li>  
+        <?php
+          while($cat=mysql_fetch_array($query)){
+          $id_val=$cat['c_id'];
+        ?>
+    <li  id="<?php echo $id_val;?>"  data-interest="<?php echo $id_val; ?>">
+            <a  href="#" id="cat_val" onclick="showData('<?php echo $id_val; ?>')">
+                <?php echo $cat['c_name'];?>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;
+        </li>
+    <?php } ?>
+           
+  
+</ul>
+
+</div>
+   <?php } ?>
+   
+    
+                        
+<?php 
+    $rs=mysql_query("select * from sub_category where c_id='1' limit 8");
+    if($rs && mysql_num_rows($rs)>0)
+    {
+?>
+   <div class="submenu" id="hide">
+        <ul id="ajax_subcat_val" class="act">
+        
+        <?php
+            while($data = mysql_fetch_array($rs)){
+            $id_val= $data['c_id'];
+            $id_val1= $data['sc_id'];
+        ?> 
+            <li class="active" data-interest="<?php echo $id_val1; ?>">
+                <a  href="#" onclick="subcat('<?php echo $id_val; ?>','<?php echo $id_val1; ?>')" id="subcat_val" class="activate">
+                    <?php echo $data['sc_name'];?>
+                </a>
+            </li>
+        <?php } ?>
+         <li ><a  href="#" class="prev"></a><a href="#" class="next"></a> </li>   
+        </ul>
+    </div>
+<?php } ?>
+       
+
+<!-- <span style="float: left;margin-left: 30px;"> Filter By Brand &nbsp;&nbsp;&nbsp;&nbsp;</span>  <select class="btn btn-info" style="width:15%;" onchange="brandfilter(this.value)">
+  <option value="">Please Select</option>
+   <option value="adidas">Brand1</option>
+   <option value="brand2">Brand2</option>
+   <option value="brand3">Brand3</option>
+</select> -->
+<!-- <input type="submit" value="Search" class="btn btn-info"  onclick="searchproduct(serchbox.value);" style="position:relative;display: inline-block;">  style="float:right;margin-right:45px;" -->   
+<input id="serchbox" type="text" class="form-control" placeholder="Search all things here"  onkeyup="searchproduct(this.value);" style="width:100%;"> <!--style="float:right;text-align:center;width:50%;" -->
+         
+
+    </div>   
+ 
+<div class="filter" style="width:43.5%;">
+                    <select  class="form-control" id="country" name ="country" onchange="country_data(this.value)" >
+                        <option select="selected">Select Country</option> 
+                        <?php 
+$query=mysql_query("SELECT * FROM country");
+while($countrys=mysql_fetch_array($query))
+{ ?>
+<option value="<?php echo $countrys['id'] ;?>"><?php echo $countrys['name'] ;?></option>
+                        <?php }?>
+                    </select>
+                    <select class="form-control" name="state" id="state" onchange="state_data(country.value,this.value)">
+                        <option select="selected">Select State</option>
+                    </select>
+                    <select class="form-control" name="city" id="city" onchange="city_data(country.value,state.value,this.value)">
+                        <option select="selected">Select City</option>
+                    </select>
+                   
+            </div>  
+
+
+
+
+<div class="content-main">
+
+
+<hr id="horizental_line">
+
+    <div class="grid_view" id="pro_items">
+            <?php
+            $pro=mysql_query("select * from products");
+            while($items=mysql_fetch_array($pro)){
+                echo '<div class="col-sm-2" id="data">';
+                echo '<div id="img"><img src="data:image/jpeg;base64,'.base64_encode( $items['p_image'] ).'"></div>';
+                echo '<div class="name">'.$items['p_name'].'</div>';
+                echo'<div class="price">'.'Price : '.'&#8377; '.$items['p_price'].'</div>';
+                echo '<div class="desc">';?>
+                <input type="submit" value="Buy Now" class="btn" onclick="addtocart(<?=$items['p_id']?>)">
+                <?php echo '</div></div>';
+            } ?>
+        </div>
+    </div>
+           <!--  <div class="footer">
+                <div class="adds">
+                    <div class="row">
+                        <?php
+                       // $spon=mysql_query("select * from sponcer");
+                        //while($new=mysql_fetch_array($spon)){
+                        ?>
+                        <div class="col-sm-2" id="add_box">
+        <?php  //echo '<a href="'.( $new['link'] ).'" target="_blank"/>';    
+       // echo '<img src="data:image/jpeg;base64,'.base64_encode( $new['image'] ).'" class="image-responsive">'; 
+       // echo "</a>"; }
+        ?>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+        </div>
+        <br><br>
+    </body>
+</html>

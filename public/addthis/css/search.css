@@ -1,0 +1,637 @@
+label {
+   font-size: 14px;
+   margin: 0;
+	font-weight:normal;
+	float:left;
+	padding-top: 7px;
+   width: 35%;
+	text-align: left;
+}
+.search-fields {display:block;}
+.row { margin-left: -15px; margin-right: -15px;}
+.select-country { width:65%;}
+.select-city { width:48%; float:left}
+.view-all { font-size:14px; color:#999;}
+.view-all a {
+    border: 1px solid #f79647;
+    color: #fff;
+    padding: 4px 12px;
+    text-decoration: none;
+    border-radius: 4px; font-size:14px;
+	background:#f79647;
+}
+.view-all a:hover{
+	box-shadow: 0px 0px 3px #f79647;
+	color: #fff;
+}
+.view-all-secondbutton { font-size:14px; color:#999;}
+.view-all-secondbutton a {
+    border: 1px solid #3eac29;
+    color: #fff;
+    padding: 4px 12px;
+    text-decoration: none;
+    border-radius: 4px; font-size:14px;
+	background:#3eac29;
+}
+.view-all-secondbutton a:hover{
+	box-shadow: 0px 0px 3px #3eac29;
+	color: #fff;
+}
+
+.btn-search-page {border: 0px none; border-radius:4px; background: #f79647; color: #fff; width: 100%; font-size:14px;}
+.search-btn:hover {color: #fff; 	box-shadow: 0px 0px 3px #f79647;}
+
+  .secondbutton a{border: 1px solid #3eac29;}
+  .secondbutton a:hover{box-shadow: 0px 0px 3px #3eac29;}
+  .view-all3{ border: 1px solid #f79647;
+    color: #fff;
+    padding: 4px 12px;
+    text-decoration: none;
+    border-radius: 4px;
+	font-size:14px;
+	background:#f79647;
+  }
+  .view-all4{ border: 1px solid #3eac29;
+    color: #fff;
+    padding: 4px 12px;
+    text-decoration: none;
+    border-radius: 4px;
+	font-size:14px;
+	background:#3eac29;
+  }
+  .view-all3:hover{ 
+  box-shadow: 0px 0px 3px #f79647;
+  }
+  .view-all4:hover{ 
+  box-shadow: 0px 0px 3px #3eac29;
+  }
+  .secondbutton3{border: 1px solid #3eac29;
+    color: #fff;
+    padding: 4px 12px;
+    text-decoration: none;
+    border-radius: 4px;
+	font-size:14px;
+	background:#3eac29;
+	}
+	
+   .secondbutton3:hover{box-shadow: 0px 0px 3px #3eac29;}
+.memories-block { width: 36%;display: block; float: left; margin-left:1.5%; }
+.featured-block { width: 36%;display: block; float: left; margin-right:1.5%;}
+.adv-search-block { width:24%;display: block; float:left; border:1px solid #3eac29 ; padding-bottom:3px }
+.adv-search-block:hover {
+    border: 1px solid #3eac29;
+    box-shadow: 0 0 3px #3eac29;
+}
+.adv-search-block.second-color{width:24%;display: block; float:left; border:1px solid #f79647  ; padding-bottom:3px}
+.adv-search-block.second-color:hover{border: 1px solid #f79647;
+    box-shadow: 0 0 3px #f79647;}
+.featured-obituaries { min-height:410px; display:block; border-radius:4px; border:1px solid #f79647; }
+.featured-obituaries h3 {  color:#f79647;}
+.featured-obituaries p { font-size:12px !important; line-height:14px; width: 100%; display: table; height: 45px; padding-top:7px;}
+.abou-img {
+    float: left;
+    margin-right:0px;
+    width:100%; display: table;
+    height: 120px;
+}
+.name-para{margin:8px 0; text-align: center; word-wrap: break-word;}
+.abou-img img{ width:auto; width:100%; border-radius:5px 5px 0px 0px; } 
+.featured-memorits {  min-height:410px; display:block; border-radius:4px; border:1px solid #3eac29;}
+.featured-memorits h3 {background-color:#3eac29; color:#fff; padding:12px 5px; margin-bottom:3px; }
+.featured-memorits p { font-size:12px !important; line-height:14px; width: 100%; display: table; height:45px; padding-top:7px; }
+
+
+.adv-search-block .advance-search {min-height:405px; display:block; border-radius:4px; padding:0px 0px 3px 0px; }
+.adv-search-block >.advance-search >h3 { background-color:#424242; color:#fff;  padding: 10px 5px; text-align: center;  margin-bottom: 9px; width: 100%; 
+border-bottom:1px solid #424242 }
+	
+.advance-search .txt-height { height:28.5px; vertical-align:text-top; padding: 6px 10px;}
+.advance-search  .txt-search { padding:0px; padding: 0px 12px; }
+.advance-search .spacing { margin:7px 0px 7px 0px;}
+.con-text .spacing { margin:7px 0px 7px 0px;}
+.advance-search .search-btn  {  background: #f79647 none repeat scroll 0 0;
+								border: 1px solid #f79647;
+								border-radius: 4px;
+								color: #fff;
+								font-size: 14px;
+								padding: 4px 12px; margin-top:6px;
+								text-decoration: none; float:left; width:86%;
+								}
+								
+.search-btn-adv { background: #f79647 none repeat scroll 0 0;
+								border: 1px solid #f79647;
+								border-radius: 4px;
+								color: #fff;
+								font-size: 14px;
+								padding: 4px 12px; margin-top:6px;
+								text-decoration: none; float:left; width:90%; }
+								
+.search-obituary-btn { margin:0px -10px;}
+								
+.search-reset {float:right; margin-top:6px; }
+.search-reset:hover{ box-shadow:box-shadow: 0 0 3px #f79647; }
+.reset {width:30px; height:30px;}
+	
+.page-nation-search { min-height: 43px}	
+.search-page-desing { display:block;}
+.special-memorites { display:block; margin-top:1.2em;}
+.special-memorites .nav-tabs {
+    border: medium none;
+    margin-bottom: 0;
+}
+
+.special-memorites .nav-tabs > li {
+    background:#949494;
+    border:0px solid #538ed5;
+    border-radius:0px; 
+	color:#fff;   
+	float: left;
+    font-size: 12px;
+    font-weight: normal !important;
+    outline: medium none;
+	 font-weight: normal !important;
+    margin-bottom: 0px;
+    margin-right: 0px;
+    margin-top: 0px;
+	border-right:1px solid #fff;
+	
+}
+.special-memorites  .panel-heading { border-radius: 0px;}
+.special-memorites .nav-tabs > li { width:16.65%; color:#fff; height:32px; margin-bottom:1px; }
+.special-memorites .nav-tabs > li:hover {  background-color:#424242; color:#fff; }
+.special-memorites .nav-tabs > li a{ text-align:center;}
+.special-memorites .nav-tabs > li > a:hover, .special-memorites .nav-tabs > li > a:focus {
+	 background-color:#424242;
+	 height:32px;
+	/*  padding:4px 9% !important;
+	border:1px solid #f79647;*/
+}
+.special-memorites .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus { height:32px;}
+
+.panel-heading { padding:0px; background:#fff !important; margin-top:5px; }
+
+#fobituaries { height: 332px; margin-top:9px; margin-right:10px; margin-left:0px; }
+#fmemorials {height:332px; margin-top:9px;  margin-right:10px; margin-left:0px; }
+
+.panel-default > .panel-heading {
+    background-color:transparent;
+    border-color: transparent;
+}
+.nav-tabs > li {
+    border: 1px solid #ccc;
+    float: left;
+    font-size: 11.64px;
+    margin-bottom: -1px;
+    margin-right: 0px;
+	margin-top:-1px;
+	 border-radius:4px 4px 0px 0px;
+	 font-weight: normal !important;
+	 background: rgb(252,252,252); /* Old browsers */
+background: -moz-linear-gradient(top, rgba(252,252,252,1) 0%, rgba(224,224,224,1) 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(252,252,252,1)), color-stop(100%,rgba(224,224,224,1))); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top, rgba(252,252,252,1) 0%,rgba(224,224,224,1) 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top, rgba(252,252,252,1) 0%,rgba(224,224,224,1) 100%); /* Opera11.10+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcfcfc', endColorstr='#e0e0e0',GradientType=0 ); /* IE6-9 */
+background: linear-gradient(top, rgba(252,252,252,1) 0%,rgba(224,224,224,1) 100%); /* W3C */
+outline: none;
+}
+.nav-tabs > li > a {
+    display: block;
+    position: relative;
+    border-radius: 0px !important;
+    color: #fdfdfd;
+} 
+
+.left-pagenation{margin-top:0px;}
+.right-page{margin-top:0px;}
+.featured-obituaries:hover{ border: 1px solid #f79647; box-shadow: 0px 0px 3px #f79647;}
+.featured-memorits:hover{border: 1px solid #3eac29; box-shadow: 0px 0px 3px #3eac29;}
+.special-memory-imgs-ob:hover{box-shadow: 0px 0px 3px #f79647;}
+.special-memory-imgs-mm:hover{box-shadow: 0px 0px 3px #3eac29;}
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background-color: #ddd ;
+    border-color: #ddd #ddd transparent;
+    border-image: none;
+    border-style: solid;
+    border-width: 0px;
+    color: #fff;
+    cursor: default;
+	margin-right:0px;
+}
+
+.special-memorites .panel { border-top:0px;}
+
+.panel { margin-left: -10px;}
+
+.nav-tabs {
+    margin-bottom:0em;
+	border:none;
+}
+
+.nav-tabs > li:last-child {
+    
+}
+.memorials-bg { background:#3eac29;}
+.obituaries-bg { background:#f79647}
+.row1 {border-radius: 4px 4px 0 0;
+    margin-left: -10px;
+    margin-right: 0;
+	}
+
+.special-memory-imgs { height:160px; width:103%; border:4px solid #999; border-radius:7px; margin-bottom:10px; }
+.special-memory-imgs .special-persons { width:100%; height:122px; }
+.special-memory-imgs .special-persons img{
+    text-align: center;
+    vertical-align: middle;
+    width: 100%;
+	height:120px;
+	border-radius:5px 5px 0px 0px;
+}
+.special-memory-imgs p{ font-size:12px; text-align:center; line-height:15px; padding-top:7px; display:table; width:100%;}
+
+.page-no { width:100%}
+.page-no ul{text-align:center;}
+.pagination {
+    border-radius: 4px;
+    display: inline-block;
+    margin: 0px 0px 5px 0px;
+    padding-left: 0;
+}
+.contact {
+    text-align: center;
+}
+.contact h3 {
+  
+    margin-bottom: 0.0em;
+    padding: 10px;
+
+}
+.leftspace {margin-left:-10px !important;}
+.rightspace {float:right; width:100%; margin-right:-10px;}
+.pull-right {
+    float: right !important;
+    margin-top: 0px;
+}
+
+.container {
+    padding-left: 0px;
+    padding-right:0px;
+}
+
+.pagination > li > a, .pagination > li > span {}
+.col-lg-4 {
+    width: 33.3333%;
+}
+.form-control::-moz-placeholder {
+    color: #555;
+}
+
+.search-reset > i {
+    background:#f79647 none repeat scroll 0 0;
+    border-radius:2px;
+    color: #fff;
+    font-size: 16px;
+    padding: 7.3px 7px;
+	cursor:pointer;
+}
+
+
+.Memoria-ls .backbtn{ 
+width:49%;
+float:right;
+text-align:right !important;
+cursor: pointer;
+font-size:14px !important; text-decoration:underline; color:#fff !important;
+}
+
+.featured-obituaries .backbtn{ 
+width:49%;
+float:right;
+text-align:right !important;
+cursor: pointer;
+font-size:14px !important; text-decoration:underline; color:#fff !important;
+}
+
+.featured-memorits .backbtn{ 
+width:49%;
+float:right;
+text-align:right !important;
+cursor: pointer;
+font-size:14px !important; text-decoration:underline; color:#fff !important;
+}
+
+.backbtn:hover{ color:#fff; } 
+
+.special-memorites h3 {
+ font-size:1.4em !important;
+ font-weight:bold;
+	}
+.spl-memo { 
+	 color: #424242;
+	border-radius:4px 4px 0px 0px;
+	font-size: 1.2em !important;
+    margin-bottom:3px !important;
+    padding: 9px 5px;
+    text-align: center;
+    margin-bottom: 3px;
+    display: table;
+    width: 99%;
+	/*background: rgb(252,252,252);
+    background: -moz-linear-gradient(top, rgba(240,240,240,1) 0%, rgba(220,220,220,1) 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(240,240,240,1)), color-stop(100%,rgba(220,220,220,1)));
+    background: -webkit-linear-gradient(top, rgba(240,240,240,1) 0%,rgba(220,220,220,1) 100%);
+    background: -o-linear-gradient(top, rgba(240,240,240,1) 0%,rgba(220,220,220,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcfcfc', endColorstr='#e0e0e0',GradientType=0 );
+    background: linear-gradient(top, rgba(240,240,240,1) 0%,rgba(220,220,220,1) 100%);
+    outline: none;*/
+	}
+
+
+.page-no > ul > li.active > a{
+background-color: #f79647 !important;
+    border-color: #f79647 !important;
+}
+.panel-body {
+    min-height: 0px !important;
+	padding-top:0px 
+ 
+}
+.tab-pane {
+	margin-top: 0px !important;
+}
+li.nbs-flexisel-item {
+  /*  width: 57px !important;*/
+}
+
+.nbs-flexisel-nav-right { display:block;}
+.nbs-flexisel-nav-left { display:block;}
+.contact h3 {
+  
+
+    font-size: 1em;
+    font-weight: normal;
+    margin-bottom: 0.7em;
+    padding:7px 7px;
+    text-align: center;
+}
+.featured-obituaries h3 {
+    background: #f79647 ;
+    color: #fff;
+    font-size: 1.2em;
+    margin: 0;
+    padding: 9px 5px;
+    text-align: center;
+    margin-bottom: 3px;
+    display: table;
+    width: 100%;
+}
+
+.featured-memorits h3{
+    color: #fff;
+    font-size: 1.2em;
+    margin: 0;
+    padding: 9px 5px;
+    text-align: center;
+    margin-bottom: 3px;
+    display: table;
+    width: 100%;
+}
+.col-sm-4 {
+    width: 33.3333%;
+}
+
+p { margin: 0px ;}
+.nbs-flexisel-item img {
+    cursor: pointer;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    max-height: 100px;
+    max-width: 100px;
+    position: relative;
+    width: 100%;
+    border:4px solid #999;
+    border-radius: 4px;
+    
+}
+.special-view-all-memo {float: right; margin: 10px -7px !important; text-align: right; width:100px;}
+
+@media (max-width: 1440px) { 
+	.advance-search .search-btn { width: 84%;}
+	/*.special-memorites .nav-tabs > li a{ padding:4px 4.3% !important}*/
+}
+
+@media (max-width: 1366px) { 
+	/*.special-memorites .nav-tabs > li a{padding: 4px 1.7% !important}*/
+}
+@media (max-width: 1366px) { 
+.special-memorites .nav-tabs > li { height:32px; }
+}
+
+@media (max-width: 1280px) { 
+	.advance-search .search-btn { width: 83%;}
+}
+@media (max-width: 1200px) {
+	
+	.special-memory-imgs {
+    border: 1px solid #f79647;
+    border-radius: 7px;
+    height: 150px;
+    width: 100%;
+	}
+	.special-memory-imgs .special-persons { width:100%; height:105px;}
+	.advance-search .search-btn { width: 81%;}
+}
+@media (max-width: 1100px) { 
+	.advance-search .search-btn { width: 79%;}
+}
+
+@media (max-width: 1100px) { 
+	/*.view-all {display: block; margin-bottom: 21px;}
+	.view-all-secondbutton {display: block; margin-bottom: 21px; }*/
+	
+}
+
+@media (max-width: 991px) {
+	
+	.special-memory-imgs {
+    border: 7px solid #999;
+    border-radius: 7px;
+    height: 160px;
+    width: 100%;
+	}
+	.featured-obituaries { min-height: 421px;}
+	.featured-obituaries h3 {padding: 17px 5px;}
+	.featured-memorits h3 {padding: 17px 5px;}
+	.featured-memorits { min-height: 421px;}
+	#fobituaries { height: 330px;}
+	#fmemorials {height: 330px;}
+	.special-memory-imgs .special-persons { width:100%; height:75px;}
+	.special-memorites .nav-tabs > li { height:42px; }
+	.special-memorites .nav-tabs > li > a:hover, .special-memorites .nav-tabs > li > a:focus {
+	 height:42px;
+	}
+.special-memorites .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus { height:42px;}
+.search-btn-adv { width: 87%;}
+.advance-search .search-btn { margin-top: 3px;}
+.search-reset { margin-top:6px;}
+.master-page .search-reset { margin-top:3px;}
+}
+@media (max-width: 800px) {
+	.search-btn-adv { width: 86%;}
+}
+
+
+@media (max-width: 768px) {
+	
+	.search-items-space { margin-bottom:10px; display: table;}
+	.abou-img img{ width:auto; width:100%; } 
+	.contact h3 {
+    font-size: 1.2em;
+    margin-bottom: 0.5em;
+	}
+	.special-memory-imgs { height:200px;}
+	.special-memory-imgs .special-persons img { height:150px;}
+	.featured-obituaries { min-height: 430px;}
+	.featured-memorits { min-height: 430px;}
+	.search-btn-adv { width: 87%;}
+
+}
+
+@media (max-width: 767px) { 
+.col-xs-12 {width:100%; } 
+.search-btn-adv {
+    width: 95%;
+}
+.recently-added { width:50%;}
+.causeof-death { width:50%;}
+}
+
+
+@media (max-width: 760px) {	
+.memories-block { width:99%;display: block; float: left; margin-left:0%; }
+.featured-block { width:99%;display: block; float: left; margin-right:1%;}
+.adv-search-block { width:99%;display: block; float:left; margin:1% 0%;}
+.select-country {
+    width: 100%;
+}
+.search-btn-adv { width: 85%;}
+.advance-search .search-btn { width:95%;}
+.search-btn-adv {
+    width: 95%;
+}
+}
+@media (max-width: 700px) {
+	.search-btn-adv { width: 94%;}
+}
+
+@media (max-width: 600px) {
+.advance-search .search-btn { width:93%;}
+.special-memorites .nav-tabs > li { width:24.95%; height:42px;}
+.special-memorites .nav-tabs > li > a:hover, .special-memorites .nav-tabs > li > a:focus { height:42px;}
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {  height:42px; color:#fff;}
+.search-btn-adv { width: 93%;}
+}
+@media (max-width: 500px) { 
+.search-btn-adv { width: 92%;}
+}
+
+@media (max-width: 450px) {
+	.advance-search .search-btn { width:91%;}
+	.special-memory-imgs { height:170px;}
+	.special-memory-imgs .special-persons img { height:120px;}
+}
+@media (max-width: 400px) { 
+.search-btn-adv { width: 90%;}
+}
+@media (max-width: 360px) {
+.special-memory-imgs { height:150px;}
+.special-memory-imgs .special-persons img { height:100px;}
+}
+
+@media (max-width: 340px) {
+.advance-search .search-btn { width:90%;}
+.special-memory-imgs { height:130px;}
+.special-memory-imgs .special-persons img { height:80px;}
+}
+
+@media (max-width: 320px) {
+.special-memory-imgs { height:110px;}
+.special-memory-imgs .special-persons img { height:60px;}
+}
+
+.Memoria-ls{ width:30%; }
+.Memoria-ls h3{ color: #f79647; font-size: 1.2em; margin:7px; 0px;  } 
+.Memoria-ls h3 strong{ color: #000;}
+.Memoria-ls h3 span{cursor: pointer;}
+.search-items-space { margin-top: 15px;}
+.feature-obitury-img{ border:1px solid #f79647; margin-top:10px; border-radius: 7px; width:105%; height:165px;}
+.feature-obitury-img .abou-img {
+    display: table;
+    float: left;
+    height: 120px;
+    margin-right: 0;
+    width: 100%;
+}
+
+.feature-obitury-img p  {
+    display: table;
+    font-size: 12px !important;
+    height: 35px;
+    line-height: 15px;
+    padding-top: 5px;
+    width: 100%;
+}
+
+
+.feature-memories-img{ border:1px solid #3eac29; margin-top:10px; border-radius: 7px; width:105%; height:165px; }
+.feature-memories-img .abou-img {
+    display: table;
+    float: left;
+    height: 120px;
+    margin-right: 0;
+    width: 100%;
+}
+
+.feature-memories-img p  {
+    display: table;
+    font-size: 12px !important;
+    height: 35px;
+    line-height: 15px;
+    padding-top: 5px;
+    width: 100%;
+}
+.special-obi-memo-tab1 { background:#e7e7e7; padding:5px 20px; color:#aaa; font-size:14px;}
+.special-obi-memo-tab1.active { background:#f79647; color:#fff;}
+
+.special-obi-memo-tab2 { background:#e7e7e7; padding:5px 20px; color:#aaa; font-size:14px;}
+.special-obi-memo-tab2.active { background:#3eac29; color:#fff;}
+.special-memorites .left-pagenation { text-align:center}
+
+
+.ui-widget-content li{ list-style:none; }
+.ui-state-hover, .ui-widget-content .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus { border:none; background:none; 
+ font-weight: normal; color: #212121; outline: none; padding-left:3px; text-decoration:none; }
+
+
+#atozfilter > ul {
+    margin:0px auto;
+    margin-top: 6px;
+	display:table;
+	padding:0px;
+}
+#atozfilter > ul li {
+    margin-top: 6px;
+}
+#atozfilter{display:table; width:100%;}
+.atozli.active {
+    background: #ccc;
+    padding: 0px 7px 0px;
+}
+
+
+.form-control{ height: 30px;
+padding: 2px 7px;}

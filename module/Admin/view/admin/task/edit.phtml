@@ -1,0 +1,24 @@
+<div id="top"><?= $this->partial('layout/admin_top_menu', array('tittle' => 'Edit Category')); ?></div>
+<div id="left"> <?= $this->partial('layout/left-menu', array('tasks' => 'active')); ?></div> 
+<div id="content"> 
+    <div class="outer">
+        <div class="inner">
+
+            <?php
+            $form = $this->form;
+            $form->setAttribute('action', $this->url('admin/tasks', array('action' => 'edit', 'id' => $this->id)));
+            $form->prepare();
+
+            echo $this->form()->openTag($form);
+            echo $this->formHidden($form->get('id'));
+            echo $this->formLabel($form->get('category_id'));
+            echo $this->formSelect($form->get('category_id'));
+            echo $this->formRow($form->get('title'));
+            echo $this->formRow($form->get('description'));
+             echo $this->formHidden($form->get('user_id'));
+            echo $this->formSubmit($form->get('submit'));
+            echo $this->form()->closeTag();
+            ?>
+        </div>
+    </div>
+</div>

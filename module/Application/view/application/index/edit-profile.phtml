@@ -1,0 +1,1989 @@
+<?php 
+//echo "ssssssssssss"; exit;
+  if($edit_obisurie == $death_user->obituary1){
+        $edit_vale = $death_user['obituary'];
+	  }elseif(empty($death_user->obituary)){
+        $edit_vale = $edit_obisurie;
+	  }else{
+		 $edit_vale = $edit_obisurie;
+	  }
+?>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+ <script src="<?php echo $this->basePath() . '/js/mobiscroll.core.js';?>"></script>
+    <script src="<?php echo $this->basePath() . '/js/mobiscroll.frame.js';?>"></script>
+    <script src="<?php echo $this->basePath() . '/js/mobiscroll.scroller.js';?>"></script>
+
+    <script src="<?php echo $this->basePath() . '/js/mobiscroll.util.datetime.js';?>"></script>
+    <script src="<?php echo $this->basePath() . '/js/mobiscroll.datetimebase.js';?>"></script>
+    <script src="<?php echo $this->basePath() . '/js/mobiscroll.datetime.js';?>"></script>
+    <script src="<?php echo $this->basePath() . '/js/mobiscroll.select.js';?>"></script>
+    <script src="<?php echo $this->basePath() . '/assets/lib/gldatepicker/glDatePicker.js';?>"></script>
+    <script src="<?php echo $this->basePath() . '/js/mobiscroll.frame.sense-ui.js';?>"></script>
+    <script src="<?php echo $this->basePath() . '/js/mobiscroll.mobiscroll-dark.js';?>"></script>
+    <script src="<?php echo $this->basePath() . '/js/i18n/mobiscroll.i18n.en-UK.js';?>"></script>
+   <?php
+
+$this->headLink()
+
+        // ->prependStylesheet($this->basePath() . '/assets/lib/gldatepicker/css/glDatePicker.flatwhite.css')
+
+        ->prependStylesheet($this->basePath() . '/assets/lib/gldatepicker/css/glDatePicker.default.css')
+
+        ->prependStylesheet($this->basePath() . '/assets/css/ui.css')  
+
+        ->prependStylesheet($this->basePath() . '/assets/player/video-js.css');
+
+
+
+$this->headScript()
+
+        ->prependFile($this->basePath() . '/assets/lib/gldatepicker/glDatePicker.js')
+
+        ->prependFile($this->basePath() . '/assets/player/video.js');
+
+?>
+
+    <link href="<?php echo $this->basePath() . '/css/mobiscroll.animation.css';?>" rel="stylesheet" type="text/css" />
+    <link href="<?php echo $this->basePath() . '/css/mobiscroll.icons.css';?>" rel="stylesheet" type="text/css" />
+    <link href="<?php echo $this->basePath() . '/css/mobiscroll.frame.css';?>" rel="stylesheet" type="text/css" />
+    <link href="<?php echo $this->basePath() . '/css/mobiscroll.frame.sense-ui.css';?>" rel="stylesheet" type="text/css" />
+    <link href="<?php echo $this->basePath() . '/css/mobiscroll.scroller.css';?>" rel="stylesheet" type="text/css" />
+    <link href="<?php echo $this->basePath() . '/css/mobiscroll.image.css';?>" rel="stylesheet" type="text/css" />
+
+    <link href="<?php echo $this->basePath() . '/css/mobiscroll.mobiscroll-dark.css';?>" rel="stylesheet" type="text/css" />
+     <link href="<?php echo $this->basePath() . '/assets/lib/gldatepicker/css/glDatePicker.default.css';?>" rel="stylesheet" type="text/css" />
+<script>
+function morefunction(){
+var pathname = window.location.pathname; // Returns path only
+var url = window.location.href; 
+document.getElementById("all").style.display="none"; 
+document.getElementById("editmore").style.display="block";
+
+}
+$(document).ready(function () {   
+$("#readmorebutton").click(function(){
+$( "#dialog" ).dialog({
+   width: 600,
+height: 650});
+});
+});
+
+</script>
+<style type="text/css">
+.dwl{
+top: -13px !important;
+}
+.dwhl .dwl{
+	display: block;
+}
+</style>
+<?php 
+if(count($edu_result)>0)
+  {
+	  
+    foreach($edu_result as $value)
+			{
+			    if($value[meta_key]=='school'){
+				  $school11=$value[meta_value];
+				$school = explode(',',$school11);
+				}else if($value[meta_key]=='college'){ 
+				  $college11=$value[meta_value];
+				  $college = explode(',',$college11);
+				}else if($value[meta_key]=='university'){        
+				  $university11=$value[meta_value];
+				  $university = explode(',',$university11);
+				  
+				
+				  
+				}else if($value[meta_key]=='others'){        
+				  $other11=$value[meta_value];  
+				   $other = explode(',',$other11);
+				}else if($value[meta_key]=='guest_email1'){        
+				  $guest_email1=$value[meta_value]; 
+				}else if($value[meta_key]=='guest_email2'){        
+				  $guest_email2=$value[meta_value];
+				}else if($value[meta_key]=='guest_pass1'){        
+				  $guest_pass1=$value[meta_value];
+				}else if($value[meta_key]=='guest_pass2'){        
+				  $guest_pass2=$value[meta_value];
+				}else if($value[meta_key]=='guest_offr1'){        
+				  $guest_offr1=$value[meta_value];
+				}else if($value[meta_key]=='guest_offr2'){        
+				  $guest_offr2=$value[meta_value];
+				}else if($value[meta_key]=='guest_msg1'){        
+				  $guest_msg1 =$value[meta_value];
+				}else if($value[meta_key]=='guest_msg2'){        
+				  $guest_msg2=$value[meta_value];  	
+               }else if($value[meta_key]=='employer'){
+			  $employer = $value[meta_value];
+			  }else if($value[meta_key]=='employment_history'){
+               $employement = $value[meta_value];
+			   }elseif($value[meta_key]=='professionals'){
+			  $professionals = $value[meta_value];
+			  }elseif($value[meta_key]=='personal'){
+			  $personal = $value[meta_value];
+			  }elseif($value[meta_key]=='qualities'){
+			  $qualities = $value[meta_value];
+			 } elseif($value[meta_key]=='relationship'){
+			  $relationship = $value[meta_value];
+			 } elseif($value[meta_key]=='influence'){
+			  $influence = $value[meta_value];
+			   }elseif($value[meta_key]=='refrance'){
+			  $refrance = $value[meta_value];
+			 } elseif($value[meta_key]=='social'){
+			  $social = $value[meta_value];
+			  }elseif($value[meta_key]=='link'){
+			  $link = $value[meta_value];
+				  }
+			}
+			
+			
+			 
+			
+}
+  
+?>
+<script>
+function privacyDivFn() {
+	var url = window.location.href;
+	var turl=url.split("&");
+	var tturl=turl[0].split('?');
+	if (tturl.length>1) {
+		window.location.href=turl[0]+'&pos=privacy';
+		
+	}else {
+		window.location.href=turl[0]+'?pos=privacy';
+	}
+	
+	//$("#privacyDiv").show();
+//$("#newDiv").hide();
+}
+function hidePrivacytab() {
+	//var url = window.location.href;
+	//var turl=url.split("&");
+	history.go(-1);
+	//window.location.href=turl+'pos=privacy';
+	//$("#privacyDiv").hide();
+	//$("#newDiv").show();
+}
+jQuery(document).ready(function ($) { 
+// Time demo initialization
+$('#death_time').mobiscroll().time({
+  theme: 'mobiscroll-dark',     // Specify theme like: theme: 'ios' or omit setting to use default 
+  mode: 'scroller',       // Specify scroller mode like: mode: 'mixed' or omit setting to use default 
+  display: 'modal', // Specify display mode like: display: 'bottom' or omit setting to use default 
+  lang: 'en'
+  //houtText: 'Hours'        // Specify language like: lang: 'pl' or omit setting to use default 
+});
+                
+$(".radGroup1").click(function(){
+$(".set-new-function").css('display','block');
+});
+
+// this one for first add more femily
+var max_fields      = 25; //maximum input boxes allowed
+var wrapper         = $(".input_fields_wrap"); //Fields wrapper
+var add_button      = $(".add_field_button"); //Add button ID
+
+ //initlal text box count
+var x = 4;
+$(add_button).click(function(e){ //on add input button click
+	e.preventDefault();
+	x=4;
+	$(".selectServ").each(function () {
+		$(this).removeAttr("name");
+		$(this).attr("name",x+"[type]");	
+		//alert($(this).parent());
+		$(this).parent().siblings("div").find('.firstnameServ').removeAttr("name");
+		$(this).parent().siblings("div").find('.firstnameServ').attr("name",x+"[first_name]");
+		$(this).parent().siblings("div").find('.lastnameServ').removeAttr("name");
+		$(this).parent().siblings("div").find('.lastnameServ').attr("name",x+"[last_name]");
+		$(this).parent().siblings("div").find('.middlenameServ').removeAttr("name");
+		$(this).parent().siblings("div").find('.middlenameServ').attr("name",x+"[middle_name]");
+		x++;
+	});
+	if (x<=max_fields) {
+		$(wrapper).append('<div><div class="form-group mar_rght1"><select class="my-control2 fon_select  form-controls demoae selectServ" name="'+x +'[type]"><option>Survived By</option><option value="Cushion">Cushion</option><option value="brother">Brother</option><option value="boyfriend">Boyfriend</option><option value="bride">Bride</option><option value="Children">Children</option><option value="cousin">Cousin</option><option value="dad">Dad</option><option value="daughter">Daughter</option><option value="father">Father</option><option value="father-in-law">Father-in-law</option><option value="fiancé">Fiancé</option><option value="fiancée">Fiancée</option><option value="friend">Friend</option><option value="girlfriend">Girlfriend</option><option value="godchild">Godchild</option><option value="godfather">Godfather</option><option value="godmother">Godmother</option><option value="grandchild,">Grandchild,</option><option value="grandchildren">Grandchildren</option><option value="granddaughter">Granddaughter</option><option value="grandfather">Grandfather</option><option value="granddad">Granddad</option><option value="grandpa">Grandpa</option><option value="grandmother">Grandmother</option><option value="grandma">Grandma</option><option value="grandson">Grandson</option><option value="great-grandparents">Great-grandparents</option><option value="groom">Groom</option><option value="half-brother">Half-brother</option><option value="husband">Husband</option><option value="mother">Mother</option><option value="mother-in-law">Mother-in-law</option><option value="mummy">Mummy</option><option value="mom ">Mom </option><option value="nephew">Nephew</option><option value="niece">Niece</option><option value="parent">Parent</option><option value="parents">Parents</option><option value="sister">Sister</option><option value="son">Son</option><option value="stepbrother">Stepbrother</option><option value="twin">Twin</option><option value="twin-brother">Twin-brother</option><option value="uncle">Uncle</option><option value="wife">Wife</option></select></div><div  class="form-group mar_rght1"><input type="text" placeholder="First name"  name="'+ x +'[first_name]" class="my-controling set_width firstnameServ" required="required"></div><div class="form-group mar_rght1"><input type="text" placeholder="Last name" name="'+ x +'[last_name]" class="my-controling set_width lastnameServ" required="required"></div><div class="form-group mar_rght1"><input type="text" placeholder="Middle name" name="'+ x +'[middle_name]" class="my-controling set_width middlenameServ" required="required"></div><a href="#" class="remove_field"><i class="glyphicon glyphicon-remove" style="float: right; padding-top: 12px; color: rgb(224, 0, 24);"></i></a></div></div>'); //add input box
+	}
+});
+$(wrapper).on("click",".remove_field", function(e){ //user click on remove text
+	e.preventDefault();
+	var y=4;
+	$(this).parent('div').remove();
+	x--;
+	$(".selectServ").each(function () {
+		if (y<=x) {
+			$(this).removeAttr("name");
+			$(this).attr("name",y+"[type]");	
+			$(this).parent().siblings("div").find('.firstnameServ').removeAttr("name");
+			$(this).parent().siblings("div").find('.firstnameServ').attr("name",y+"[first_name]");
+			$(this).parent().siblings("div").find('.lastnameServ').removeAttr("name");
+			$(this).parent().siblings("div").find('.lastnameServ').attr("name",y+"[last_name]");
+			$(this).parent().siblings("div").find('.middlenameServ').removeAttr("name");
+			$(this).parent().siblings("div").find('.middlenameServ').attr("name",y+"[middle_name]");
+			y++;
+		}
+	}); 
+})
+
+//End first add more family
+// Predeceased add more family
+var max_fields11      = 25; //maximum input boxes allowed
+var wrapper11         = $(".input_fields_wrap11"); //Fields wrapper
+var add_button11      = $(".add_field_button11"); //Add button ID
+
+var z= 4; //initlal text box count
+$(add_button11).click(function(e){ //on add input button click
+e.preventDefault();
+z=4;
+	$(".selectPreDe").each(function () {
+		$(this).removeAttr("name");
+		$(this).attr("name",z+"[type]");	
+		//alert($(this).parent());
+		$(this).parent().siblings("div").find('.firstnamePreDe').removeAttr("name");
+		$(this).parent().siblings("div").find('.firstnamePreDe').attr("name",z+"[first_name]");
+		$(this).parent().siblings("div").find('.lastnamePreDe').removeAttr("name");
+		$(this).parent().siblings("div").find('.lastnamePreDe').attr("name",z+"[last_name]");
+		$(this).parent().siblings("div").find('.middlenamePreDe').removeAttr("name");
+		$(this).parent().siblings("div").find('.middlenamePreDe').attr("name",z+"[middle_name]");
+		z++;
+	});
+	if (z<=max_fields11) {
+		$(wrapper11).append('<div class=""><div class="form-group mar_rght "><select class="my-control2  fon_select form-controls demoae selectPreDe" name="'+z +'[type]"><option>Predeceased By</option><option value="Cushion">Cushion</option><option value="brother">Brother</option><option value="boyfriend">Boyfriend</option><option value="bride">Bride</option><option value="Children">Children</option><option value="cousin">Cousin</option><option value="dad">Dad</option><option value="daughter">Daughter</option><option value="father">Father</option><option value="father-in-law">Father-in-law</option><option value="fiancé">Fiancé</option><option value="fiancée">Fiancée</option><option value="friend">Friend</option><option value="girlfriend">Girlfriend</option><option value="godchild">Godchild</option><option value="godfather">Godfather</option><option value="godmother">Godmother</option><option value="grandchild,">Grandchild,</option><option value="grandchildren">Grandchildren</option><option value="granddaughter">Granddaughter</option><option value="grandfather">Grandfather</option><option value="granddad">Granddad</option><option value="grandpa">Grandpa</option><option value="grandmother">Grandmother</option><option value="grandma">Grandma</option><option value="grandson">Grandson</option><option value="great-grandparents">Great-grandparents</option><option value="groom">Groom</option><option value="half-brother">Half-brother</option><option value="husband">Husband</option><option value="mother">Mother</option><option value="mother-in-law">Mother-in-law</option><option value="mummy">Mummy</option><option value="mom ">Mom </option><option value="nephew">Nephew</option><option value="niece">Niece</option><option value="parent">Parent</option><option value="parents">Parents</option><option value="sister">Sister</option><option value="son">Son</option><option value="stepbrother">Stepbrother</option><option value="twin">Twin</option><option value="twin-brother">Twin-brother</option><option value="uncle">Uncle</option><option value="wife">Wife</option></select></div><div  class="form-group mar_rght"><input type="text" placeholder="First name"  name="'+ z +'[first_name]" class="my-controling set_width firstnamePreDe" required="required"></div><div class="form-group mar_rght"><input type="text" placeholder="Last name" name="'+ z +'[last_name]" class="my-controling set_width lastnamePreDe" required="required"></div><div class="form-group mar_rght"><input type="text" placeholder="Middle name" name="'+ z +'[middle_name]" class="my-controling set_width middlenamePreDe" required="required"></div><a href="#" class="remove_field11"><i class="glyphicon glyphicon-remove" style="float: right; padding-top: 12px; color: rgb(224, 0, 24);"></i></a></div>'); //add input box
+	}
+});
+
+<!--<a href="#" class="remove_field11">Remove</a>-->
+$(wrapper11).on("click",".remove_field11", function(e){ //user click on remove text
+	e.preventDefault(); 
+	var y=4;
+	$(this).parent('div').remove();
+	z--;
+	$(".selectPreDe").each(function () {
+		if (y<=z) {
+			$(this).removeAttr("name");
+			$(this).attr("name",y+"[type]");	
+			$(this).parent().siblings("div").find('.firstnamePreDe').removeAttr("name");
+			$(this).parent().siblings("div").find('.firstnamePreDe').attr("name",y+"[first_name]");
+			$(this).parent().siblings("div").find('.lastnamePreDe').removeAttr("name");
+			$(this).parent().siblings("div").find('.lastnamePreDe').attr("name",y+"[last_name]");
+			$(this).parent().siblings("div").find('.middlenamePreDe').removeAttr("name");
+			$(this).parent().siblings("div").find('.middlenamePreDe').attr("name",y+"[middle_name]");
+			y++;
+		}
+	}); 
+})
+
+
+// End of Predeceased add more family
+
+
+
+$('#more_realtion').click(function(){
+$('#add_new').css('display','block');
+
+});
+$('.btn2').hover(function() {
+$('#new_warring').css('display','block');        
+});
+
+$('#more_realtion1').click(function(){
+//$('#more_realtion').css('display','none');
+$('#add_new1').css('display','block');
+
+});
+
+jQuery(function(){
+ jQuery('.datetimepicker6').datetimepicker({
+  format:'Y/m/d',
+  onShow:function( ct ){
+   this.setOptions({
+    maxDate:jQuery('.datetimepicker7').val()?jQuery('.datetimepicker7').val():false
+   })
+  },
+  timepicker:false
+ });
+ jQuery('.datetimepicker7').datetimepicker({
+  format:'Y/m/d',
+  onShow:function( ct ){
+   this.setOptions({
+    minDate:jQuery('.datetimepicker6').val()?jQuery('.datetimepicker6').val():false
+   })
+  },
+  onChangeDateTime:function(dp,$input){
+  	var start=jQuery('.datetimepicker6').val();
+   var end=$input.val();
+   var styear=start.split('/');
+   var endyear=end.split('/');
+   var years=endyear[0]-styear[0];
+   var selyear='';
+   if (years<18) {
+   	selyear='< 18';
+   }
+   if (years>18 && years<21) {
+   	selyear='< 21';
+   }
+    if (years>21 && years<25) {
+   	selyear='21+';
+   }
+    if (years>25 && years<30) {
+   	selyear='25+';
+   }
+    if (years>30 && years<35) {
+   	selyear='30+';
+   }
+    if (years>35 && years<40) {
+   	selyear='35+';
+   }
+    if (years>40 && years<45) {
+   	selyear='40+';
+   }
+    if (years>45 && years<50) {
+   	selyear='45+';
+   }
+    if (years>50 && years<55) {
+   	selyear='50+';
+   }
+    if (years>55 && years<60) {
+   	selyear='55+';
+   }
+    if (years>60 && years<65) {
+   	selyear='60+';
+   }
+    if (years>65 && years<70) {
+   	selyear='65+';
+   }
+    if (years>70 && years<75) {
+   	selyear='70+';
+   }
+    if (years>75 && years<80) {
+   	selyear='75+';
+   }
+    if (years>80 && years<85) {
+   	selyear='80+';
+   }
+    if (years>85 && years<90) {
+   	selyear='85+';
+   }
+    if (years>90 && years<95) {
+   	selyear='90+';
+   }
+    if (years>95 && years<100) {
+   	selyear='95+';
+   }
+    if (years>100) {
+   	selyear='100+';
+   }
+    //alert(selyear);
+    var objSelect = document.getElementById("age");
+    setSelectedValue(objSelect, selyear);
+  },
+  timepicker:false
+ });
+});
+
+
+function setSelectedValue(selectObj, valueToSet) {
+	
+    for (var i = 0; i < selectObj.options.length; i++) {
+    	//alert(selectObj.options[i].value);
+        if (selectObj.options[i].value== valueToSet) {
+        	
+            selectObj.options[i].selected = true;
+            return;
+        }
+    }
+}
+$('#radiofirst').click(function() {
+$('#MyaccountDiv').hide();
+$('#newDiv').show();        
+});
+$('#radiosecond').click(function() {
+$('#newDiv').hide();
+$('#MyaccountDiv').show();
+});
+
+$('#draft_but').click(function() {
+var doo = $('.draft').removeAttr('required');	
+});
+
+$('#morebut').click(function(){
+$('#all').css('display','none');
+$('#moress').css('display','block');   
+
+});
+
+$('#maintab').click(function(){
+$('#moress').css('display','none');
+$('#all').css('display','block');  	
+});
+
+$('.test img').click(function() {
+var img = $(this).attr('src');
+$('#change').attr("src",img);
+});
+
+
+$('.greetings img').click(function() {
+var imagecount = $('#appendimg img').length;
+if(imagecount==10){	
+alert("Offering can be done only 10");
+}
+else {
+var img = $(this).attr('src');
+//$('#greet').attr("src",img);
+$('#appendimg').append("<div style='float:left'><img  class='user-img bot' src="+img+" /><i class='fa fa-times cross' onclick='removeimg(this)'></i></div>");
+var offerimg=$("#offerimg").val();
+if (offerimg!="") {
+	$("#offerimg").val(offerimg+","+img);
+}else {
+	$("#offerimg").val(img);
+}
+
+}
+});
+
+$('.tributesgreetings img').click(function() {
+var imagecount = $('#tributeappendimg img').length;
+if(imagecount==10){	
+alert("Offering can be done only 10");
+}
+else {
+var img = $(this).attr('src');
+//$('#greet').attr("src",img);
+$('#tributeappendimg').append("<div style='float:left'><img  class='user-img bot' src="+img+" /><i class='fa fa-times cross' onclick='removeimg(this)'></i></div>")
+}
+});
+
+$('#suggestions').click(function() {
+$('#mydonations').hide();
+$('#suggestion').show();        
+});
+$('#donations').click(function() {
+$('#suggestion').hide();
+$('#mydonations').show();
+});
+
+
+});
+function removeimg(e) {
+	$(e).siblings().remove();
+	$(e).remove();
+}
+function selectCauseerror() {
+	var cause = $('#death_cause').val();
+	if(cause=="Murder"){
+		alert("Please dont specify the Details");
+		return false;
+	}else{
+		return true;
+	}
+}
+function checkamount() {
+ var amount=$("#suggamount").val();
+ if (parseInt(amount)>100) {
+	$("#securitycard").show();
+}else {
+	$("#securitycard").hide();
+	}
+}	
+$(document).ready(function () {
+	  var dates = [];
+
+        var obj = $.parseJSON('<?php echo $this->dates; ?>');
+
+        for (var key in obj) {
+
+
+
+            dates.push({
+
+                date: new Date(key),
+
+                data: {message: obj[key]},
+
+                repeatMonth: false
+
+            });
+
+        }
+
+	 
+
+	$("#selectLang").click(function(e){
+	
+        if($("#selectLang").attr("disabled")) {
+        	e.preventDefault();  
+        	$("#msgdialog").html("<p style='font-size:25px'>First save the 'Info' then select languages</p>");
+        	//alert("First save the 'Info' then select languages");
+        	$("#msgdialog").dialog();
+              
+        }        
+    });  
+
+$('.inputs').hover( function() {
+        $(this).attr('title').fadeIn(300);
+    }, function() {
+        $(this).attr('title').fadeOut(100);
+    });
+
+});
+
+
+</script>
+<?php echo $this->partial('partial/breadcrumb.phtml',array('message'=>$message)); ?>
+<div class="section-band">
+  <div class="col-md-4 border-right text-center">
+    <?php 
+
+				if(sizeof($result_thmb2)>0){			
+			foreach($result_thmb2 as $result2){
+				
+				$doc_name2 = $result2['image_url'];
+				
+				$path2 = '/../module/Application/assets/images/'.$deathuserid.'/'.$doc_name2;
+			
+				$src2 = $this->basepath().$path2;
+			?>
+			<a href="<?php echo $this->url('uploadd');?>">
+			<div id="back"></div>
+			<img id='change' class="user-img" height='500px' width='100%' src='<?php echo $src2;?>' style="position:absolute; top:0;left:0px; z-index:0;" />
+		
+			<p class="set-thumb" style="cursor:pointer; text-decoration:none;left: 170px;
+    margin-top: -75px;
+    position: absolute;">Deceased's Profile Name<span class="set-band" >Date: Oct 2,1869-Jan 30,1948</span></p>    
+			<!--<img class="img-responsive" src="images/user.png" />-->
+		</a>
+			<?php	
+break;				
+			}
+			}else{
+?>
+<a href="<?php echo $this->url('uploadd');?>">
+			<div id="back">
+            </div>
+           
+				<img id='change' class="user-img" height='500px' width='100%' src="images/user.png" style="position:absolute; top:0;left:0px; z-index:0;"/>
+         <p class="set-thumb" style="text-decoration:none;left: 170px;
+    margin-top: -75px;
+    position: absolute;">Deceased's Profile Name<span class="set-band" >Date: Oct 2,1869-Jan 30,1948</span></p>        
+		</a>
+<?php			
+			}?>
+   
+    <div class="col-md-12 col-sm-12 the-controlling-images">
+    <div class='test' style="">
+
+<?php
+
+$count = count ( $result_thmb );
+if ($count > 0) {
+	foreach ( $result_thmb as $result ) {
+		$ext = $result ['extension'];
+		$doc_name = $result ['image_url'];
+		$path = '/../module/Application/assets/images/'.$deathuserid.'/'.$doc_name;
+		$src = $this->basepath () . $path;
+		?>
+<img class="inputs" src='<?php echo $src;?>' />
+<?php }}?>
+<?php
+
+$path = '/addthis/images/imagenouser.png';
+for($i = $count; $i < 8; $i ++) {
+	?>
+<img class='inputs' src='<?php echo $this->basepath(). '/addthis/images/imagenouser.png';?>' />
+<?php } ?>
+
+
+</div>
+</div>
+   <!-- <div class="back_border">Add Audio, Video and Images</div>-->
+    <select class="demoa  form-controls">
+      <option>Rest in Peace</option>
+      <option>R.I.P.</option>
+      <option>We miss you</option>
+      <option>Love you Forever</option>
+      <option>You won't be forgotten</option>
+      <option>You will always be in our hearts</option>
+      <option>Whereever you are, we love you</option>
+    </select>
+       <div class="offertings-block">  
+     <div class="set-img left-img1">
+      <a href="<?php echo $this->url('third');?>">
+       <img class="img-responsive" src="addthis/images/mala-2.png" /> 
+      </a>
+    </div>
+    <div class="greetings">
+    				<p> Offerings </p>
+    				<div class="offering-row1">
+                    <img src="<?php echo $this->basepath(). "/addthis/images/candlee.jpg";?>" class="inputs" title='count:1'>
+                    <img src="<?php echo $this->basepath(). "/addthis/images/diya1.jpg";?>" class="inputs" title='count:1'>
+                    <img src="<?php echo $this->basepath(). "/addthis/images/thali.jpg";?>" class="inputs" title='count:1'>
+                    <img src="<?php echo $this->basepath(). "/addthis/images/wreath.jpg";?>" class="inputs" title='count:1'>
+                    </div>
+                    <div class="offering-row1">
+                    <img src="<?php echo $this->basepath(). "/addthis/images/namste-offering.jpg";?>" class="inputs" title='count:1'>
+                    <img src="<?php echo $this->basepath(). "/addthis/images/ome-offering.jpg";?>" class="inputs" title='count:1'>
+					<img src="<?php echo $this->basepath(). "/addthis/images/dove.png";?>" class="inputs" title='count:1'>
+                    <img src="<?php echo $this->basepath(). "/addthis/images/dayofdeath.png";?>" class="inputs" title='count:1'>
+                    
+                  </div>
+                    <div class="offering-row1">
+                    <img src="<?php echo $this->basepath(). "/addthis/images/candles.jpg";?>" class="inputs" title='count:1'>
+                    <img src="<?php echo $this->basepath(). "/addthis/images/Growing-Tulsi-2.jpg";?>" class="inputs" title='count:1'>
+                    <img src="<?php echo $this->basepath(). "/addthis/images/ashoka-chakra.jpg";?>"  class="inputs" title='count:1'>
+                    <img src="<?php echo $this->basepath(). "/addthis/images/havan.jpg";?>" class="inputs" title='count:1'>
+                    </div> 
+                    </div>
+     </div>
+	
+
+ <p class="set-thumbs"  style="cursor:pointer;">Created by: Rajeev Bhatia</p>
+
+    <?php
+   if($deathuserid){
+	?>
+	<span class="set-bands" onclick="privacyDivFn()" style="cursor:pointer">Privacy Settings</span>
+	<?php	   
+   }else {
+?>
+<span class="set-bands">Privacy Settings</span>
+<?php   
+   }
+	
+    ?>
+  
+  </div>
+
+
+
+<?php
+
+$pos = $_GET ['pos'];
+if (! $pos)
+	$pos = 1;
+?>
+
+
+<div id='all'>
+<?php if($pos!='privacy') { ?>
+    <div class="col-md-8 border-left" id="newDiv">
+      <ul role="tablist" class="nav nav-tabs navs newLayout" id="myTab">
+      
+        <li
+          <?php if(($pos==1) or($pos==10)or($pos==11)or($pos==9)or($pos==8)) echo 'class="active"';?>
+          role="presentation"><a aria-expanded="true" aria-controls="info" data-toggle="tab"
+          role="tab" id="info-tab" href="#info">Info</a></li>
+        <li role="presentation" <?php if($pos==2) echo 'class="active"';?>><a aria-controls="edu"
+          data-toggle="tab" id="edu-tab" role="tab" href="#edu" aria-expanded="false">Edu</a></li>
+        <li role="presentation" <?php if($pos==3) echo 'class="active"';?>><a aria-controls="family"
+          data-toggle="tab" id="family-tab" role="tab" href="#family" aria-expanded="false">Family</a></li>
+        <li role="presentation" <?php if($pos==4) echo 'class="active"';?>><a
+          aria-controls="guestbook" data-toggle="tab" id="guestbook-tab" role="tab"
+          href="#guestbook" aria-expanded="false">Guestbook</a></li>
+        <li role="presentation" <?php if($pos==5) echo 'class="active"';?>><a
+          aria-controls="tributes" data-toggle="tab" id="tributes-tab" role="tab" href="#tributes"
+          aria-expanded="false">Tributes</a></li>
+        <li role="presentation" <?php if($pos==6) echo 'class="active"';?>><a aria-controls="donate"
+          data-toggle="tab" id="donate-tab" role="tab" href="#donate" aria-expanded="false">Donate</a></li>
+			     
+        <li><a class='make' id="morebut">More...</a></li>
+      </ul>
+      <div class="tab-content" id="myTabContent">
+        <div aria-labelledby="info-tab" id="info"
+          class="tab-pane <?php if(($pos==1) or($pos==11)or($pos==10)or($pos==11)or($pos==9)or($pos==8)) echo 'active';else echo 'fade';?> "
+          role="tabpanel">
+<?php $link= $this->url('edit-profile',array(), array('force_canonical' => true)).'?id='.$_GET['id'];?>
+
+<form class="form-inline" method="post" action="<?php echo $link; ?>">
+            <div class="border-set">
+              <div class="col-md-6 set-border">
+                <div class="set-form add-death-user">
+                <div class="input-append">
+                  <span class="placeholder-name">Salutation</span> 
+                  <select  name="user[salutation]" class="my-control1 demoae draft">
+				  <?php
+                  $sir_name = $draft_data ['salutation'];
+                  if ($sir_name == 'mr') {
+                      $mr_name = 'selected=selected';
+                  } elseif ($sir_name == 'mrs') {
+                      $mrs_name = 'selected=selected';
+                  } else {
+                      $ms_name = 'selected=selected';
+                  }
+                  ?>
+                  <option <?php echo $mr_name;?> value="mr">Mr.</option>
+                  <option <?php echo $mrs_name;?> value="mrs">Mrs.</option>
+                  <option <?php echo $ms_name;?> value="ms">Ms.</option>
+                  </select>
+                  </div>
+                  <!-- <p id="new_warring" style="display:none;"><span style="color:#FF0000;">Warning:-</span>Please do not disclose the identity of the Person or Upload photos When it is Prohibited by law to do so .</p>-->
+                  <div class="input-append">
+                  <span class="placeholder-name">First Name.</span> <input type="text" name="user[first_name]"
+                    value='<?php echo $death_user['first_name'];?>' class="my-control  btn2"
+                    placeholder=" "  /> </div>
+                    
+                    <div class="input-append">
+                  <span class="placeholder-name">Middle Name.</span><input type="text" name="user[middle_name]" value='<?php echo $death_user['middle_name'];?>'
+                    class="my-control draft" placeholder=" "  /> 
+                    </div>
+                    
+                    <div class="input-append">
+                  <span class="placeholder-name">Last Name.</span><input  type="text" name="user[last_name]" value='<?php echo $death_user['last_name'];?>'
+                    class="my-control draft" placeholder=" " /> 
+                    </div>
+                    
+                   <div class="input-append">
+                  <span class="placeholder-name">Aka	</span> <input type="text" name="user[aka]" value='<?php echo $death_user['aka'];?>'
+                    class="my-control draft" placeholder=" "  />
+                    </div>
+                  <div class="row set-label" style="margin-top: 10px; margin-bottom: 9px;">
+
+					<?php
+                    
+                    $gender = $draft_data->gender;
+                    if ($gender == 'male') {
+                        $male = 'checked';
+                    } elseif ($gender == 'female') {
+                        // echo "hello";die;
+                        $female = 'checked';
+                    } elseif ($gender == 'others') {
+                        $others1 = 'checked';
+                    }
+                    
+                    ?>
+					
+					 <div class="col-md-3">
+                      <input type="radio" id="radio1" name="user[gender]" value="male" <?php echo $male;?>
+                        class="css-checkbox" checked="checked"/> <label class="css-label radGroup1" for="radio1">Male</label>
+                    </div>
+                    <div class="col-md-4">
+                      <input type="radio" name="user[gender]" value="female" <?php echo $female;?>
+                        class="css-checkbox" id="radio2" /> <label class="css-label radGroup1"
+                        for="radio2">Female</label>
+                    </div>
+                    <div class="col-md-4">
+                      <input type="radio" name="user[gender]" value="other" <?php echo $others1;?>
+                        class="css-checkbox" id="radio3" /> <label class="css-label radGroup1"
+                        for="radio3">Other</label>
+                    </div>
+                  </div>
+                 
+                 <div class="input-append">
+                  <span class="placeholder-name">Resident of</span> <input type="text" name="user[resident]"
+                    value='<?php echo $death_user['resident'];?>' class="my-control draft"
+                    placeholder=" "  /> 
+                    </div>
+                    
+                    <div class="input-append">
+                  	<span class="placeholder-name">Occupation</span> <input type="text"
+                    name="user[occupation]" value='<?php echo $death_user['occupation'];?>'
+                    class="my-control draft" placeholder=" " />
+                    </div>
+                    
+                   <div class="input-append">
+                  <span class="placeholder-name">Special Mention</span> <select name="user[special_mention_id]" class="my-control1 demoae draft"
+                    >
+
+<option value="">Special Mention Category</option>
+				<?php 
+					foreach($spmention as $scat) {
+						$spid=$scat['id'];
+						$sid = $draft_data['special_mention_id'];
+				?>
+				<option value="<?php echo $scat['id'];?>" <?php if($spid==$sid){ echo 'selected="selected"';} ?>><?php echo $scat['sp_name'] ?></option>
+				<?php
+					}				
+				?>    
+                  </select></div>
+                </div>
+              </div>
+              <div class="col-md-6 short-border" id="new_height"
+                style="overflow: hidden !important;">
+                <div class="set-form">
+                  <div class="input-append">
+                  <span class="placeholder-name">Caste</span> <input type="text" name="user[caste]" value='<?php echo $death_user['caste'];?>'
+                    class="my-control draft" placeholder=" "/> 
+                   </div>
+                   
+                   <div class="input-append">
+                  <span class="placeholder-name">Gotra</span>
+                   <input type="text" name="user[gotra]" value='<?php echo $death_user['gotra'];?>'
+                    class="my-control draft" placeholder=" " /> 
+                    </div>
+                    
+                 <div class="input-append">
+                  <span class="placeholder-name">Cause of Death</span> 
+                <?php /*?>  <select name="user[death_cause]" id="death_cause" class="my-control demoae draft" onchange="return selectCauseerror()">
+                  <option value="">Select Cause</option>
+                  <?php foreach($causeNames as $CNames){ ?>
+                  <option value="<?php echo $CNames['name'];?>"><?php echo $CNames['name'];?></option>
+                  <?php } ?>
+                  </select> <?php */?>
+					
+                    
+                    <input type="text" name="user[death_cause]" id="death_cause" class="my-control draft" value="<?php echo $CNames['name'];?>"/>
+                    <?php 
+						$deathcause=array();    
+						          
+                  foreach($causeNames as $CNames){ 
+                   $deathcause[]=$CNames['name'];
+                  } 
+							//print_r($deathcause);exit;                  
+                  ?>
+                    </div>
+
+<div class="input-append">
+                  <span class="placeholder-name">Time of Death</span>
+                   <input type="text" name="user[death_time]" id="death_time" value='<?php echo $death_user['death_time'];?>'
+                    class="my-control draft" placeholder=" " />  
+                  </div>
+                                    
+                   <div class="input-append">
+                  <span class="placeholder-name">Country of Death</span> 
+                   <select name="user[death_country]" id="death_country" class="my-control demoae draft" >
+                   <option value="">Select Country</option>
+                   <?php foreach($countriesNames as $countrynames){ ?>
+                  <option value="<?php echo $countrynames['country'];?>"><?php echo $countrynames['country'];?></option>
+                  <?php } ?>
+                  </select>
+                   <!--<input type="text" name="user[death_country]" value='<?php echo $draft_data['death_country'];?>'
+                    class="my-control draft  width_fild " placeholder=" "/>-->
+                    </div>
+                    
+                   <div class="input-append">
+                  <span class="placeholder-name">Place of Death</span>  <input type="text" name="user[death_place]"
+                    value='<?php echo $death_user['death_place'];?>' class="my-control draft"
+                    placeholder=" " /> 
+                    </div>
+                    
+                    <div class="input-append">
+                  <span class="placeholder-name">Date of Birth</span> <input type="text" id="dateofbirth" name="user[date_of_birth]" value='<?php echo $death_user['date_of_birth'];?>' class="my-control draft datetimepicker6" placeholder=" "  />
+                  </div>
+                  
+                  <div class="input-append">
+                  <span class="placeholder-name">Date of Death</span>   <input type="text" id="dateofdeath" name="user[date_of_death]" value='<?php echo $death_user['date_of_death'];?>' class="my-control draft datetimepicker7" placeholder=""  /> 
+                  </div>
+                   
+                   <div class="input-append">
+                  <span class="placeholder-name">Deceased's Age</span>  <select name="user[age]" id="age" class="my-control demoae draft">
+<?php if($death_user['age']){?>
+<option value="<?php echo $death_user['age'];?>"><?php echo $death_user['age'];?></option>
+<?php }?>
+<option value="">Deceased's Age</option>
+                    <option value="< 18">< 18</option>
+                    <option value="< 21">< 21</option>
+                    <option value="21+">21+</option>
+                    <option value="25+">25+</option>
+                    <option value="30+">30+</option>
+                    <option value="35+">35+</option>
+                    <option value="40+">40+</option>
+                    <option value="45+">45+</option>
+                    <option value="50+">50+</option>
+                    <option value="55+">55+</option>
+                    <option value="60+">60+</option>
+                    <option value="65+">65+</option>
+                    <option value="70+">70+</option>
+                    <option value="75+">75+</option>
+                    <option value="80+">80+</option>
+                    <option value="85+">85+</option>
+                    <option value="90+">90+</option>
+                    <option value="95+">95+</option>
+                    <option value="100+">100+</option>
+                  </select>
+                  </div>
+                </div>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+             <div class="clearfix"></div>
+            <div class="border-sets">
+              <div class="col-md-12">
+           
+                <p class="set-thumb">Obituary</p>
+                <!--<input type="text" name="user[obituary]" value='<?php echo $orbitory1;?>'
+                  placeholder="We regret to inform you that this person has passed way."
+                  class="my-control">-->
+
+  				
+				<?php 
+				//print_r($langtext);exit;	
+					foreach($langtext as $lk=>$lv){
+						echo "<p>".$lv."</p>";					
+					}				
+				?>  				
+  				
+
+                <!--<p class="set-thumbe">We regret to inform you that this person has passedway.</p>-->
+              </div>
+              <div class="col-md-12">
+              <?php $link= $this->url('style',array(), array('force_canonical' => true)).'?step='.$_GET['step'];?>
+                <a href="<?php echo $link;?>" id="selectLang" class="myButton" <?php if($_GET['step']==''){ echo "disabled";} ?>>Select from other language</a> <a class="btn btn-default set-default">Custom it</a> 
+                   <a  class="read-more" href="#" id="readmorebutton">Read more</a>
+              </div>
+              <div id="msgdialog"></div>
+              <div class="clearfix"></div>
+              
+              <div class="col-sm-4">
+              <div class="border-sets row">
+              <div class="calendar border-right ">
+              <div class="calender-heading"> 
+                 <h4>Event Calendar</h4>
+                
+                  <div class="datepicker" ></div>
+                 
+                
+              </div>
+              
+<script>
+ $(document).ready(function() {
+	 var dates = [];
+	 $('.datepicker').glDatePicker({
+
+                    showAlways: true,
+
+                    borderSize: 1,
+
+                    dowNames: null,
+
+                    cssName: 'default',
+
+                    allowMonthSelect: false,
+
+                    allowYearSelect: false,
+
+                    selectedDate: new Date(),
+
+                    specialDates: dates,
+
+                    onClick: (function(el, cell, date, data) {
+
+                        alert(data.message);
+
+
+
+                    }),
+
+                });
+ });
+</script>
+              </div>
+                    
+            </div>
+            </div>
+           
+              <!--<div class="position-img">
+                <img src="<?php echo $this->basePath('/addthis/images/icon.png');?>">
+              </div>-->
+              
+              <div class="col-sm-4">
+              <div class="daywise ">
+<div class="daywise-heading">
+                        <h4>Day Wise Plan &nbsp;<a class="fa fa-pencil" href="<?php echo $this->basePath('/events/add/13/obituary');?>"></a></h4>
+</div>
+
+
+                        <?php if (count($this->events) <= 0) { ?>
+
+                            <a href="<?php echo $this->url('event-calendar-events', array('type' => 'obituary', 'id' => $this->id)) ?>">Create Events</a>
+
+                        <?php } ?>
+
+                        <?php
+
+                        foreach ($this->events as $key => $event) {
+
+                            $day = $key + 1;
+
+                            ?>
+
+                            <div class="days" style="width:31%;float:left" align="center">
+
+                                <p>
+
+                                    <?php echo 'Day ' . $day; ?>
+
+                                </p>
+
+                                <p>
+
+                                    <?php echo $event['title']; ?>
+
+                                </p>
+
+                            </div>
+
+                        <?php } ?>
+
+                    </div>
+                  </div>
+             <!-- <div class="position-imgs">
+                <img src="<?php echo $this->basePath('/addthis/images/icon.png');?>">
+              </div>-->
+              <div class="col-sm-4">
+              <div class="sharedtasks row">
+<div class="share-heading" >
+                    <h4>Shared Task &nbsp;<a class="fa fa-pencil" href="<?php echo $this->url('sharedtasks', array('id' => $this->deathuserid, 'type' => 'obituary')); ?>"></a></h4>
+</div>
+ <div class="shared-tasks-table"> 
+                    <?php if (count($this->sharedTasks) > 0) { ?>
+
+                        <table width="100%">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>Task</th>                           
+
+                                    <th>Due Date</th> 
+
+                                    <th>Due Time</th>                             
+
+                                    <th>Prioriy</th>                             
+
+                                    <th>Status</th>                            
+
+                                    <th>Helpers</th>                            
+
+                                </tr>
+
+                            </thead>
+
+                            <tbody>
+
+                                <?php foreach ($this->sharedTasks as $task) : ?>
+
+                                    <tr class="disabled sharedrows" id="<?php echo $task['id']; ?>">
+
+                                        <td><?php echo $task['task']; ?></td>                               
+
+                                        <td><?php echo date('d', strtotime($task['due_date'])); ?></td>
+
+                                        <td><?php echo $task['due_time']; ?></td>                               
+
+                                        <td><?php echo $task['priority']; ?></td>
+
+                                        <td><?php echo $task['status']; ?></td>                                                        
+
+                                        <td><?php echo $task['userName']; ?></td>                                
+
+                                    </tr>
+
+                                <?php endforeach; ?>
+
+                            </tbody>
+
+                        </table>
+
+                    <?php } ?>
+
+                    <?php if (count($this->sharedTasks) <= 0) { ?>
+
+                        <a href="<?php echo $this->url('sharedtasks', array('type' => 'obituary', 'id' => $this->id)) ?>">Create Shared Task </a> </p>
+
+                        <?php } ?>
+ </div>
+                </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="obituary_status">
+
+                <div class="updates">
+
+                    <h4>Updates</h4>
+
+                </div>
+
+                <div class="alerts">
+
+                    <h4>Alerts</h4>
+				  </div>
+
+                <div class="points">
+
+                    <h4>Meets &amp; Greet Points</h4>
+
+                </div>
+
+            </div>
+            <br />
+                
+              <div class="clearfix"></div>
+            </div>
+            <div>
+              <!--<button class="saveButton" name='draft_info' value='draft_info' id="draft_but">Add To
+                Drafts</button>-->
+              <!--<a href="#" class="toolButton">Tools</a>-->
+              <button class="saveButton" name='sub' type="submit">Save to my account</button>
+              <span style="float: right;"><a class="sendButton">Send</a></span>
+            </div>
+          </form>
+        </div>
+        <div aria-labelledby="edu-tab" id="edu"
+          class="tab-pane <?php if($pos==2) echo 'active';else echo 'fade';?>" role="tabpanel">
+
+<?php //$link= $this->url('application/default',array('controller' => 'index', 'action' => 'edu'), array('force_canonical' => true)).'?step='.$_GET['step'];?>
+
+<?php $link= $this->url('edit-profile',array(), array('force_canonical' => true)).'?id='.$_GET['id'];?>
+<form class="form-inline" method="post" action="<?php echo $link; ?>">
+<style type="text/css" media="all">
+/* fix rtl for demo */
+.chosen-rtl .chosen-drop {
+	left: -9000px;
+}
+
+</style>
+            <div class="border-set">
+              <div class="col-md-12">
+                <div class="set-form">
+                  <div class="side-by-side clearfix">
+                    <div class="side-by-side clearfix">
+                      <div>
+                        <!-- <em>Multiple Select</em>-->
+                        <script src="<?php echo $this->basePath();?>/addthis/js/chosen.jquery.js"
+                          type="text/javascript"></script>
+                        <br /> 
+                        
+<label>School</label>                        
+<select  style="width:350px !important;" name="edu[school][]" multiple class="chosen-select-width " tabindex="11">   
+<?php if(!empty($school)){ foreach($school as $school_val):?>
+<option <?php echo 'selected="selected"';?> value="<?php echo $school_val;?>">
+<?php echo $school_val;?></option>
+<?php endforeach;}?>
+<?php  
+foreach($fetch_all_value as $getschoolname11):
+	  ?>
+<option value="<?php echo $getschoolname11->school_name;?>"><?php echo $getschoolname11->school_name;?></option>
+<?php endforeach;?>
+
+</select> <br /> <br />
+
+<label>College</label>
+<select  style="width:350px !important;" name="edu[college][]" multiple class="chosen-select-width " tabindex="11">   
+<?php if(!empty($college)){ foreach($college as $college_val):?>
+<option <?php echo 'selected="selected"';?> value="<?php echo $college_val;?>"><?php echo $college_val;?></option>
+<?php endforeach;}?>
+<?php  
+foreach($college_name as $college_name1):
+	  ?>
+<option value="<?php echo $college_name1->college_name;?>"><?php echo $college_name1->college_name;?></option>
+<?php endforeach;?>
+
+</select> <br /> <br /> 
+
+<label>Graduation</label>
+<select  style="width:350px !important;" name="edu[university][]" multiple class="chosen-select-width " tabindex="11">   
+<?php if(!empty($university)){ foreach($university as $university_val):?>
+<option <?php echo 'selected="selected"';?> value="<?php echo $university_val;?>"><?php echo $university_val;?></option>
+<?php endforeach;}?>
+<?php  
+foreach($university_name1 as $university_name11):
+	  ?>
+<option value="<?php echo $university_name11->universityname;?>"><?php echo $university_name11->universityname;?></option>
+<?php endforeach;?>
+
+</select> <br /> <br />
+
+<label>Post Graduation</label>
+<select  style="width:350px !important;" name="edu[others][]" multiple class="chosen-select-width " tabindex="11">   
+<?php if(!empty($other)){ foreach($other as $others_val):?>
+<option <?php echo 'selected="selected"';?> value="<?php echo $others_val;?>">
+<?php echo $others_val;?></option>
+<?php endforeach;}?>
+<?php  
+foreach($other_school_name as $other_school_name1):
+	  ?>
+<option value="<?php echo $other_school_name1->othername;?>"><?php echo $other_school_name1->othername;?></option>
+<?php endforeach;?>
+
+</select> <br /> <br /> <br />
+                        <script type="text/javascript">
+var config = {
+'.chosen-select'           : {},
+'.chosen-select-deselect'  : {allow_single_deselect:true},
+'.chosen-select-no-single' : {disable_search_threshold:10},
+'.chosen-select-no-results': {no_results_text:'Oops, nothing found!'},
+'.chosen-select-width'     : {width:"100%"}
+}
+for (var selector in config) {
+$(selector).chosen(config[selector]);
+}
+</script>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+            <div>
+              <button class="saveButton" type="submit">Save to my account</button>
+              <a class="sendButton floatr" href="#">Send</a>
+            </div>
+          </form>
+        </div>
+        <div aria-labelledby="family-tab" id="family"
+          class="tab-pane <?php if($pos==3) echo 'active';else echo 'fade';?>" role="tabpanel">
+<?php //$link= $this->url('application/default',array('controller' => 'index', 'action' => 'family'), array('force_canonical' => true)).'?step='.$_GET['step'];?>
+
+<?php $link= $this->url('family',array(), array('force_canonical' => true)).'?step='.$_GET['step'];?>
+<form class="form-inline" method="post" action="<?php echo $link; ?>">
+            <div class="border-set">
+              <div class="col-md-12">
+                <div class="set-form">
+                
+                  
+<?php
+
+
+if (count ( $fetch_all_data ) > 0) {
+	?>
+	<label class="make-label fon_large ">Survived by:-</label>
+	<?php
+$i = 1;
+	foreach ( $fetch_all_data as $fech_all ) {
+	if($fech_all->personType=='servived') {
+		//echo "sridhar";exit;
+		?>
+<div class="obitury-family">
+    <div class="form-group">
+                    <select class="my-control2 fon_select demoae" name="serv-<?php echo $i;?>[type]">
+                      <option value="<?php echo $fech_all->type;?>"><?php echo $fech_all->type;?></option>
+                      <option value="Son">Son</option>
+                      <option value="Daughter">Daughter</option>
+                      <option value="Sister">Sister</option>
+                      <option value="father-in-law">Father-in-law</option>
+                      <option value="fiancé">Fiancé</option>
+                      <option value="fiancée">Fiancée</option>
+                      <option value="friend">Friend</option>
+                      <option value="girlfriend">Girlfriend</option>
+                      <option value="godchild">Godchild</option>
+                      <option value="godfather">Godfather</option>
+                      <option value="godmother">Godmother</option>
+                      <option value="grandchild,">Grandchild,</option>
+                      <option value="grandchildren">Grandchildren</option>
+                      <option value="granddaughter">Granddaughter</option>
+                      <option value="grandfather">Grandfather</option>
+                      <option value="granddad">Granddad</option>
+                      <option value="grandpa">Grandpa</option>
+                      <option value="grandmother">Grandmother</option>
+                      <option value="grandma">Grandma</option>
+                      <option value="grandson">Grandson</option>
+                      <option value="great-grandparents">Great-grandparents</option>
+                      <option value="groom">Groom</option>
+                      <option value="half-brother">Half-brother</option>
+                      <option value="husband">Husband</option>
+                      <option value="mother">Mother</option>
+                      <option value="mother-in-law">Mother-in-law</option>
+                      <option value="mummy">Mummy</option>
+                      <option value="mom ">Mom</option>
+                      <option value="nephew">Nephew</option>
+                      <option value="niece">Niece</option>
+                      <option value="parent">Parent</option>
+                      <option value="parents">Parents</option>
+                      <option value="sister">Sister</option>
+                      <option value="son">Son</option>
+                      <option value="stepbrother">Stepbrother</option>
+                      <option value="twin">Twin</option>
+                      <option value="twin-brother">Twin-brother</option>
+                      <option value="uncle">Uncle</option>
+                      <option value="wife">Wife</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <input type="text" placeholder="First name" name='serv-<?php echo $i;?>[first_name]'
+                      value="<?php echo $fech_all->first_name;?>" class="my-controling set_width"
+               >
+                  </div>
+                  <div class="form-group">
+                    <input type="text" placeholder="Last name" name='serv-<?php echo $i;?>[last_name]'
+                      value="<?php echo $fech_all->last_name;?>" class="my-controling set_width"
+                      >
+                  </div>
+                  <div class="form-group">
+                    <input type="text" placeholder="Middle name"
+                      name='serv-<?php echo $i;?>[middle_name]' class="my-controling set_width"
+                      value="<?php echo $fech_all->middle_name;?>" >
+                  </div>
+</div>
+ <?php $i++; } } 
+?>
+
+
+<div class="input_fields_wrap "></div>
+                  <div>
+                    <button class="add_field_button add-Mores1">Add Another Family Member +</button>
+                  </div>
+                  <label class="make-labels fon_large" >Predeceased by:-</label>
+
+<?php
+$j=1;
+foreach ( $fetch_all_data2 as $fech_all2 ) {
+	if($fech_all2->personType=='predeceased') {
+		//echo "sri//";exit;
+		?>
+		<div class="form-group">
+                    <select class="my-control2 fon_select demoae" name="pred-<?php echo $j;?>[type]">
+                      <option value="<?php echo $fech_all2->type;?>"><?php echo $fech_all2->type;?></option>
+                      <option value="Son">Son</option>
+                      <option value="Daughter">Daughter</option>
+                      <option value="Sister">Sister</option>
+                      <option value="father-in-law">Father-in-law</option>
+                      <option value="fiancé">Fiancé</option>
+                      <option value="fiancée">Fiancée</option>
+                      <option value="friend">Friend</option>
+                      <option value="girlfriend">Girlfriend</option>
+                      <option value="godchild">Godchild</option>
+                      <option value="godfather">Godfather</option>
+                      <option value="godmother">Godmother</option>
+                      <option value="grandchild,">Grandchild,</option>
+                      <option value="grandchildren">Grandchildren</option>
+                      <option value="granddaughter">Granddaughter</option>
+                      <option value="grandfather">Grandfather</option>
+                      <option value="granddad">Granddad</option>
+                      <option value="grandpa">Grandpa</option>
+                      <option value="grandmother">Grandmother</option>
+                      <option value="grandma">Grandma</option>
+                      <option value="grandson">Grandson</option>
+                      <option value="great-grandparents">Great-grandparents</option>
+                      <option value="groom">Groom</option>
+                      <option value="half-brother">Half-brother</option>
+                      <option value="husband">Husband</option>
+                      <option value="mother">Mother</option>
+                      <option value="mother-in-law">Mother-in-law</option>
+                      <option value="mummy">Mummy</option>
+                      <option value="mom ">Mom</option>
+                      <option value="nephew">Nephew</option>
+                      <option value="niece">Niece</option>
+                      <option value="parent">Parent</option>
+                      <option value="parents">Parents</option>
+                      <option value="sister">Sister</option>
+                      <option value="son">Son</option>
+                      <option value="stepbrother">Stepbrother</option>
+                      <option value="twin">Twin</option>
+                      <option value="twin-brother">Twin-brother</option>
+                      <option value="uncle">Uncle</option>
+                      <option value="wife">Wife</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <input type="text" placeholder="First name" name='pred-<?php echo $j;?>[first_name]'
+                      value="<?php echo $fech_all2->first_name;?>" class="my-controling set_width"
+                      >
+                  </div>
+                  <div class="form-group">
+                    <input type="text" placeholder="Last name" name='pred-<?php echo $j;?>[last_name]'
+                      value="<?php echo $fech_all2->last_name;?>" class="my-controling set_width"
+                      >
+                  </div>
+                  <div class="form-group">
+                    <input type="text" placeholder="Middle name"
+                      name='pred-<?php echo $j;?>[middle_name]' class="my-controling set_width"
+                      value="<?php echo $fech_all2->middle_name;?>" >
+                  </div>
+		<?php
+		 $j++; } }
+} else{ ?>
+<label class="make-label fon_large ">Survived by:-</label>
+<div class="form-group">
+<?php echo $this->partial('partial/dropdown.phtml',array('name'=>'serv-1[type]','defaultOptions'=>'Survived By')); ?>
+</div>
+                  <div class="form-group">
+                    <input type="text" placeholder="First name" name='serv-1[first_name]' value=""
+                      class="my-controling set_width" >
+                  </div>
+                  <div class="form-group">
+                    <input type="text" placeholder="Last name" name='serv-1[last_name]' value=""
+                      class="my-controling set_width" >
+                  </div>
+                  <div class="form-group">
+                    <input type="text" placeholder="Middle name" name='serv-1[middle_name]'
+                      class="my-controling set_width" value="" >
+                  </div>
+                  <div class="clearfix"></div>
+                  <div class="form-group">
+<?php echo $this->partial('partial/dropdown.phtml',array('name'=>'serv-2[type]','defaultOptions'=>'Survived By')); ?>
+</div>
+                  <div class="form-group">
+                    <input type="text" placeholder="First name" name='serv-2[first_name]' value=""
+                      class="my-controling set_width" >
+                  </div>
+                  <div class="form-group">
+                    <input type="text" placeholder="Last name" name='serv-2[last_name]'
+                      class="my-controling set_width" value="" >
+                  </div>
+                  <div class="form-group">
+                    <input type="text" placeholder="Middle name" name='serv-2[middle_name]'
+                      class="my-controling set_width" value="" >
+                  </div>
+                  <div class="clearfix"></div>
+                  <div class="form-group">
+<?php echo $this->partial('partial/dropdown.phtml',array('name'=>'serv-3[type]','defaultOptions'=>'Survived By')); ?>
+</div>
+                  <div class="form-group">
+                    <input type="text" placeholder="First name" name='serv-3[first_name]' value=""
+                      class="my-controling set_width" >
+                  </div>
+                  <div class="form-group">
+                    <input type="text" placeholder="Last name" name='serv-3[last_name]' value=""
+                      class="my-controling set_width" >
+                  </div>
+                  <div class="form-group">
+                    <input type="text" placeholder="Middle name" name='serv-3[middle_name]' value=""
+                      class="my-controling set_width" >
+                  </div>
+                  <div class="input_fields_wrap "></div>
+                  <div>
+                    <button class="add_field_button add-Mores1">Add Another Family Member +</button>
+                  </div>
+                  <label class="make-labels fon_large" style="margin-left: 15px">Predeceased by:-</label>
+                  <div class="form-group ">
+<?php echo $this->partial('partial/dropdown.phtml',array('name'=>'pred-1[type]','defaultOptions'=>'Predeceased By')); ?>
+</div>
+                  <div class="form-group">
+                    <input type="text" placeholder="First name" name='pred-1[first_name]' value=""
+                      class="my-controling set_width" >
+                  </div>
+                  <div class="form-group">
+                    <input type="text" placeholder="Last name" name='pred-1[last_name]'
+                      class="my-controling set_width" value="" >
+                  </div>
+                  <div class="form-group">
+                    <input type="text" placeholder="Middle name" name='pred-1[middle_name]'
+                      class="my-controling set_width" value="" >
+                  </div>
+                  <div class="clearfix"></div>
+                  <div class="form-group ">
+<?php echo $this->partial('partial/dropdown.phtml',array('name'=>'pred-2[type]','defaultOptions'=>'Predeceased By')); ?>
+</div>
+                  <div class="form-group">
+                    <input type="text" placeholder="First name" name='pred-2[first_name]'
+                      class="my-controling set_width" value="" >
+                  </div>
+                  <div class="form-group">
+                    <input type="text" placeholder="Last name" name='pred-2[last_name]'
+                      class="my-controling set_width" value="" >
+                  </div>
+                  <div class="form-group">
+                    <input type="text" placeholder="Middle name" name='pred-2[middle_name]'
+                      class="my-controling set_width" value="" >
+                  </div>
+                  <div class="clearfix"></div>
+                  <div class="form-group ">
+<?php echo $this->partial('partial/dropdown.phtml',array('name'=>'pred-3[type]','defaultOptions'=>'Predeceased By')); ?>
+</div>
+                  <div class="form-group">
+                    <input type="text" placeholder="First name" name='pred-3[first_name]'
+                      class="my-controling set_width" >
+                  </div>
+                  <div class="form-group">
+                    <input type="text" placeholder="Last name" name='pred-3[last_name]'
+                      class="my-controling set_width" >
+                  </div>
+                  <div class="form-group">
+                    <input type="text" placeholder="Middle name" name='pred-3[middle_name]'
+                      class="my-controling set_width" >
+                  </div>
+<?php } ?>
+
+
+<div class="clearfix"></div>
+                  <div class="input_fields_wrap11 alignme"></div>
+                  <div class="">
+                    <button class="add_field_button11 add-Mores1 alignme">Add Another Family Member
+                      +</button>
+                  </div>
+                  <div class="clearfix"></div>
+                </div>
+                <!--<div><a class="toolButton" href="#">Tools</a>-->
+                <button class="saveButton" type="submit">Save to my account</button>
+                <span class="flot_rght float-none"><button class="sendButton" name='sub' type="submit">Send</button></span>
+                <!--</div>-->
+              
+              </div>
+                
+            </div>
+            <div class="clearfix"></div>
+          </form>
+        </div>
+        <!-- Guest book Tab -->
+        <div aria-labelledby="guestbook-tab" id="guestbook"
+          class="tab-pane <?php if($pos==4) echo 'active';else echo 'fade';?>" role="tabpanel">
+<?php $link= $this->url('guestbook',array(), array('force_canonical' => true)).'?step='.$_GET['step'];?>
+<?php echo $this->partial('partial/guestbook.phtml',array('link'=>$link,'email'=>$email_value,'message'=>$msg_value)); ?>
+
+</div>
+        <!-- end guest book Tab -->
+        <!-- Tributes Tab -->
+        <div aria-labelledby="tributes-tab" id="tributes"
+          class="tab-pane <?php if($pos==5) echo 'active';else echo 'fade';?>" role="tabpanel">
+<?php $link= $this->url('tributes',array(), array('force_canonical' => true)).'?step='.$_GET['step'];?>
+<?php echo $this->partial('partial/tributes.phtml',array('link'=>$link,'email'=>$tribute_email_value,'message'=>$tribute_msg_value)); ?>
+</div>
+        <!-- End tributes Tab -->
+        <!-- donate tab -->
+        <div aria-labelledby="donate-tab" id="donate"
+          class="tab-pane <?php if($pos==6) echo 'active';else echo 'fade';?>" role="tabpanel">
+      <?php $link= $this->url('donate',array(), array('force_canonical' => true)).'?step='.$_GET['step'];?>
+		<?php echo $this->partial('partial/donate.phtml',array('link'=>$link)); ?>
+</div>
+        <!-- end donate tab -->
+        
+        <div aria-labelledby="more-tab" id="more"
+          class="tab-pane <?php if($pos==7) echo 'active';else echo 'fade';?>" role="tabpanel">
+          <div class="border-set">
+            <div class="col-md-12">
+              <div class="set-form">
+                <form>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="exampleInputEmail1">Email address</label> <input type="email"
+                          class="my-control" id="exampleInputEmail1" placeholder="Enter email">
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="exampleInputPassword1">Password</label> <input type="password"
+                          class="my-control" id="exampleInputPassword1" placeholder="Password">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Message</label>
+                    <textarea placeholder="Message here..." rows="5" class="my-controls"></textarea>
+                  </div>
+                </form>
+              </div>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+          <div>
+            <button class="saveButton" type="submit">Save to my account</button>
+            <a class="sendButton">Send</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-8 border-left" id="newDiv">
+      <div id="MyaccountDiv" class="set-new-function" style="display: none;">
+        <h3>All Death Users</h3>
+        <table class="table table-striped table-bordered table-hover table-condensed">
+          <thead>
+            <th>S.No.</th>
+            <th>FullName</th>
+            <th>Gender</th>
+            <th>Caste</th>
+            <th>Created</th>
+            <th>Edit</th>
+            <th>Delete</th>
+          </thead>
+
+
+<?php $i=1; foreach($deathUsers as $deathUser){?>
+<tbody>
+            <td><?php echo $i; ?></td>
+            <td><a href="<?php echo $this->url('view-account').'?id='.$deathUser['deathuser_id'];?>"><?php echo $deathUser['first_name'].' '.$deathUser['middle_name'].' '.$deathUser['last_name']; ?> </a></td>
+            <td><?php echo $deathUser['gender']; ?></td>
+            <td><?php echo $deathUser['caste']; ?></td>
+            <td><?php echo $deathUser['created']; ?></td>
+            <td><a href="<?php echo $this->url('edit-profile').'?id='.$deathUser['deathuser_id'];?>">Edit</a></td>
+            <td><a href="<?php echo $this->url('delete').'?id='.$deathUser['deathuser_id'];?>">Delete</a></td>
+          </tbody>
+<?php $i++; } ?>
+</table>
+      </div>
+    </div>
+    <?php }
+		if($pos=='privacy'){    
+     ?>
+    <style>
+	.clear-fix{ clear:both;}
+	.right_side{ margin-top:-6px;}
+	</style>
+    <div class="col-md-8 border-left" id="privacyDiv" >
+    <h4 class="new-text">Privacy Settings<a class="right_side btn btn-default" href="javascript:hidePrivacytab()">Back</a></h4>
+
+<div class="clear-fix"></div>
+    <!-- privacy tab -->
+    <div class="privacyDesc" style="border:1px solid #ccc; margin-top:14px;">
+    <div style="margin:15px">
+    <p style="margin-top:15px; text-align:justify;">
+		<strong>Public:</strong> Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.     
+    </p>
+     <p style="margin-top:15px; text-align:justify;margin-bottom: 30px !important;"> Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.     
+    </p>
+    <div id="privacy" class="" >
+         <?php $link= $this->url('privacy',array(), array('force_canonical' => true)).'?step='.$_GET['step'];?>
+<?php echo $this->partial('partial/privacy.phtml',array('link'=>$link)); ?>
+</div>
+    <p style="margin-top:30px; text-align:justify;">
+		<strong>Private:</strong> Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.     
+    </p>
+    <p style="margin-top:15px; text-align:justify;"> Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.     
+    </p>
+ 	 
+    </div>
+    </div>
+        
+        <!-- end privacy tab -->
+    </div>
+    <?php } ?>
+  </div>
+  <!--    second click     -->
+
+
+<?php
+	$pos = $_GET ['pos'];
+	if (! $pos) $pos = 1;
+?>
+
+
+
+<div class="col-md-8 border-left min_width" id='moress' style="display: none">
+    <ul role="tablist" class="nav nav-tabs navs newLayout1" id="myTab">
+      <!--<li <?php //if($pos==1) echo 'class="active"';?> role="presentation"><a aria-expanded="true" aria-controls="info" data-toggle="tab" role="tab" id="info-tab" href="#info">Info</a></li>-->
+      <li
+        <?php if(($pos==8)or($pos==6)or($pos==1)or($pos==2)or($pos==3)or($pos==4)or($pos==5) ) echo 'class="active"';?>
+        class="" role="presentation"><a aria-expanded="true" aria-controls="achievement"
+        data-toggle="tab" role="tab" id="achievement-tab" href="#achievement">Employment History </a></li>
+      <li role="presentation" <?php if($pos==9) echo 'class="active"';?>><a aria-expanded="false"
+        aria-controls="home" data-toggle="tab" role="tab" id="home-tab" href="#home">Achivements
+          &amp; Awards</a></li>
+      <li role="presentation" <?php if($pos==10) echo 'class="active"';?>><a aria-controls="profile"
+        data-toggle="tab" id="profile-tab" role="tab" href="#profile" aria-expanded="false">Personal
+          Honors</a></li>
+      <li role="presentation" <?php if($pos==11) echo 'class="active"';?>><a
+        aria-controls="footprints" data-toggle="tab" id="footprints-tab" role="tab"
+        href="#footprints" aria-expanded="false">Digital Footprints &amp; Links</a></li>
+      <!-- <li role="presentation" class=""><a aria-controls="guestbook" data-toggle="tab" id="guestbook-tab" role="tab" href="#guestbook" aria-expanded="false">Back to Info</a></li>-->
+      <li><a class='make' id="maintab">Back to Info...</a></li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+      <!--  <div aria-labelledby="info-tab" id="info" class="tab-pane <?php //if($pos==1) echo 'active';else echo 'fade';?> " role="tabpanel"></div>
+-->
+      <div aria-labelledby="achievement-tab" id="achievement"
+        class="tab-pane <?php if(($pos==8) or ($pos==6) or ($pos==1)or($pos==2)or($pos==3)or($pos==4)or($pos==5)) echo 'active';else echo 'fade';?>"
+        role="tabpanel">
+        <div class="border-set">
+          <div class="col-md-12">
+            <div class="set-form">
+
+<?php $link= $this->url('employement',array(), array('force_canonical' => true)).'?step='.$_GET['step'];?>
+<form class="" method="post" action="<?php echo $link; ?>">
+                <div class="form-group">
+                  <label class="fon_large" for="exampleInputPassword1">Employer Name </label>
+                  <textarea placeholder="Message here..." name="user[employer]" rows="6"
+                    class="my-controls new-control"><?php echo $employer;?></textarea>
+                </div>
+                <a class="custom-span" id="readmorebutton" style="float: right; margin-bottom: 10px;" href="#">Read
+                  more</a>
+                <div class="form-group">
+                  <label class="fon_large" for="exampleInputPassword1">Employment History</label>
+                  <textarea placeholder="Message here..." name="user[employment_history]" rows="6"
+                    class="my-controls new-control"><?php echo $employement;?></textarea>
+                </div>
+                <a class="custom-span" id="readmorebutton" style="float: right; margin-bottom: 10px;" href="#">Read
+                  more</a>
+                 
+            </div>
+          </div>
+          <div class="clearfix"></div>
+        </div>
+        <div>
+          <button class="saveButton" type="submit">Save to my account</button>
+          <a class="sendButton flot_rght">Send</a>
+        </div>
+        </form>
+      </div>
+      <div aria-labelledby="home-tab" id="home"
+        class="tab-pane  <?php if($pos==9) echo 'active';else echo 'fade';?>" role="tabpanel">
+        <div class="border-set">
+          <div class="col-md-12">
+            <div class="set-form">
+<?php $link= $this->url('achive',array(), array('force_canonical' => true)).'?step='.$_GET['step'];?>
+<form class="" method="post" action="<?php echo $link; ?>">
+                <div class="form-group">
+                  <label class="fon_large" for="exampleInputPassword1">Professionals</label>
+                  <textarea placeholder="Message here..." rows="6" name="user[professionals]"
+                    class="my-controls new-control"><?php echo $professionals;?></textarea>
+                </div>
+                 <a class="custom-span" id="readmorebutton" style="float: right; margin-bottom: 10px;" href="#">Read
+                  more</a>
+                <div class="form-group">
+                  <label class="fon_large" for="exampleInputPassword1">Personal</label>
+                  <textarea placeholder="Message here..." rows="6" class="my-controls new-control"
+                    name="user[personal]"><?php echo $personal;?></textarea>
+                </div>
+                <a class="custom-span" id="readmorebutton" style="float: right; margin-bottom: 10px;" href="#">Read
+                  more</a>
+            
+            </div>
+          </div>
+          <div class="clearfix"></div>
+        </div>
+        <div>
+          <!--<a class="toolButton" href="#">Tools</a>-->
+          <button class="saveButton">Save to my account</button>
+          <a class="sendButton flot_rght">Send</a>
+        </div>
+        </form>
+      </div>
+
+<?php //if($pos==10) echo 'active';else echo 'fade';?>
+<div aria-labelledby="profile-tab" id="profile"
+        class="tab-pane <?php if($pos==10) echo 'active';else echo 'fade';?>" role="tabpanel">
+        <div class="border-set">
+          <div class="col-md-12">
+            <div class="set-form">
+
+<?php $link= $this->url('honors',array(), array('force_canonical' => true)).'?step='.$_GET['step'];?>
+<form class="" method="post" action="<?php echo $link; ?>">
+                <div class="form-group">
+                  <label class="fon_large" for="exampleInputPassword1">Qualities: Best Singer, Most
+                    helpful</label>
+                  <textarea placeholder="Message here..." rows="6" name="user[qualities]"
+                    class="my-controls new-control"><?php echo $qualities;?></textarea>
+                </div>
+                 <a class="custom-span" id="readmorebutton" style="float: right; margin-bottom: 10px;" href="#">Read
+                  more</a>
+                <div class="form-group">
+                  <label class="fon_large" for="exampleInputPassword1">Relationship: My Favourite
+                    Uncle</label>
+                  <textarea placeholder="Message here..." name="user[relationship]" rows="6"
+                    class="my-controls new-control"><?php echo $relationship;?></textarea>
+                </div>
+                 <a class="custom-span" id="readmorebutton" style="float: right; margin-bottom: 10px;" href="#">Read
+                  more</a>
+                <div class="form-group">
+                  <label class="fon_large" for="exampleInputPassword1">Influence: Fan of your Music</label>
+                  <textarea placeholder="Message here..." rows="6" name="user[influence]"
+                    class="my-controls new-control"><?php echo $influence;?></textarea>
+                </div>
+                <a class="custom-span" id="readmorebutton" style="float: right; margin-bottom: 10px;" href="#">Read
+                  more</a>
+            
+            </div>
+          </div>
+          <div class="clearfix"></div>
+        </div>
+        <div>
+          <!--<a class="toolButton" href="#">Tools</a>-->
+          <button class="saveButton">Save to my account</button>
+          <a class="sendButton flot_rght">Send</a>
+        </div>
+        </form>
+      </div>
+<?php //if($pos==11) echo 'active';else echo 'fade';?>
+<div aria-labelledby="footprints-tab" id="footprints"
+        class="tab-pane <?php if($pos==11) echo 'active';else echo 'fade';?>" role="tabpanel">
+        <div class="border-set">
+          <div class="col-md-12">
+            <div class="set-form">
+
+<?php $link= $this->url('digital',array(), array('force_canonical' => true)).'?step='.$_GET['step'];?>
+<form class="" method="post" action="<?php echo $link; ?>">
+                <div class="form-group">
+                  <label class="fon_large" for="exampleInputPassword1">Links</label>
+                  <textarea placeholder="Message here..." name="user[link]" rows="6"
+                    class="my-controls new-control"><?php echo $link;?></textarea>
+                </div>
+                <a class="custom-span" id="readmorebutton" style="float: right; margin-bottom: 10px;" href="#">Read
+                  more</a>
+                <div class="form-group">
+                  <label class="fon_large" for="exampleInputPassword1">References</label>
+                  <textarea placeholder="Message here..." name="user[refrance]" rows="6"
+                    class="my-controls new-control"><?php echo $refrance;?></textarea>
+                </div>
+                <a class="custom-span" id="readmorebutton" style="float: right; margin-bottom: 10px;" href="#">Read
+                  more</a>
+                <div class="form-group">
+                  <label class="fon_large" for="exampleInputPassword1">Social Sites</label>
+                  <textarea placeholder="Message here..." name="user[social]" rows="6"
+                    class="my-controls new-control"><?php echo $social;?></textarea>
+                </div>
+                <a class="custom-span" id="readmorebutton" style="float: right; margin-bottom: 10px;" href="#">Read
+                  more</a>
+            
+            </div>
+          </div>
+          <div class="clearfix"></div>
+        </div>
+        <div>
+          <button class="saveButton">Save to my account</button>
+          <a class="sendButton flot_rght">Send</a>
+        </div>
+        </form>
+      </div>
+      <div aria-labelledby="guestbook-tab" id="guestbook" class="tab-pane fade" role="tabpanel">
+        <div class="table-responsive">
+          <table class="table table-bordered table-make">
+            <thead>
+              <tr>
+                <th class="theads" colspan="4">Select obituaries</th>
+              </tr>
+            </thead>
+            <tbody class="texts">
+              <tr>
+                <th>Language</th>
+                <th>Styled</th>
+                <th>Customized</th>
+                <th>Newspapers</th>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <a href="#" class="viewfile">It is a long established fact that a reader will be
+              distracted by the readable content of a page when looking at its layout. </a>
+          </div>
+          <div class="col-md-4">
+            <a href="#" class="viewfile">It is a long established fact that a reader will be
+              distracted by the readable content of a page when looking at its layout. The point of
+              using Lorem Ipsum is that it has a more-or-less normal distribution of letters.</a>
+          </div>
+          <div class="col-md-4">
+            <a href="#" class="viewfile">It is a long established fact that a reader will be
+              distracted by the readable content of a page when looking at its layout. The point of
+              using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as
+              opposed to using 'Content here.</a>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <a href="#" class="viewfile">It is a long established fact that a reader will be
+              distracted by the readable content of a page when looking at its layout. </a>
+          </div>
+          <div class="col-md-4">
+            <a href="#" class="viewfile">It is a long established fact that a reader will be
+              distracted by the readable content of a page when looking at its layout. The point of
+              using Lorem Ipsum is that it has a more-or-less normal distribution of letters.</a>
+          </div>
+          <div class="col-md-4">
+            <a href="#" class="viewfile">It is a long established fact that a reader will be
+              distracted by the readable content of a page when looking at its layout. The point of
+              using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as
+              opposed to using 'Content here.</a>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <a href="#" class="viewfile">It is a long established fact that a reader will be
+              distracted by the readable content of a page when looking at its layout. </a>
+          </div>
+          <div class="col-md-4">
+            <a href="#" class="viewfile">It is a long established fact that a reader will be
+              distracted by the readable content of a page when looking at its layout. The point of
+              using Lorem Ipsum is that it has a more-or-less normal distribution of letters.</a>
+          </div>
+          <div class="col-md-4">
+            <a href="#" class="viewfile">It is a long established fact that a reader will be
+              distracted by the readable content of a page when looking at its layout. The point of
+              using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as
+              opposed to using 'Content here.</a>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <a href="#" class="viewfile">It is a long established fact that a reader will be
+              distracted by the readable content of a page when looking at its layout. </a>
+          </div>
+          <div class="col-md-4">
+            <a href="#" class="viewfile">It is a long established fact that a reader will be
+              distracted by the readable content of a page when looking at its layout. The point of
+              using Lorem Ipsum is that it has a more-or-less normal distribution of letters.</a>
+          </div>
+          <div class="col-md-4">
+            <a href="#" class="viewfile">It is a long established fact that a reader will be
+              distracted by the readable content of a page when looking at its layout. The point of
+              using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as
+              opposed to using 'Content here.</a>
+          </div>
+        </div>
+        <div class="text-center">
+          <nav>
+            <ul class="pagination pagination-lg">
+              <li><a aria-label="Previous" href="#"><span aria-hidden="true">«</span></a></li>
+              <li class="active"><a href="#">1</a></li>
+              <li><a href="#">2</a></li>
+              <li><a href="#">3</a></li>
+              <li><a href="#">4</a></li>
+              <li><a href="#">5</a></li>
+              <li><a aria-label="Next" href="#"><span aria-hidden="true">»</span></a></li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="clearfix"></div>
+</div>
+</div>
+</div>
+</div>
+
+<?php if ($pos >= 8) { ?>
+<script>
+	document.getElementById("all").style.display="none"; 
+	document.getElementById("moress").style.display="block";
+	 
+</script>
+<?php }?>
+
+
+<style>
+.calendar {
+    width:100%;
+    float: left;
+    margin: 0 10px 0 0;
+    padding: 0 18px 8px 0;
+    height: 420px;
+    position: relative;
+}
+.daywise {
+   float: left;
+	border:1px solid #e3e3e3;
+    height: 420px;
+	margin-top:3px;
+	width:100%;
+	overflow:auto;
+}
+.sharedtasks {
+   float: left;
+	border:1px solid #e3e3e3;
+    height: 420px;
+	overflow:auto;
+	margin-top:3px;
+	width:100%; display:table;
+}
+.shared-tasks-table tr th { font-size:12px; font-weight:normal;}
+</style>
+ <div id="dialog" title="Obituary" style="display:none">
+  	<?php 
+				//print_r($langtext);exit;	
+					foreach($langtext as $lk=>$lv){
+						echo "<p>".$lv."</p>";					
+					}				
+				?>  
+ </div>
+ <script>
+ (function() {
+    var guests = ["<?php echo  implode('","',$deathcause); ?>"];
+   //alert(guests);
+    $("#death_cause").autocomplete({
+        source: guests
+    });
+
+    // Overrides the default autocomplete filter function to search only from the beginning of the string
+    $.ui.autocomplete.filter = function (array, term) {
+        var matcher = new RegExp("^" + $.ui.autocomplete.escapeRegex(term), "i");
+        return $.grep(array, function (value) {
+            return matcher.test(value.label || value.value || value);
+        });
+    };
+})();
+</script>

@@ -1,0 +1,333 @@
+<form class="form-inline" method="post" action="<?php echo $link; ?>">
+<div class="border-set">
+	<div class="col-md-12">
+		<div class="set-form second-form-deathuser">
+			
+			
+			<div class="row">
+				<!--<div style="margin:10px">
+						<select id="privacySelect" name="privacySelect" onchange="changePrivacy()">
+							<option value="public">Public</option>	
+							<option value="private">Private</option>
+						</select>
+				</div>-->
+				</div>
+				
+				<div class="row" id="privacyOptions" style="display:none">
+				<div class="col-md-4">
+				
+                <input type="checkbox" disabled="disabled" id="checkbox1" name="user[info]" value="info" class="css-checkbox" /> 
+                <label class="" for="checkbox1">Information</label>
+            </div>
+            <div class="col-md-4">
+				
+                <input type="checkbox" disabled="disabled" id="checkbox1" name="user[edu]" value="edu" class="css-checkbox" /> 
+                <label class="" for="checkbox1">Education</label>
+            </div>
+<div class="col-md-4">
+				
+                <input type="checkbox" disabled="disabled" id="checkbox1" name="user[family]" value="family" class="css-checkbox" /> 
+                <label class="" for="checkbox1">Family</label>
+            </div>
+				<div class="col-md-4">
+				
+                <input type="checkbox" id="checkbox1" name="user[guestbook]" value="guestbook" class="css-checkbox" /> 
+                <label class="" for="checkbox1">Guest Book</label>
+            </div>
+            
+				<div class="col-md-4">
+                <input type="checkbox" id="checkbox2" name="user[tributes]" value="tributes" class="css-checkbox" /> 
+                <label class="" for="checkbox2">Tributes</label>
+            </div>
+        
+				<div class="col-md-4">
+                <input type="checkbox" id="checkbox3" name="user[donate]" value="donate" class="css-checkbox" /> 
+                <label class="" for="checkbox3">Donate</label>
+            </div>
+            
+				<div class="col-md-4">
+                <input type="checkbox" id="checkbox4" name="user[employmenthistory]" value="employment history" class="css-checkbox" /> 
+                <label class="" for="checkbox4">Employment History</label>
+            </div>
+            
+            <div class="col-md-4">
+                <input type="checkbox" id="checkbox5" name="user[achivementsawards]" value="achivements and awards" class="css-checkbox" /> 
+                <label class="" for="checkbox5">Achivements & Awards</label>
+            </div>
+            
+				<div class="col-md-4">
+                <input type="checkbox" id="checkbox6" name="user[personalhonor]" value="personal honors" class="css-checkbox" /> 
+                <label class="" for="checkbox6">Personal Honors</label>
+            </div>
+                        
+            <div class="col-md-4">
+                <input type="checkbox" id="checkbox6" name="user[digitalfootprintslinks]" value="digital footprints and links" class="css-checkbox" /> 
+                <label class="" for="checkbox6">Digital Footprints & links</label>
+            </div>
+            
+            <!--<div class="col-md-4">
+                <input type="checkbox" id="checkbox6" name="user[personal honors]" value="personal honors" class="css-checkbox" /> 
+                <label class="" for="checkbox6">Personal Honors</label>
+            </div>-->
+            </div>
+		<div class="row dropside-guest-1" id="privacyPublicOptions">
+		<?php
+		
+
+if(count($fetchall_privacy)==0){
+		?>
+       <div class="col-md-4 dropside-guest-book">
+				<input type="hidden" name="privacySelect" id="privacySelect" value="public"/>
+                <input type="checkbox" disabled="disabled" id="checkbox1" checked="checked" name="user[info]" value="info" class="css-checkbox privacyChk" /> 
+                <label class="" for="checkbox1">Information</label>
+            </div>
+<div class="col-md-4 dropside-guest-book">
+				<input type="hidden" name="privacySelect" id="privacySelect" value="public"/>
+                <input type="checkbox" disabled="disabled" id="checkbox1" checked="checked" name="user[edu]" value="edu" class="css-checkbox privacyChk" /> 
+                <label class="" for="checkbox1">Education</label>
+            </div>
+            <div class="col-md-4 dropside-guest-book">
+				<input type="hidden" name="privacySelect" id="privacySelect" value="public"/>
+                <input type="checkbox" disabled="disabled" id="checkbox1" checked="checked" name="user[family]" value="family" class="css-checkbox privacyChk" /> 
+                <label class="" for="checkbox1">Family</label>
+            </div>
+				<div class="col-md-4 dropside-guest-book">
+				<input type="hidden" name="privacySelect" id="privacySelect" value="public"/>
+                <input type="checkbox" id="checkbox1" checked="checked" name="user[guestbook]" value="guestbook" class="css-checkbox privacyChk" /> 
+                <label class="" for="checkbox1">Guest Book</label>
+            </div>
+            
+				<div class="col-md-4 dropside-guest-book">
+                <input type="checkbox" id="checkbox2" checked="checked" name="user[tributes]" value="tributes" class="css-checkbox privacyChk" /> 
+                <label class="" for="checkbox2">Tributes</label>
+            </div>
+        
+				<div class="col-md-4 dropside-guest-book">
+                <input type="checkbox" id="checkbox3" checked="checked" name="user[donate]" value="donate" class="css-checkbox privacyChk" /> 
+                <label class="" for="checkbox3">Donate</label>
+            </div>
+
+				<div class="col-md-4 dropside-guest-book">
+                <input type="checkbox" id="checkbox4" checked="checked" name="user[employmenthistory]" value="employment history" class="css-checkbox privacyChk" /> 
+                <label class="" for="checkbox4">Employment History</label>
+            </div>
+            
+            <div class="col-md-4 dropside-guest-book">
+                <input type="checkbox" id="checkbox5" checked="checked" name="user[achivementsawards]" value="achivements and awards" class="css-checkbox privacyChk" /> 
+                <label class="" for="checkbox5">Achivements & Awards</label>
+            </div>
+            
+				<div class="col-md-4 dropside-guest-book">
+                <input type="checkbox" id="checkbox6" checked="checked" name="user[personalhonor]" value="personal honors" class="css-checkbox privacyChk" /> 
+                <label class="" for="checkbox6">Personal Honors</label>
+            </div>
+                        
+            <div class="col-md-4 dropside-guest-book">
+                <input type="checkbox" id="checkbox6" checked="checked" name="user[digitalfootprintslinks]" value="digital footprints and links" class="css-checkbox privacyChk" /> 
+                <label class="" for="checkbox6">Digital Footprints & links</label>
+            </div>
+            <?php
+					}  else {
+						$vguestbook='';
+						$vtribute='';
+						$vdonate='';
+						$vemphistory='';
+						$vachiveawards='';
+						$vpersonalhonor='';
+						$vdigital='';
+						foreach($fetchall_privacy as $fprivacy){
+							if($fprivacy['visibility_categories']=='guestbook') {
+								$vguestbook=$fprivacy['visibility_categories'];
+							}
+							if($fprivacy['visibility_categories']=='tributes') {
+								$vtribute=$fprivacy['visibility_categories'];
+							}
+							if($fprivacy['visibility_categories']=='donate') {
+								$vdonate=$fprivacy['visibility_categories'];
+							}
+							if($fprivacy['visibility_categories']=='employment history') {
+								$vemphistory=$fprivacy['visibility_categories'];
+							}
+							if($fprivacy['visibility_categories']=='achivements and awards') {
+								$vachiveawards=$fprivacy['visibility_categories'];
+							}
+							if($fprivacy['visibility_categories']=='personal honors') {
+								$vpersonalhonor=$fprivacy['visibility_categories'];
+							}
+							if($fprivacy['visibility_categories']=='digital footprints and links') {
+								$vdigital=$fprivacy['visibility_categories'];
+							}
+						}
+					?>
+					<div class="col-md-4 dropside-guest-book">
+				<input type="hidden" name="privacySelect" id="privacySelect" value="public"/>
+							
+                <input type="checkbox" disabled="disabled" id="checkbox1" checked="checked" name="user[info]" value="info" class="css-checkbox privacyChk" /> 
+                <label class="" for="checkbox1">Information</label>
+            </div>
+<div class="col-md-4 dropside-guest-book">
+				<input type="hidden" name="privacySelect" id="privacySelect" value="public"/>
+                <input type="checkbox" disabled="disabled" id="checkbox1" checked="checked" name="user[edu]" value="edu" class="css-checkbox privacyChk" /> 
+                <label class="" for="checkbox1">Education</label>
+            </div>
+            <div class="col-md-4 dropside-guest-book">
+				<input type="hidden" name="privacySelect" id="privacySelect" value="public"/>
+                <input type="checkbox" disabled="disabled" id="checkbox1" checked="checked" name="user[family]" value="family" class="css-checkbox privacyChk" /> 
+                <label class="" for="checkbox1">Family</label>
+            </div>
+				<div class="col-md-4 dropside-guest-book">
+				<input type="hidden" name="privacySelect" id="privacySelect" value="public"/>
+				<?php
+					if($vguestbook!='') {
+				?>
+				<input type="checkbox" id="checkbox1" checked="checked" name="user[guestbook]" value="guestbook" class="css-checkbox privacyChk" />
+				<?php							
+					}else {
+				?>
+				<input type="checkbox" id="checkbox1" name="user[guestbook]" value="guestbook" class="css-checkbox privacyChk" />
+
+				<?php					
+					}
+				?>	
+                 
+                <label class="" for="checkbox1">Guest Book</label>
+            </div>
+            
+				<div class="col-md-4 dropside-guest-book">
+				<?php
+					if($vtribute!='') {
+				?>
+                <input type="checkbox" id="checkbox2" checked="checked" name="user[tributes]" value="tributes" class="css-checkbox privacyChk" /> 
+				<?php
+				}else {
+				?>
+				<input type="checkbox" id="checkbox2" name="user[tributes]" value="tributes" class="css-checkbox privacyChk" /> 
+		
+				<?php	
+				}					
+				?>             
+                <label class="" for="checkbox2">Tributes</label>
+            </div>
+        
+				<div class="col-md-4 dropside-guest-book">
+				<?php
+					if($vdonate!='') {
+				?>
+                <input type="checkbox" id="checkbox3" checked="checked" name="user[donate]" value="donate" class="css-checkbox privacyChk" /> 
+				<?php
+					}else {
+				?>
+				<input type="checkbox" id="checkbox3" name="user[donate]" value="donate" class="css-checkbox privacyChk" /> 	
+				<?php						
+					}				
+				?>              
+                <label class="" for="checkbox3">Donate</label>
+            </div>
+
+				<div class="col-md-4 dropside-guest-book">
+				<?php
+					if($vemphistory!='') {
+				?>
+                <input type="checkbox" id="checkbox4" checked="checked" name="user[employmenthistory]" value="employment history" class="css-checkbox privacyChk" /> 
+				<?php
+					}else {
+				?>
+					<input type="checkbox" id="checkbox4" name="user[employmenthistory]" value="employment history" class="css-checkbox privacyChk" /> 
+				<?php	
+					}					
+				?>           
+                <label class="" for="checkbox4">Employment History</label>
+            </div>
+            
+            <div class="col-md-4 dropside-guest-book">
+            <?php
+					if($vachiveawards!='') {
+				?>
+                <input type="checkbox" id="checkbox5" checked="checked" name="user[achivementsawards]" value="achivements and awards" class="css-checkbox privacyChk" /> 
+				<?php
+					}else {
+				?>
+				<input type="checkbox" id="checkbox5" name="user[achivementsawards]" value="achivements and awards" class="css-checkbox privacyChk" /> 
+
+				<?php					
+					}				
+				?>           
+                <label class="" for="checkbox5">Achivements & Awards</label>
+            </div>
+            
+				<div class="col-md-4 dropside-guest-book">
+				<?php
+					if($vpersonalhonor!='') {
+				?>
+                <input type="checkbox" id="checkbox6" checked="checked" name="user[personalhonor]" value="personal honors" class="css-checkbox privacyChk" /> 
+				<?php
+					} else {
+				?>
+				<input type="checkbox" id="checkbox6" name="user[personalhonor]" value="personal honors" class="css-checkbox privacyChk" /> 
+
+				<?php		
+				}						
+				?>
+                <label class="" for="checkbox6">Personal Honors</label>
+            </div>
+                        
+            <div class="col-md-4 dropside-guest-book">
+            <?php
+					if($vdigital!='') {
+				?>
+                <input type="checkbox" id="checkbox6" checked="checked" name="user[digitalfootprintslinks]" value="digital footprints and links" class="css-checkbox privacyChk" /> 
+				<?php
+					} else {
+				?>
+				<input type="checkbox" id="checkbox6" name="user[digitalfootprintslinks]" value="digital footprints and links" class="css-checkbox privacyChk" /> 
+
+				<?php
+					}						
+				?>	             
+                <label class="" for="checkbox6">Digital Footprints & links</label>
+            </div>
+			<?php		
+		
+					}	          
+            ?>
+            <!--<div class="col-md-4">
+                <input type="checkbox" id="checkbox6" name="user[personal honors]" value="personal honors" class="css-checkbox" /> 
+                <label class="" for="checkbox6">Personal Honors</label>
+            </div>-->
+            </div>
+		</div>
+	</div>
+	<div class="clearfix"></div>
+	<div class="new-align">
+	
+	<button class="saveButton" type="submit">Save to my account</button>
+     <span class="flot_rght float-none"><a class="sendButton">Send</a></span>
+</div>
+</div>
+
+
+</form>
+<script>
+$(document).ready(function () {
+	$("input[type='checkbox'].privacyChk").change(function(){
+    var a = $("input[type='checkbox'].privacyChk");
+    if(a.length == a.filter(":checked").length){
+    	 //alert("ggg");
+       $("#privacySelect").val('public');
+    }else {
+    	//alert("ss");
+ 		$("#privacySelect").val('private');
+ 	 }   	
+});
+});
+function changePrivacy(){
+var pselect=$("#privacySelect").val();
+if(pselect=="private"){
+	$("#privacyOptions").show();
+	$("#privacyPublicOptions").hide();
+}else{
+	$("#privacyOptions").hide();
+	$("#privacyPublicOptions").show();
+}
+}
+</script>

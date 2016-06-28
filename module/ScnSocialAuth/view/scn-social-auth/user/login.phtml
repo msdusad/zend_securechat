@@ -1,0 +1,35 @@
+<?php
+if (isset($this->widget) && $this->widget == false) {
+    echo '<style>
+        .form-signin{background: none!important;padding: 0!important;margin: 0!important;}
+        .socialbuttons {width: 300px;margin: 20px 0 0 0;}
+         .fancybox{display:none;}
+        </style>';
+    echo '<div style="width:300px;margin: 0 auto;">';
+}
+?>
+<div class="loginmain">
+    <?php
+    $socialSignIn = true;
+    if ($this->options->getSocialLoginOnly() == false) {
+        echo $this->zfcUserLogin;
+    }
+    ?>
+    <div class="socialbuttons">
+        <?php
+        echo '<ul>';
+        foreach ($this->options->getEnabledProviders() as $provider) {
+            if ($socialSignIn) {
+                $socialSignIn = false;
+            }
+            echo $this->socialSignInButton($provider, $this->redirect);
+        }
+        echo '</ul>';
+        ?>
+
+    </div>
+</div>
+<?php
+if (isset($this->widget) && $this->widget == false) {
+    echo '</div>';
+}?>

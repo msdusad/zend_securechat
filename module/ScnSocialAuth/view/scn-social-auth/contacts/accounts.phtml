@@ -1,0 +1,74 @@
+<?=
+$this->partial('layout/top_links');
+
+$connected_adapters_list = $this->providers;
+?>
+<div class="layout_nav">
+        <ul>
+            <li><a class="before" href="<?php echo $this->basePath('/'); ?>">Home &rsaquo; </a></li>           
+            <li>Connected Accounts</li> 
+        </ul>
+ </div>
+<div class='clear'></div>
+<div class="myaccount">
+    <h3>Social of you have an account with any of these Social accounts, You can connect</h3>
+    <div class="">
+        <div class="maincontent">
+            <div style='padding: 30px 10px;'>
+                <?php if (count($connected_adapters_list)) { ?>
+                    <h5>Social Account You are connected width</h5>
+                <?php
+                }
+// try to get already authenticated provider list
+                try {
+                    $connected_adapters_list = $this->providers;
+
+                    if (count($connected_adapters_list)) {
+                        ?> 
+                        <ul>                    
+                                   <?php foreach ($connected_adapters_list as $adapter_id) { ?>
+                                <li class="<?php echo strtolower($adapter_id); ?>">
+                                    <a class="transparant" title=" click to disconnect <?php echo $adapter_id; ?>" href="<?php echo $this->url('scn-social-accounts', array('provider' => $adapter_id, 'return' => 'scn-social-accounts'));
+                                       ?>"><?php echo $adapter_id; ?></a>
+                                </li>
+        <?php } ?>
+
+                        </ul>
+
+                        <?php
+                    }
+                } catch (Exception $e) {
+                    
+                }
+                ?> 
+                <br />
+                <h5>Connect now with</h5>
+                <ul>                
+                    <?php
+                    $available_providers_list = array(
+                        "Google",
+                        "Yahoo",
+                        "Facebook",
+                        "Twitter",
+                        "LinkedIn",
+                    );
+
+                    foreach ($available_providers_list as $adapter_id) {
+                        if (in_array($adapter_id, $this->providers)) {
+                            
+                        } else {
+                            ?>
+                            <li class="<?php echo strtolower($adapter_id); ?>">
+                                <a class="transparant" href="<?php echo $this->url('scn-social-contact', array('provider' => $adapter_id, 'return' => 'scn-social-accounts'));
+                            ?>"><?php echo $adapter_id; ?></a></li>
+                                <?php
+                            }
+                        }
+                        ?> 
+                            <li class="skype"><a class="transparant" href="#">Skype</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+</div>

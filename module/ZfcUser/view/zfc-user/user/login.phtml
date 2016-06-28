@@ -1,0 +1,136 @@
+
+<?php
+$form = $this->loginForm;
+$form->prepare();
+$form->setAttribute('action', $this->url('zfcuser/login'));
+$form->setAttribute('method', 'post');
+$form->setAttribute('class', 'form-signin');
+//register form
+$rForm = $this->registerForm;
+$rForm->prepare();
+$rForm->setAttribute('action', $this->url('zfcuser/register'));
+$rForm->setAttribute('method', 'post');
+$rForm->setAttribute('class', 'form-signin');
+?>
+<div class="tab-content">
+    <div id="loginform" class="tab-pane active">
+    <!--  <a  class="text-muted" href="#mobileloginform" data-toggle="tab">Login Via Mobile Number </a> -->
+        <?php echo $this->form()->openTag($form) ?>
+
+        <?php echo $this->formElementErrors($form->get('identity')) ?>
+
+
+        <?php echo $this->formInput($form->get('identity')) ?>
+
+
+        <?php echo $this->formInput($form->get('credential')) ?>
+
+        <?php if ($this->redirect): ?>
+            <input type="hidden" name="redirect" value="<?php echo $this->redirect ?>" />
+        <?php endif ?>
+
+        <?php echo $this->formButton($form->get('submit')) ?>
+        <a href="#" >Forget Password</a>
+
+        <?php
+        if (isset($this->disablelayout) && $this->disablelayout == 1) {?>
+             <a href="<?php echo $this->url('zfcuser/register'); ?>">Sign up</a>
+        <?php } else {
+            ?>
+            <div class="remember">
+                <input type="checkbox" name="remember" value="1" />Remember Me
+            </div>           
+            <a class="text-muted" href="#signupform" data-toggle="tab">No account?sign up for free </a><br>
+
+          
+    <?php }echo $this->form()->closeTag() ?>
+    </div>
+
+
+     <!-- <div id="loginform" class="tab-pane active">
+     
+       <b>Login Via Mobile Number</b>
+       <input type="text" ></input>
+         <input type="submit" value="Submit"></input>
+    </div> -->
+
+
+    <div id="signupform" class="tab-pane">
+        <?php echo $this->form()->openTag($rForm) ?>
+        <?php echo $this->formInput($rForm->get('username')) ?>
+        <?php echo $this->formInput($rForm->get('display_name')) ?>
+        <?php echo $this->formInput($rForm->get('email')) ?>
+        <?php echo $this->formInput($rForm->get('password')) ?>
+          <?php echo $this->formInput($rForm->get('cpassword')) ?>
+        <?php echo $this->formButton($rForm->get('submit')) ?>
+        <?php if ($this->redirect): ?>
+            <input type="hidden" name="redirect" value="<?php echo $this->redirect ?>" />
+            <?php
+        endif;
+        if (isset($this->disablelayout) && $this->disablelayout == 1) {
+            
+        } else {
+            ?>
+            <a class="text-muted" href="#loginform" data-toggle="tab">Already have an account?sign in </a>
+<?php } echo $this->form()->closeTag() ?>
+
+    </div>
+
+  
+
+</div>
+
+<script>
+    $('.text-muted').click(function() {
+        var activeForm = $(this).attr('href') + ' > form';
+
+        //console.log(activeForm);
+        $(activeForm).addClass('magictime swap');
+        //set timer to 1 seconds, after that, unload the magic animation
+        setTimeout(function() {
+            $(activeForm).removeClass('magictime swap');
+        }, 1000);
+
+    });
+
+    $(document).ready(function(){
+$("#getotp").click(function(){
+var mob=$("#mobile_number").val();
+if(mob==''){
+$("#mob_error").html("Please Fill Mobile Number");
+return false;
+}
+
+$.ajax({
+
+  type: "POST",
+          data: {mob_number:mob},
+          url: "<?php echo $this->url('getdata'); ?>",
+          beforeSend: function(){
+     $("#loading").show();
+   },
+   complete: function(){
+     $("#loading").hide();
+   },
+          success: function(data) 
+          {       
+              //alert(data);       
+              var ss=$('#mob_error').html(jQuery(data).find('#mob_result').html());
+              var res=jQuery(data).find('#mob_result').html(); 
+            
+              if(/^\s*1\s*$/.test(res)){                
+$("#submit_number").hide();
+$("#submit_otp").show();
+              }
+              
+
+          }
+
+});
+
+});
+
+    });
+
+</script>
+

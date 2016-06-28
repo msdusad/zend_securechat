@@ -1,0 +1,915 @@
+  <script>
+        jQuery(document).ready(function ($) {
+            var options = {
+                $AutoPlay: true,                                    //[Optional] Whether to auto play, to enable slideshow, this option must be set to true, default value is false
+                $AutoPlayInterval: 4000,                            //[Optional] Interval (in milliseconds) to go for next slide since the previous stopped if the slider is auto playing, default value is 3000
+                $SlideDuration: 500,                                //[Optional] Specifies default duration (swipe) for slide in milliseconds, default value is 500
+                $DragOrientation: 3,                                //[Optional] Orientation to drag slide, 0 no drag, 1 horizental, 2 vertical, 3 either, default value is 1 (Note that the $DragOrientation should be the same as $PlayOrientation when $DisplayPieces is greater than 1, or parking position is not 0)
+                $UISearchMode: 0,                                   //[Optional] The way (0 parellel, 1 recursive, default value is 1) to search UI components (slides container, loading screen, navigator container, arrow navigator container, thumbnail navigator container etc).
+
+                $ThumbnailNavigatorOptions: {
+                    $Class: $JssorThumbnailNavigator$,              //[Required] Class to create thumbnail navigator instance
+                    $ChanceToShow: 2,                               //[Required] 0 Never, 1 Mouse Over, 2 Always
+
+                    $Loop: 2,                                       //[Optional] Enable loop(circular) of carousel or not, 0: stop, 1: loop, 2 rewind, default value is 1
+                    $SpacingX: 3,                                   //[Optional] Horizontal space between each thumbnail in pixel, default value is 0
+                    $SpacingY: 3,                                   //[Optional] Vertical space between each thumbnail in pixel, default value is 0
+                    $DisplayPieces: 6,                              //[Optional] Number of pieces to display, default value is 1
+                    $ParkingPosition: 204,                          //[Optional] The offset position to park thumbnail,
+
+                    $ArrowNavigatorOptions: {
+                        $Class: $JssorArrowNavigator$,              //[Requried] Class to create arrow navigator instance
+                        $ChanceToShow: 2,                               //[Required] 0 Never, 1 Mouse Over, 2 Always
+                        $AutoCenter: 2,                                 //[Optional] Auto center arrows in parent container, 0 No, 1 Horizontal, 2 Vertical, 3 Both, default value is 0
+                        $Steps: 6                                       //[Optional] Steps to go for each navigation request, default value is 1
+                    }
+                }
+            };
+
+            var jssor_slider1 = new $JssorSlider$("slider1_container", options);
+
+            //responsive code begin
+            //you can remove responsive code if you don't want the slider scales while window resizes
+            function ScaleSlider() {
+                var parentWidth = jssor_slider1.$Elmt.parentNode.clientWidth;
+                if (parentWidth)
+                    jssor_slider1.$ScaleWidth(Math.min(parentWidth, 447));
+                else
+                    window.setTimeout(ScaleSlider, 30);
+            }
+            ScaleSlider();
+
+            $(window).bind("load", ScaleSlider);
+            $(window).bind("resize", ScaleSlider);
+            $(window).bind("orientationchange", ScaleSlider);
+            //responsive code end
+        });
+   
+document.getElementById("uploadBtn").onchange = function () {
+    document.getElementById("uploadFile").value = this.value;
+};
+</script>
+
+
+
+
+
+
+<div class="header-bottom">
+<div class="col-md-4">
+<a class="logo-top" href="#">Cremation Planning <i class="fa fa-chevron-right"></i></a>
+<a class="main-slide" href="#">Announce</a>
+</div>
+
+<div class="col-md-4">
+<div class="button-radio">
+<input type="radio" class="css-checkbox" id="radiofirst" name="radiog_lite">
+<label class="css-label1 radGroup1" for="radiofirst">Create New</label>
+
+<input type="radio" checked="checked" class="css-checkbox" id="radiosecond" name="radiog_lite">
+<label class="css-label1 radGroup1" for="radiosecond">My Account</label>
+</div>
+</div>
+
+<div class="col-md-4">
+<div class="floatr border-full">
+<a class="alls first" href="#">FAQ</a><a class="alls second" href="#">Demo</a><a class="alls third" href="#">Share</a>
+</div>
+</div>
+
+<div class="clearfix"></div>
+</div>
+
+<div class="section-band">
+<div class="col-md-4 border-right text-center">
+<!--<a href="#"><img class="img-responsive" src="images/user.png" /></a>-->
+
+
+
+
+    <div id="slider1_container" style="position: relative; width: 447px;
+        height: 370px; overflow: hidden;">
+
+        <!-- Loading Screen -->
+        <div u="loading" style="position: absolute; top: 0px; left: 0px;">
+            <div style="filter: alpha(opacity=70); opacity:0.7; position: absolute; display: block;
+                background-color: #000; top: 0px; left: 0px;width: 100%;height:100%;">
+            </div>
+            <div style="position: absolute; display: block; background: url(../img/loading.gif) no-repeat center center;
+                top: 0px; left: 0px;width: 100%;height:100%;">
+            </div>
+        </div>
+
+        <!-- Slides Container -->
+        <div u="slides" style="cursor: move; position: absolute; left: 0px; top: 0px; width: 447px; height: 279px;
+            overflow: hidden;">
+            <div>
+                <img u="image" src="<?php echo $this->basePath('/images/travel/01.jpg');?>" />
+                <img u="thumb" src="<?php echo $this->basePath('/images/travel/thumb-01.jpg');?>" />
+            </div>
+            <div>
+                <img u="image" src="<?php echo $this->basePath('/images/travel/02.jpg');?>" />
+                <img u="thumb" src="<?php echo $this->basePath('/images/travel/thumb-02.jpg');?>" />
+            </div>
+            <div>
+                <img u="image" src="<?php echo $this->basePath('/images/travel/03.jpg');?>" />
+                <img u="thumb" src="<?php echo $this->basePath('/images/travel/thumb-03.jpg');?>" />
+            </div>
+            <div>
+                <img u="image" src="<?php echo $this->basePath('/images/travel/04.jpg');?>" />
+                <img u="thumb" src="<?php echo $this->basePath('/images/travel/thumb-04.jpg');?>" />
+            </div>
+            <div>
+                <img u="image" src="<?php echo $this->basePath('/images/travel/05.jpg');?>" />
+                <img u="thumb" src="<?php echo $this->basePath('/images/travel/thumb-05.jpg');?>" />
+            </div>
+            <div>
+                <img u="image" src="<?php echo $this->basePath('/images/travel/06.jpg');?>" />
+                <img u="thumb" src="<?php echo $this->basePath('/images/travel/thumb-06.jpg');?>" />
+            </div>
+            <div>
+                <img u="image" src="<?php echo $this->basePath('/images/travel/07.jpg');?>" />
+                <img u="thumb" src="<?php echo $this->basePath('/images/travel/thumb-07.jpg');?>" />
+            </div>
+            <div>
+                <img u="image" src="<?php echo $this->basePath('/images/travel/08.jpg');?>" />
+                <img u="thumb" src="<?php echo $this->basePath('/images/travel/thumb-08.jpg');?>" />
+            </div>
+            <div>
+                <img u="image" src="<?php echo $this->basePath('/images/travel/09.jpg');?>" />
+                <img u="thumb" src="<?php echo $this->basePath('/images/travel/thumb-09.jpg');?>" />
+            </div>
+            <div>
+                <img u="image" src="<?php echo $this->basePath('/images/travel/10.jpg');?>" />
+                <img u="thumb" src="<?php echo $this->basePath('/images/travel/thumb-10.jpg');?>" />
+            </div>
+
+            <div>
+                <img u="image" src="<?php echo $this->basePath('/images/travel/11.jpg');?>" />
+                <img u="thumb" src="<?php echo $this->basePath('/images/travel/thumb-11.jpg');?>" />
+            </div>
+            <div>
+                <img u="image" src="<?php echo $this->basePath('/images/travel/12.jpg');?>" />
+                <img u="thumb" src="<?php echo $this->basePath('/images/travel/thumb-12.jpg');?>" />
+            </div>
+            <div>
+                <img u="image" src="<?php echo $this->basePath('/images/travel/13.jpg');?>" />
+                <img u="thumb" src="<?php echo $this->basePath('/images/travel/thumb-13.jpg');?>" />
+            </div>
+            <div>
+                <img u="image" src="<?php echo $this->basePath('/images/travel/14.jpg');?>" />
+                <img u="thumb" src="<?php echo $this->basePath('/images/travel/thumb-14.jpg');?>" />
+            </div>
+        </div>
+        
+        
+        <!-- Thumbnail Navigator Skin Begin -->
+        
+        <p  style="font-family: openFont2;
+font-size: 17px;
+padding-top: 280px;
+margin-bottom: 2px !important;
+color: #FF7F50; ">Created by: Rajiv Bhatia</p>
+<span class="set-bands">Privacy Setting: Public</span>
+        
+        
+        <div u="thumbnavigator" class="jssort07" style="position: absolute; width: 447px; height: 100px; left: 0px; bottom: 0px; overflow: hidden; ">
+            <div style=" background-color: #000; filter:alpha(opacity=30); opacity:.3; width: 100%; "></div>
+            <!-- Thumbnail Item Skin Begin -->
+          
+            <div u="slides" style="cursor: move;">
+                <div u="prototype" class="p" style="POSITION: absolute; WIDTH: 50px; HEIGHT: 40px; TOP: 0; LEFT: 0;">
+                    <div u="thumbnailtemplate" class="i" style="position:absolute;"></div>
+                    <div class="o">
+                    </div>
+                </div>
+            </div>
+            <!-- Thumbnail Item Skin End -->
+            <!-- Arrow Navigator Skin Begin -->
+            
+            <!-- Arrow Left -->
+            <span u="arrowleft" class="jssora11l" style="width: 37px; height: 37px; top: 123px; left: 8px;">
+            </span>
+            <!-- Arrow Right -->
+            <span u="arrowright" class="jssora11r" style="width: 37px; height: 37px; top: 123px; right: 8px">
+            </span>
+            <!-- Arrow Navigator Skin End -->
+        </div>
+        
+        <!-- Trigger -->
+    </div>
+
+
+
+
+<p class="set-thumb">Deceased's Profile Name</p>
+<span class="set-band">Date: Oct 2,1869-Jan 30,1948</span>
+
+<div class="back_border">Add Audio, Video and Images</div>
+<select class="demoa form-controls">
+
+   <option>Rest in Peace</option>
+		  <option>R.I.P.</option>
+		  <option>We miss you</option>
+		  <option>Love you Forever</option>
+		  <option>You won't be forgotten</option>
+		  <option>You will always be in our hearts</option>
+		  <option>Whereever you are, we love you</option>
+</select>
+<div class="set-img"><img src="<?php echo $this->basePath('/images/adminimage.jpg');?>" /><img src="<?php echo $this->basePath('/images/adminimage.jpg');?>" /><img src="<?php echo $this->basePath('/images/adminimage.jpg');?>" /></div>
+
+</div>
+<?php $pos=$_GET['pos'];
+      if(!$pos) $pos=1; ?>
+<div class="col-md-8 border-left">
+<ul role="tablist" class="nav nav-tabs navs" id="myTab">
+      <li <?php if($pos==1) echo 'class="active"';?> role="presentation"><a aria-expanded="true" aria-controls="info" data-toggle="tab" role="tab" id="info-tab" href="#info">Info</a></li>
+      <li role="presentation" <?php if($pos==2) echo 'class="active"';?>><a aria-controls="edu" data-toggle="tab" id="edu-tab" role="tab" href="#edu" aria-expanded="false">Edu</a></li>
+	   <li role="presentation" <?php if($pos==3) echo 'class="active"';?>><a aria-controls="family" data-toggle="tab" id="family-tab" role="tab" href="#family" aria-expanded="false">Family</a></li>
+	    <li role="presentation" <?php if($pos==4) echo 'class="active"';?>><a aria-controls="guestbook" data-toggle="tab" id="guestbook-tab" role="tab" href="#guestbook" aria-expanded="false">Guestbook</a></li>
+		 <li role="presentation" <?php if($pos==5) echo 'class="active"';?>><a aria-controls="tributes" data-toggle="tab" id="tributes-tab" role="tab" href="#tributes" aria-expanded="false">Tributes</a></li>
+		  <li role="presentation" <?php if($pos==6) echo 'class="active"';?>><a aria-controls="donate" data-toggle="tab" id="donate-tab" role="tab" href="#donate" aria-expanded="false">Donate</a></li>
+		   <li role="presentation" <?php if($pos==7) echo 'class="active"';?>><a aria-controls="more" data-toggle="tab" id="more-tab" role="tab" href="#more" aria-expanded="false">More...</a></li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+      <div aria-labelledby="info-tab" id="info" class="tab-pane <?php if($pos==1) echo 'active';else echo 'fade';?> " role="tabpanel">
+       <?php $link= $this->url('application/default',array('controller' => 'index', 'action' => 'index'), array('force_canonical' => true)).'?step='.$_GET['step'];?>
+      <form class="form-inline" method="post" action="<?php echo $link; ?>">
+      
+       <div class="border-set">
+       <div class="col-md-6 set-border">
+       <div class="set-form">     
+
+        <select name="user[salutation]" class="my-control1 demoae" required="required" >
+            <option value="mr">Mr.</option>
+            <option value="mrs">Mrs.</option>
+            <option value="ms">Ms.</option>
+        </select>
+<input type="text" name="user[first_name]" class="my-control" placeholder="First Name" required="required" />
+<input type="text" name="user[middle_name]" class="my-control" placeholder="Middle Name" required="required" />
+<input type="text" name="user[last_name]" class="my-control" placeholder="Last Name" required="required" />
+<input type="text" name="user[aka]" class="my-control" placeholder="Aka" required="required" />
+
+<div class="row set-label">
+<div class="col-md-5">
+<input type="radio" id="radio1" name="user[gender]" value="male" class="css-checkbox"/>
+<label class="css-label radGroup1" for="radio1">Male</label>
+</div>
+<div class="col-md-5">
+<input type="radio" name="user[gender]" value="female" checked="checked" class="css-checkbox" id="radio2"/>
+<label class="css-label radGroup1" for="radio2">Female</label>
+</div>
+</div>
+
+<input type="text" name="user[resident]" class="my-control" placeholder="Resident of" required="required" />
+<input type="text" name="user[occupation]" class="my-control" placeholder="Occupation" required="required"/>
+
+     
+      </div>
+       </div>
+       <div class="col-md-6 short-border">
+       <div class="set-form">
+       
+<input type="text" name="user[caste]" class="my-control" placeholder="Caste" required="required" />
+<input type="text" name="user[gotra]" class="my-control" placeholder="Gotra" required="required" />
+<input type="text" name="user[death_place]" class="my-control" placeholder="Place of Death" required="required" />
+<input type="text" name="user[death_cause]" class="my-control" placeholder="Cause of Death" required="required" />
+<input type="text" name="user[death_time]" id="deathTime" class="my-control" placeholder="Time of Death" required="required" />
+<input type="text" name="user[date_of_birth]" id="dateOfBirth" class="my-control" placeholder="Date of Birth" required="required"/>
+<input type="text" name="user[date_of_death]" id="dateOfDeath" class="my-control" placeholder="Date of Death" required="required" />
+<input type="text" name="user[age]" class="my-control" placeholder="Age (Apporximate)" required="required"/>
+
+    
+      </div>
+       </div>
+       <div class="clearfix"></div>
+       </div>
+	   
+	   <div class="border-sets">
+       <div class="col-md-6"><p class="set-thumb">Obituary</p>
+       <input type="text" placeholder="Text here..." class="my-control" >
+       <p class="set-thumbe">We regret to inform you that this person has passedway.</p>
+       </div>
+	   <div class="col-md-6">
+       <a href="#" class="myButton">Select from other style and language</a>
+       <a class="btn btn-success set-success" href="#">Custom it</a> 
+       <a class="custom-span" href="#">Read more...</a>
+       </div>
+	   <div class="clearfix"></div>
+       </div>
+	   
+	   <div class="border-sets">
+	   <div class="floatl">
+       <div class="event-new">
+	   <div class="well well-sm wells">Event Cal</div>
+	   </div>
+	   <div class="event-news">
+	   <div class="well well-sm wells">Alerts</div>
+	   </div>
+	   </div>
+	   <div class="position-img"><img src="/images/icon.png"></div>
+	   <div class="floatl">
+       <div class="event-new1">
+	   <div class="well well-sm wells">Day by day events</div>
+	   </div>
+	   <div class="event-news1">
+	   <div class="well well-sm wells">Car Pool</div>
+	   </div>
+	   </div>
+	   
+	   <div class="position-imgs"><img src="/images/icon.png"></div>
+	   <div class="floatl">
+       <div class="event-new2">
+	   <div class="well well-sm wells">Shared Tasks</div>
+	   </div>
+	   <div class="event-news2">
+	   <div class="well well-sm wells">Meet &amp; Greet Points</div>
+	   </div>
+	   </div>
+	   
+	   <div class="clearfix"></div>
+       </div>
+	   
+	   <div><a href="#" class="toolButton">Tools</a><button class="saveButton" type="submit">Save to my account</button><a class="sendButton">Send</a></div>
+	   </form>
+      </div>
+      <div aria-labelledby="edu-tab" id="edu" class="tab-pane <?php if($pos==2) echo 'active';else echo 'fade';?>" role="tabpanel">
+	  
+	   <?php $link= $this->url('application/default',array('controller' => 'index', 'action' => 'edu'), array('force_canonical' => true)).'?step='.$_GET['step'];?>
+      <form class="form-inline" method="post" action="<?php echo $link; ?>">
+	  <div class="border-set">
+       <div class="col-md-12">
+       <div class="set-form">
+     
+<textarea name="user[school]" class="my-controls" rows="4" placeholder="School name..." required="required"></textarea>
+<textarea name="user[college]" class="my-controls" rows="4" placeholder="College name..." required="required"></textarea>
+<textarea name="user[university]" class="my-controls" rows="4" placeholder="University name..." required="required"></textarea>
+<textarea name="user[others]" class="my-controls" rows="4" placeholder="Others qualification name..." required="required"></textarea>
+
+      
+      </div>
+       </div>
+       <div class="clearfix"></div>
+       </div>
+
+	
+	 <div><button class="saveButton" type="submit">Save to my account</button><a class="sendButton floatr" href="#">Send</a></div>
+	  
+	  
+	  </form>
+	  
+       
+      </div>
+	  
+	  
+	  
+	  <div aria-labelledby="family-tab" id="family" class="tab-pane <?php if($pos==3) echo 'active';else echo 'fade';?>" role="tabpanel">
+	  <?php $link= $this->url('application/default',array('controller' => 'index', 'action' => 'family'), array('force_canonical' => true)).'?step='.$_GET['step'];?>
+      <form class="form-inline" method="post" action="<?php echo $link; ?>">
+	 <div class="border-set">
+       <div class="col-md-12">
+       <div class="set-form">   
+	
+	  
+	  <label class="make-label">Survived by:-</label>
+  <div class="form-group">
+  <select class="my-control2 demoae" name="1[type]">
+      <option value="Sister">Sister</option>
+  <option value="Daughter">Daughter</option>
+  <option value="Son">Son</option>
+</select>
+  </div>
+  <div class="form-group">
+    <input type="text" placeholder="First name" name='1[first_name]' class="my-controling"  required="required">
+  </div>
+  <div class="form-group">
+    <input type="text" placeholder="Last name"  name='1[last_name]' class="my-controling"  required="required">
+  </div>
+  <div class="form-group">
+    <input type="text" placeholder="Middle name" name='1[middle_name]' class="my-controling"  required="required">
+  </div>
+  
+  <div class="form-group">
+  <select class="my-control2 demoae" name="2[type]">
+      <option value="Sister">Sister</option>
+  <option value="Daughter">Daughter</option>
+  <option value="Son">Son</option>
+</select>
+  </div>
+  <div class="form-group">
+    <input type="text" placeholder="First name" name='2[first_name]' class="my-controling"  required="required">
+  </div>
+  <div class="form-group">
+    <input type="text" placeholder="Last name" name='2[last_name]' class="my-controling"  required="required">
+  </div>
+  <div class="form-group">
+    <input type="text" placeholder="Middle name" name='2[middle_name]'  class="my-controling" required="required">
+  </div>
+  
+  <div class="form-group">
+  <select class="my-control2 demoae" name="3[type]">
+      <option value="Sister">Sister</option>
+  <option value="Daughter">Daughter</option>
+  <option value="Son">Son</option>
+</select>
+  </div>
+  <div class="form-group">
+    <input type="text" placeholder="First name"  name='3[first_name]' class="my-controling" required="required">
+  </div>
+  <div class="form-group">
+    <input type="text" placeholder="Last name" name='3[last_name]' class="my-controling" required="required">
+  </div>
+  <div class="form-group">
+    <input type="text" placeholder="Middle name" name='3[middle_name]' class="my-controling" required="required">
+  </div>
+  
+  <a class="add-more" href="#"><i class="fa fa-plus"></i> Add another family member</a>
+  
+  
+  <label class="make-labels">Predeceased by:-</label>
+  <div class="form-group">
+  <select class="my-control2 demoae" name="4[type]">
+      <option value="Grandfather">Grandfather</option>
+  <option value="Grandmother">Grandmother</option>
+  <option value="Father">Father</option>
+  <option value="Mother">Mother</option>
+</select>
+  </div>
+  <div class="form-group">
+    <input type="text" placeholder="First name"  name='4[first_name]' class="my-controling" required="required">
+  </div>
+  <div class="form-group">
+    <input type="text" placeholder="Last name" name='4[last_name]' class="my-controling" required="required">
+  </div>
+  <div class="form-group">
+    <input type="text" placeholder="Middle name" name='4[middle_name]' class="my-controling" required="required">
+  </div>
+  
+  <div class="form-group">
+  <select class="my-control2 demoae" name="5[type]">
+      <option value="Grandfather">Grandfather</option>
+  <option value="Grandmother">Grandmother</option>
+  <option value="Father">Father</option>
+  <option value="Mother">Mother</option>
+</select>
+  </div>
+  <div class="form-group">
+    <input type="text" placeholder="First name"  name='5[first_name]' class="my-controling" required="required">
+  </div>
+  <div class="form-group">
+    <input type="text" placeholder="Last name" name='5[last_name]' class="my-controling" required="required">
+  </div>
+  <div class="form-group">
+    <input type="text" placeholder="Middle name" name='5[middle_name]' class="my-controling" required="required">
+  </div>
+  
+  <div class="form-group">
+  <select class="my-control2 demoae" name="6[type]">
+  <option value="Grandfather">Grandfather</option>
+  <option value="Grandmother">Grandmother</option>
+  <option value="Father">Father</option>
+  <option value="Mother">Mother</option>
+</select>
+  </div>
+  <div class="form-group">
+    <input type="text" placeholder="First name" name='6[first_name]' class="my-controling" required="required">
+  </div>
+  <div class="form-group">
+    <input type="text" placeholder="Last name" name='6[last_name]' class="my-controling" required="required">
+  </div>
+  <div class="form-group">
+    <input type="text" placeholder="Middle name" name='6[middle_name]' class="my-controling" required="required">
+  </div>
+   <a class="add-mores" href="#"><i class="fa fa-plus"></i> Add another family member</a>
+
+      </div>
+       </div>
+       <div class="clearfix"></div>
+       </div>
+	   
+	   <div><a class="toolButton" href="#">Tools</a><button class="saveButton" type="submit">Save to my account</button><a class="sendButton" href="#">Send</a></div>
+	  
+    </form>   
+      </div>
+	  
+	  
+	  
+	  
+	  <div aria-labelledby="guestbook-tab" id="guestbook" class="tab-pane <?php if($pos==4) echo 'active';else echo 'fade';?>" role="tabpanel">
+	  <?php $link= $this->url('application/default',array('controller' => 'index', 'action' => 'guestbook'), array('force_canonical' => true)).'?step='.$_GET['step'];?>
+      <form class="form-inline" method="post" action="<?php echo $link; ?>"> 
+	 <div class="border-set">
+       <div class="col-md-12">
+       <div class="set-form">
+      
+	  
+	  <div class="row">
+	  <div class="col-md-6">
+  <div class="form-group" style="display:block;">
+    <label for="exampleInputEmail1">Email address</label>
+    <input type="email" class="my-control" id="exampleInputEmail1" placeholder="Enter email" name="user[guest_email1]" required="required">
+  </div>
+  </div>
+  <div class="col-md-6">
+  <div class="form-group" style="display:block;">
+    <label for="exampleInputPassword1">Password</label>
+    <input type="password" class="my-control" id="exampleInputPassword1" placeholder="Password" name="user[guest_pass1]" required="required">
+  </div>
+  </div>
+  </div>
+  <div class="form-group" style="display:block;">
+    <label for="exampleInputPassword1">Message</label>
+    <textarea placeholder="Message here..." rows="5" class="my-controls" name="user[guest_msg1]" required="required"></textarea>
+  </div>
+   <div class="form-group" style="display:block;">
+    <label for="exampleInputPassword1">Select offerings:</label>
+    <select class="my-control1 demoak" name="user[guest_offr1]">
+  <option value="First">First</option>
+  <option value="Second">Second</option>
+  <option value="Third">Third</option>
+  <option value="Fourth">Fourth</option>
+  <option value="Fifth">Fifth</option>
+  <option value="Sixth">Sixth</option>
+  <option value="Seventh">Seventh</option>
+  <option value="Eighth">Eighth</option>
+</select>
+  </div>
+
+	  
+      </div>
+       </div>
+       <div class="clearfix"></div>
+       </div>
+	   
+	   
+	   <div class="border-sets">
+       <div class="col-md-12">
+       <div class="set-form">
+      
+	  
+	  <div class="row">
+	  <div class="col-md-6">
+  <div class="form-group" style="display:block;">
+    <label for="exampleInputEmail1">Email address</label>
+    <input type="email" class="my-control" id="exampleInputEmail1" placeholder="Enter email" name="user[guest_email2]" required="required">
+  </div>
+  </div>
+  <div class="col-md-6">
+  <div class="form-group" style="display:block;">
+    <label for="exampleInputPassword1">Password</label>
+    <input type="password" class="my-control" id="exampleInputPassword1" placeholder="Password" name="user[guest_pass2]" required="required">
+  </div>
+  </div>
+  </div>
+  <div class="form-group" style="display:block;">
+    <label for="exampleInputPassword1">Message</label>
+    <textarea placeholder="Message here..." rows="5" class="my-controls" name="user[guest_msg2]" required="required"></textarea>
+  </div>
+   <div class="form-group" style="display:block;">
+    <label for="exampleInputPassword1">Select offerings:</label>
+    <select class="my-control1 demoak" name="user[guest_offr2]">
+  <option value="First">First</option>
+  <option value="Second">Second</option>
+  <option value="Third">Third</option>
+  <option value="Fourth">Fourth</option>
+  <option value="Fifth">Fifth</option>
+  <option value="Sixth">Sixth</option>
+  <option value="Seventh">Seventh</option>
+  <option value="Eighth">Eighth</option>
+</select>
+  </div>
+  
+
+	  
+      </div>
+       </div>
+       <div class="clearfix"></div>
+       </div>
+	  
+	   
+	   <div><a class="toolButton" href="#">Tools</a><button class="saveButton" type="submit">Save to my account</button><a class="sendButton">Send</a></div>
+      </form> 
+      </div>
+	  
+	  
+	   <div aria-labelledby="tributes-tab" id="tributes" class="tab-pane <?php if($pos==5) echo 'active';else echo 'fade';?>" role="tabpanel">
+	   <?php $link= $this->url('application/default',array('controller' => 'index', 'action' => 'tributes'), array('force_canonical' => true)).'?step='.$_GET['step'];?>
+      <form class="form-inline" method="post" action="<?php echo $link; ?>"> 
+	  <div class="border-set">
+       <div class="col-md-12">
+       <div class="set-form">
+      
+	  
+	  <div class="row">
+	  <div class="col-md-6">
+  <div class="form-group"  style="display:block;">
+    <label for="exampleInputEmail1">Email address</label>
+    <input type="email" class="my-control" id="exampleInputEmail1" placeholder="Enter email" name="1[email]" required="required">
+  </div>
+  </div>
+  <div class="col-md-6">
+  <div class="form-group" style="display:block;">
+    <label for="exampleInputPassword1">Password</label>
+    <input type="password" class="my-control" id="exampleInputPassword1" placeholder="Password" name="1[password]" required="required">
+  </div>
+  </div>
+  </div>
+  <div class="form-group" style="display:block;">
+    <label for="exampleInputPassword1">Message</label>
+    <textarea placeholder="Message here..." rows="5" class="my-controls" name="1[message]" required="required"></textarea>
+  </div>
+   <div class="form-group" style="display:block;">
+    <label for="exampleInputPassword1">Select offerings:</label>
+    <select class="my-control1 demoak"  name="1[offerings]">
+ <option value="First">First</option>
+  <option value="Second">Second</option>
+  <option value="Third">Third</option>
+  <option value="Fourth">Fourth</option>
+  <option value="Fifth">Fifth</option>
+  <option value="Sixth">Sixth</option>
+  <option value="Seventh">Seventh</option>
+  <option value="Eighth">Eighth</option>
+</select>
+  </div>
+ 
+
+	  
+      </div>
+       </div>
+       <div class="clearfix"></div>
+       </div>
+	   
+	   
+	   <div class="border-sets new-lake">
+       <div class="col-md-12">
+       <div class="set-form">
+      
+	  
+	  <div class="row">
+	  <div class="col-md-6">
+  <div class="form-group" style="display:block;">
+    <label for="exampleInputEmail1">Email address</label>
+    <input type="email" class="my-control" id="exampleInputEmail1" placeholder="Enter email" name="2[email]" required="required">
+  </div>
+  </div>
+  <div class="col-md-6">
+  <div class="form-group" style="display:block;">
+    <label for="exampleInputPassword1">Password</label>
+    <input type="password" class="my-control" id="exampleInputPassword1" placeholder="Password" name="2[password]" required="required">
+  </div>
+  </div>
+  </div>
+  <div class="form-group" style="display:block;">
+    <label for="exampleInputPassword1">Message</label>
+    <textarea placeholder="Message here..." rows="5" class="my-controls" name="2[message]" required="required"></textarea>
+  </div>
+   <div class="form-group" style="display:block;">
+    <label for="exampleInputPassword1">Select offerings:</label>
+    <select class="my-control1 demoak"  name="2[offerings]">
+  <option value="First">First</option>
+  <option value="Second">Second</option>
+  <option value="Third">Third</option>
+  <option value="Fourth">Fourth</option>
+  <option value="Fifth">Fifth</option>
+  <option value="Sixth">Sixth</option>
+  <option value="Seventh">Seventh</option>
+  <option value="Eighth">Eighth</option>
+</select>
+  </div>
+ 
+
+	  
+      </div>
+       </div>
+       <div class="clearfix"></div>
+       </div>
+	<div><a class="toolButton" href="#">Tools</a><button class="saveButton" type="submit">Save to my account</button><a class="sendButton">Send</a></div>
+       </form> 
+      </div>
+	  
+	  
+	   <div aria-labelledby="donate-tab" id="donate" class="tab-pane <?php if($pos==6) echo 'active';else echo 'fade';?>" role="tabpanel">
+
+	   <div class="border-set">
+       <div class="col-md-12">
+       <div class="set-form">
+      
+	  <h4 class="new-text">In memory of the person, please make an impact through donations to</h4>
+	  <h3 class="new-fonts">Antimsanskar Default Suggestion</h3>
+	
+	<div class="row">
+	<div class="col-md-4">
+	<a class="view" href="#">Cleaning holy rivers</a>
+	</div>
+	<div class="col-md-4">
+	<a class="view" href="#">Cause of death related - like Cancer Heart Disease</a>
+	</div>
+	<div class="col-md-4">
+	<a class="view" href="#">Religious Beliefs</a>
+	</div>
+	</div>
+	
+	<div class="row">
+	<div class="col-md-4">
+	<a class="view" href="#">Soup Chicken, Food &amp; Shelter</a>
+	</div>
+	<div class="col-md-4">
+	<a class="view" href="#">Scholarships and Education</a>
+	</div>
+	<div class="col-md-4">
+	<a class="view" href="#">Research and Development</a>
+	</div>
+	</div>
+	
+	<div class="row">
+	<div class="col-md-4">
+	<a class="view" href="#">Soup Chicken, Food &amp; Shelter</a>
+	</div>
+	<div class="col-md-4">
+	<a class="view" href="#">Scholarships and Education</a>
+	</div>
+	<div class="col-md-4">
+	<a class="view" href="#">Research and Development</a>
+	</div>
+	</div> 
+	
+	<a href="#" class="fastButton">Mydonations: Click here to choose from a complete list of impact categories</a>
+	  
+      </div>
+       </div>
+       <div class="clearfix"></div>
+       </div>
+	   
+	  
+	   
+	   <div><a class="toolButton" href="#">Tools</a><button class="saveButton" type="submit">Save to my account</button><a class="sendButton">Send</a></div>
+       
+      </div>
+     
+	 
+	 <div aria-labelledby="more-tab" id="more" class="tab-pane <?php if($pos==7) echo 'active';else echo 'fade';?>" role="tabpanel">
+
+<div class="border-set">
+       <div class="col-md-12">
+       <div class="set-form">
+      
+	  <form>
+	  <div class="row">
+	  <div class="col-md-6">
+  <div class="form-group">
+    <label for="exampleInputEmail1">Email address</label>
+    <input type="email" class="my-control" id="exampleInputEmail1" placeholder="Enter email">
+  </div>
+  </div>
+  <div class="col-md-6">
+  <div class="form-group">
+    <label for="exampleInputPassword1">Password</label>
+    <input type="password" class="my-control" id="exampleInputPassword1" placeholder="Password">
+  </div>
+  </div>
+  </div>
+  <div class="form-group">
+    <label for="exampleInputPassword1">Message</label>
+    <textarea placeholder="Message here..." rows="5" class="my-controls"></textarea>
+  </div>
+   <div class="form-group">
+    <label for="exampleInputPassword1">Select offerings:</label>
+    <select class="my-control1 demoak">
+  <option>First</option>
+  <option>Second</option>
+  <option>Third</option>
+  <option>Fourth</option>
+  <option>Fifth</option>
+  <option>Sixth</option>
+  <option>Seventh</option>
+  <option>Eighth</option>
+</select>
+  </div>
+  </form>
+
+	  
+      </div>
+       </div>
+       <div class="clearfix"></div>
+       </div>
+	   
+	   
+	   <div class="border-sets">
+       <div class="col-md-12">
+       <div class="set-form">
+      
+	  <form>
+	  <div class="row">
+	  <div class="col-md-6">
+  <div class="form-group">
+    <label for="exampleInputEmail1">Email address</label>
+    <input type="email" class="my-control" id="exampleInputEmail1" placeholder="Enter email">
+  </div>
+  </div>
+  <div class="col-md-6">
+  <div class="form-group">
+    <label for="exampleInputPassword1">Password</label>
+    <input type="password" class="my-control" id="exampleInputPassword1" placeholder="Password">
+  </div>
+  </div>
+  </div>
+  <div class="form-group">
+    <label for="exampleInputPassword1">Message</label>
+    <textarea placeholder="Message here..." rows="5" class="my-controls"></textarea>
+  </div>
+   <div class="form-group">
+    <label for="exampleInputPassword1">Select offerings:</label>
+    <select class="my-control1 demoak">
+  <option>First</option>
+  <option>Second</option>
+  <option>Third</option>
+  <option>Fourth</option>
+  <option>Fifth</option>
+  <option>Sixth</option>
+  <option>Seventh</option>
+  <option>Eighth</option>
+</select>
+  </div>
+  </form>
+
+	  
+      </div>
+       </div>
+       <div class="clearfix"></div>
+       </div>
+	  
+	   
+	   <div><a class="toolButton" href="#">Tools</a><button class="saveButton" type="submit">Save to my account</button><a class="sendButton">Send</a></div>
+       
+      </div>
+	  
+	  
+	  <div aria-labelledby="profile-tab" id="profile" class="tab-pane <?php if($pos==6) echo 'active';else echo 'fade';?>" role="tabpanel">
+
+<div class="border-set">
+       <div class="col-md-12">
+       <div class="set-form">
+      
+	  <h4 class="new-text">In memory of the person, please make an impact through donations to</h4>
+	  <h3 class="new-fonts">Antimsanskar Default Suggestion</h3>
+	
+	<div class="row">
+	<div class="col-md-4">
+	<a class="view" href="#">Cleaning holy rivers</a>
+	</div>
+	<div class="col-md-4">
+	<a class="view" href="#">Cause of death related - like Cancer Heart Disease</a>
+	</div>
+	<div class="col-md-4">
+	<a class="view" href="#">Religious Beliefs</a>
+	</div>
+	</div>
+	
+	<div class="row">
+	<div class="col-md-4">
+	<a class="view" href="#">Soup Chicken, Food &amp; Shelter</a>
+	</div>
+	<div class="col-md-4">
+	<a class="view" href="#">Scholarships and Education</a>
+	</div>
+	<div class="col-md-4">
+	<a class="view" href="#">Research and Development</a>
+	</div>
+	</div>
+	
+	<div class="row">
+	<div class="col-md-4">
+	<a class="view" href="#">Soup Chicken, Food &amp; Shelter</a>
+	</div>
+	<div class="col-md-4">
+	<a class="view" href="#">Scholarships and Education</a>
+	</div>
+	<div class="col-md-4">
+	<a class="view" href="#">Research and Development</a>
+	</div>
+	</div> 
+	
+	<a href="#" class="fastButton">Mydonations: Click here to choose from a complete list of impact categories</a>
+	  
+      </div>
+       </div>
+       <div class="clearfix"></div>
+       </div>
+	   
+	  
+	   
+	   <div><a class="toolButton" href="#">Tools</a><button class="saveButton" type="submit">Save to my account</button><a class="sendButton">Send</a></div>
+       
+      </div>
+      
+    </div>
+</div>
+<div class="clearfix"></div>
+</div>
+
+
+</div>
+</div>
+
+
+

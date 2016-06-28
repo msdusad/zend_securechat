@@ -1,0 +1,25 @@
+<?php $sn=1; foreach($users as $userkey=>$uservalue):?>
+                                            
+        <tr>
+            <td><?php echo $sn;?></td>
+            <td><?php echo $uservalue['first_name']." ".$uservalue['last_name']?></td>
+            <td><a href="<?php echo $this->url('administrator',array('controller'=>'administrator','action'=>'profile','id'=>$uservalue['user_id'])); ?>"><?php echo $uservalue['email']; ?></a></td>
+            <td><?php echo ucwords($uservalue['role_name']); ?></td>
+            <td><a href="<?php echo $this->url('administrator',array('controller'=>'administrator','action'=>'userstatus','id'=>$uservalue['user_id'])); ?>" class='state  <?php echo $uservalue['state']=='0' ? ' btn btn-xs btn-danger':' btn btn-xs btn-success';?>' rel='<?php echo $uservalue['state'];?>' ><?php echo $uservalue['state']=='0' ? "Inactive" : "Active ";?></a></td>
+            <td>
+                <div class="btn-group">
+                    <button class="btn btn-info" type="button">Action</button>
+                    <button data-toggle="dropdown" class="btn btn-info dropdown-toggle" type="button">
+                        <span class="caret"></span>
+                        <span class="sr-only">Toggle Dropdown</span>
+                    </button>
+                    <ul role="menu" class="dropdown-menu">
+                        <li><a href="javascript:void(0);" onclick="changepassword('<?php echo $uservalue['user_id']  ?>')">Change Password</a></li>
+                        <li><a href="javascript:void(0);" onclick="changerole('<?php echo $uservalue['user_id']  ?>','<?php echo $uservalue['role_id']; ?>')">Change Role</a></li>
+                        <li><a href="javascript:void(0);" onclick="deleteuser('<?php echo $uservalue['user_id'];?>');" >Delete</a></li>
+                   </ul>
+               </div>
+            
+            </td>
+        </tr>
+<?php $sn++; endforeach; die;?>

@@ -1,0 +1,46 @@
+body {
+/*
+    padding-top: 60px;
+    padding-bottom: 40px;
+*/
+}
+.sidebar-nav {
+    padding: 9px 0;
+}
+.show-grid {
+    background-color: #EEE;
+    text-align: center;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    min-height: 40px;
+    line-height: 40px;
+}
+
+div.container a.brand {
+    background: url("../images/zf2-logo.png") no-repeat scroll 0 10px transparent;
+    margin-left: 0;
+    padding: 8px 20px 12px 40px;
+}
+
+#the_form {
+	margin: 0;
+	padding: 0;
+}
+
+#the_form li{
+	list-style: none;
+	margin: 0 0 10px 0;
+}
+
+#the_form li:hover{
+	background: #EEE;
+}
+
+.nav li:hover ul.dropdown-menu {
+    display:block;
+}
+.social_buttons a{float:left;margin: 0 5px 0 0;}
+.social_buttons{clear: both;width: 100%;margin: 20px 0;display: inline-block;}.width_fild {	width: 258px;	float: left;}.width_fild_sel {	width: 119px;	float: right;}.colum_heg {	height: 43px;}.set_width {	width: 192px !important;}/* fix rtl for demo */.chosen-rtl .chosen-drop {	left: -9000px;}#new_height {	height: 459px !important;	margin-top: 2px !important;}#add-Mores11 {	color: hsl(16, 100%, 66%);	display: inline-block;	font-family: openFont2;	font-size: 15px;	margin-bottom: 12px;	margin-top: 3px;	padding: 3px 5px 9px;}
+
+

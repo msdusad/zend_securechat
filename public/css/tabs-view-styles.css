@@ -1,0 +1,104 @@
+
+
+.nav-tabs > li {
+    float: left;
+    margin-bottom: -2px;
+    font-size: 14px;
+	font-weight:bold;
+	border:1px solid #ddd;
+}
+.container { background:none;}
+.panel-body { min-height:400px; padding:5px; }
+
+
+.panel-heading {
+    padding:0px; 
+}
+
+.nav-tabs {
+    margin-bottom: 0em;
+}
+
+.nav-tabs > li > a {
+    border: 1px solid transparent;
+    border-radius: 2px 2px 0 0;
+    line-height: 1.42857;
+    margin:0px;
+}
+
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+    background-color:#cccccc;
+    color: #555;
+	border:0px;
+    cursor: default;
+}
+
+.tab-content > .tab-pane {
+    text-align: left; margin-top:15px;
+}
+.tab-pane  ul li{
+	list-style-position: inside; font-size:14px; line-height:21px; padding-top:10px; margin-left:15px;
+}
+
+.tab-pane  p{
+	list-style-position: inside; font-size:14px; line-height:21px; padding-top:10px; text-align:justify;
+}
+
+.tab-content-place { margin:0px; display:block;}
+.add-place { display:block;}
+
+.panel-body .legal-act{ display:block; width:100%; margin-top:30px;}
+.legal-act .legal-act-boxes { width:25%;  padding:3px; float:left; }
+
+.legal-act .legal-forms { width:100%; border:1px solid #424242; height:120px;}
+.legal-act .legal-forms .legal-forms-head { height:30px; width:100%;  }
+.legal-act .legal-forms .legal-forms-head h4{ font-size:12px; background-color:#f0f0f0; padding:5px; margin:3px; color:#424242; text-align:center; font-weight:bold;  }
+.legal-act .legal-forms .legal-forms-head p{ font-size:9px; color:#424242; text-align:center; padding-top:60px  }
+
+
+.legal-adv-adds { border:1px solid #424242; margin-top:10px; width:100%; display:table;}
+
+.legal-adv-box { float: left;    padding: 2px;    width: 32.2%; height:130px; margin:2px;}
+.legal-adv-box .adviser-adds { border:1px solid #666;} 
+.legal-adv-box .adviser-adds img{ display: inline; }
+.legal-adv-box .adviser-adds h4 { font-size:12px; font-weight:bold; color:#424242; text-align:center; padding:5px 2px; }
+
+
+.legal-resources { width:100%; margin-top:15px;}
+
+.legal-resources .nav-tabs > li {
+    float: left;
+    margin-bottom: -2px;
+    font-size: 14px;
+	font-weight:bold;
+	border:1px solid #ddd;
+	background:#f5f5f5;
+}
+
+.panel-primary > .panel-heading {
+    background-color: #f5f5f5;
+    border-color: #ddd;
+    color: #fff;
+}
+
+.legal-resources .panel-body { min-height:100px;}
+
+@media (max-width:480px){
+	
+	.legal-adv-box {
+    float: left;
+    height: 130px;
+    margin: 2px;
+    padding: 2px;
+    width: 31.0%;
+}
+	}
+
+
+
+
+
+
+
+
+

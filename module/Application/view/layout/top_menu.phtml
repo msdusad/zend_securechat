@@ -1,0 +1,133 @@
+<?php
+
+$sm = $this->getHelperPluginManager()->getServiceLocator();
+
+$authorize = $sm->get('BjyAuthorize\Provider\Identity\ProviderInterface');
+
+$admin = $sm->get('Admin\Model\CityTable');
+
+$roles = $authorize->getIdentityRoles();
+?>
+
+<style>
+  .imandir ul li a{color:#000 !important;}
+</style>
+
+<!-- .navbar -->
+
+<nav class="navbar navbar-inverse navbar-static-top" >
+
+    <!-- Brand and toggle get grouped for better mobile display -->
+
+    <header class="navbar-header" style="background-color:; "><!-- #f79647; -->
+
+
+		<div class="col-md-4 col-sm-3">
+        <a href="<?php echo $this->basePath('/'); ?>" class="navbar-brand img-responsive">
+    <img id="changelogoint" class="logo img-responsive" src="<?php echo $this->basePath('/assets/img/securechat_logo.png'); ?>" alt="">
+        </a>
+		</div>
+
+
+		<div class="col-md-3 col-sm-3 col-xs-5 pull-right imandir-mob" >
+        
+<div class="imandir" style=" border:0px;">
+
+             
+          <!-- <img src="<?php //echo $this->basePath('/assets/img/imandir.jpg');     ?>" alt="">-->
+
+            <ul>
+
+                <?php if ($roles[0] != 'guest') { ?>
+
+                    <li style=""><a class="logout" href="<?php echo $this->basePath('/user/logout'); ?>">Logout</a></li>
+
+                <?php } else { ?>
+
+                    <li style=""><a class="fancybox logintop" href="#login" >Login</a></li>
+
+                <?php } ?>
+
+                <li style="float: right;">
+                    <a href="<?php echo $this->url('page', array('id' => 'about-us')); ?>">About Us</a></li>
+
+                
+           <!--      <li style="float: left;margin-top:18px;"><a href="<?php //echo $this->url('i-mandir'); ?>">Imandir</a></li>
+
+                 <li style="float: right;margin-top:18px;"><a href="<?php //echo $this->url('special-needs'); ?>">Special Needs</a></li> -->
+
+            </ul>
+
+        </div>
+	</div>
+    </header>    
+
+
+
+</nav>
+
+<div id="login" class="login" style="display:none;">
+
+    <div class="loginpopup">
+
+        <img src="<?php echo $this->basePath('/assets/img/securechat_logo.png'); ?>" />
+
+        <?php
+
+        echo $this->zfcUserLoginWidget();
+
+        echo $this->UserLoginWidget();
+
+        ?>
+
+    </div>
+
+</div>
+
+
+
+<form method="POST" action="<?php echo $this->url('city'); ?>" id="city_form">
+
+    <input type="hidden" name="lat" id="latitude" value="37.7749295">
+
+    <input type="hidden" name="lang" id="langitude" value="-122.4194155">
+
+</form>
+
+
+<script>
+
+
+
+    $(document).ready(function() {
+
+
+
+        $('.dropdown-toggle').dropdown();
+
+
+
+        $('.fancybox').fancybox();
+
+
+
+        $('.city').click(function(e) {
+
+            $('#latitude').val($(this).data('lat'));
+
+            $('#langitude').val($(this).data('lang'));
+
+            $('#city_form').submit();
+
+        });
+
+        //<?php if (!isset($_COOKIE["PHPSESSID"])) { echo "$('#city_form').submit()";}?>
+
+       
+
+    });
+
+</script>
+
+
+

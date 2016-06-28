@@ -1,0 +1,59 @@
+<?php
+echo $this->headLink()
+        ->prependStylesheet($this->basePath() . '/assets/lib/multipleupload/css/uploadfile.css');
+echo $this->headScript()->prependFile($this->basePath() . '/assets/lib/multipleupload/js/jquery.uploadfile.min.js');
+echo $this->partial('layout/top_links');
+?>
+ 
+<div class="row">
+    <div class="layout_nav">
+        <ul>
+            <li><a class="before" href="<?php echo $this->basePath('/'); ?>">Home &rsaquo; </a></li>
+             <li><a class="before" href="<?php echo $this->url('cremation-plans'); ?>">Cremation Planning &rsaquo;</a></li>
+            <li>Special Needs</li> 
+        </ul>
+    </div>
+     <div class="clear"></div>
+<?php if ($this->message != '') { ?>
+    <div class="flash_message">
+        <?php echo $this->message[0]; ?>
+    </div>
+<?php } ?>
+<?php if (count($this->gallery) > 0) { ?>
+     <div class='specialgallery'>
+    <form method="POST" action="<?php echo $this->url('special-needs', array('action' => 'deletephotose', 'id' => $this->id));?>">
+        <ul class="impact_gallery">
+            <?php foreach ($this->gallery as $value) { ?>
+                <li>
+                    <img src="<?php echo $this->basePath('/../module/Admin/assets/specialneeds/thumb/' . $this->id . '_' . $value['photo_url']); ?>"/>
+                    <input type="checkbox" name="ids[]" value="<?php echo $value['id']; ?>">
+
+                </li>
+            <?php } ?>
+        </ul>  
+        <input type="submit" value="Delete" class="btn btn-warning btn-sm "/>
+    </form>
+     </div>
+<?php }
+?>
+  
+<div id="fileuploader">Upload</div>
+</div>
+<a class='btn btn-danger btn-sm nextbtn' href="<?php echo $this->url('special-needs');?>"> Save </a>
+<script>
+    $(document).ready(function()
+    {
+        $("#fileuploader").uploadFile({
+            url: "<?php echo $this->url('special-needs', array('action' => 'upload', 'id' => $this->id)); ?>",
+            fileName: "myfile",
+            allowedTypes: "png,gif,jpg,jpeg",
+            afterUploadAll: function()
+            {
+                location.reload();
+
+            }
+        });
+
+    });
+
+</script>

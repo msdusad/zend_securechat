@@ -1,0 +1,180 @@
+   <!-- Main content -->
+                <section class="content">
+
+                    <!-- row -->
+                    <div class="row">                        
+                        <div class="col-md-12">
+                            <!-- The time line -->
+                            <ul class="timeline">
+                                <!-- timeline time label -->
+                                <li class="time-label">
+                                    <span class="bg-red">
+                                    <?php 
+                                    echo $user['created'];
+                                     ?>
+                                    </span>
+                                </li>
+                                <!-- /.timeline-label -->
+                                <!-- timeline item -->
+                                <li>
+                                    <i class="fa fa-user bg-aqua"></i>
+                                    <div class="timeline-item">
+                                        <h3 class="timeline-header"><?php echo $user['first_name']." ".$user['last_name']; ?></h3>
+                                        <div class="timeline-body">
+                                            UserName : <?php echo $user['username']; ?><br />
+                                            Email    : <?php echo $user['email']; ?> <br />
+                                            Language : <?php echo $user['language']; ?>
+                                        </div>
+                                        <div class='timeline-footer'>
+                                            <!--<a  href="" class="btn btn-danger btn-xs">Change Password</a> -->
+                                        </div>
+                                    </div>
+                                </li>
+                                <!-- END timeline item -->
+                                <!-- timeline item -->
+                                <li>
+                                    <i class="fa fa-book bg-aqua"></i>
+                                    <div class="timeline-item">
+                                       
+                                        <h3 class="timeline-header">
+                                        <a class="btn btn-xs bg-maroon" href="#"><?php echo $this->translate('First Sample Articles') ?></a>
+                                        <?php
+                                        if($user['is_approved_article']==0):
+                                           echo "<span class='btn bg-purple btn-xs'>Waiting</span>";
+                                        elseif($user['is_approved_article']==1):
+                                           echo "<span class='btn bg-purple btn-xs'>Approved</span>";
+                                        elseif($user['is_approved_article']==2):
+                                          echo "<span class='btn bg-purple btn-xs'>Rejected</span>";
+                                        endif;
+                                        ?>
+                                        </h3>
+                                        <div class="timeline-body">
+                                           <?php echo $user['first_article'];?>
+                                           
+                                        </div>
+                                        <h3 class="timeline-header">
+                                        <a class="btn btn-xs bg-maroon" href="#">
+                                        <?php echo $this->translate('Second Sample Articles') ?></a></h3>
+                                         <div class="timeline-body">
+                                           <?php echo $user['second_article'];?>
+                                        </div>
+                                        <div class='timeline-footer'>
+                                           <button class="btn btn-primary btn-xs" data-toggle="modal" data-target="#approvearticle-modal">Approve</button>
+                                           <button class="btn btn-danger btn-xs" data-toggle="modal" data-target="#rejectarticle-modal">Reject</button>
+                                        </div>
+                                    </div>
+                                </li>
+                                <!-- END timeline item -->
+                                <!-- timeline item -->
+                                <li>
+                                    <i class="fa fa-comments bg-yellow"></i>
+                                    <div class="timeline-item">
+                                        <span class="time"><i class="fa fa-clock-o"></i> 27 mins ago</span>
+                                        <h3 class="timeline-header"><a href="#">Post Project Details</a> </h3>
+                                        <div class="timeline-body">
+                                            //todo
+                                        </div>
+                                        <div class='timeline-footer'>
+                                            <a class="btn btn-warning btn-flat btn-xs">View Project Status</a>
+                                        </div>
+                                    </div>
+                                </li>
+                                <!-- END timeline item -->
+                                <!-- timeline time label -->
+                                <li class="time-label">
+                                    <span class="bg-green">
+                                        3 Jan. 2014
+                                    </span>
+                                </li>
+                                <!-- /.timeline-label -->
+                                <!-- timeline item -->
+                                <li>
+                                    <i class="fa fa-camera bg-purple"></i>
+                                    <div class="timeline-item">
+                                        <span class="time"><i class="fa fa-clock-o"></i> 2 days ago</span>
+                                        <h3 class="timeline-header"><a href="#">Additional Details</a> </h3>
+                                        <div class="timeline-body">
+                                           //todo
+                                        </div>
+                                    </div>
+                                </li>
+                                <!-- END timeline item -->
+                                <!-- timeline item -->
+                                <li>
+                                    <i class="fa fa-video-camera bg-maroon"></i>
+                                    <div class="timeline-item">
+                                        <span class="time"><i class="fa fa-clock-o"></i> 5 days ago</span>
+                                        <h3 class="timeline-header"><a href="#">Todo</a></h3>
+                                        <div class="timeline-body">
+                                            
+                                        </div>
+                                        <div class="timeline-footer">
+                                            <a href="#" class="btn btn-xs bg-maroon">todo</a>
+                                        </div>
+                                    </div>
+                                </li>
+                                <!-- END timeline item -->
+                                <li>
+                                    <i class="fa fa-clock-o"></i>
+                                </li>
+                            </ul>
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
+        </section><!-- /.content -->
+
+<script>
+function approve()
+{
+    $('#approvearticle-modal').Modal('show');
+}
+
+</script>        
+<!-- article approve model -->
+
+    <div class="modal fade" id="approvearticle-modal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title"><?php echo $this->translate('Article Approval Panel');?></h4>
+                    </div>
+                       
+                        <div class="modal-body">
+                         <?php echo $this->translate("Do you want to Approve Both Sample Article ?"); ?>
+                        </div>
+                        <div class="modal-footer clearfix">
+
+                            <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+                          <a href="<?php  echo $this->url('administrator',array('controller'=>'administrator','action'=>'approvalarticle','id'=>$user['user_id'])); ?>" id="approve" class="btn btn-danger">Approve</a>
+                             
+                        </div>
+                        
+                    
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+
+
+ <div class="modal fade" id="rejectarticle-modal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title"><?php echo $this->translate('Article Rejection Panel');?></h4>
+                    </div>
+                       
+                        <div class="modal-body">
+                         <?php echo $this->translate("Do you want to Reject Both Sample Article ?"); ?>
+                        </div>
+                        <div class="modal-footer clearfix">
+
+                            <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+                          <a href="<?php  echo $this->url('administrator',array('controller'=>'administrator','action'=>'rejectionarticle','id'=>$user['user_id'])); ?>" id="approve" class="btn btn-danger">Reject</a>
+                             
+                        </div>
+                        
+                    
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+<!-- end article approve model -->

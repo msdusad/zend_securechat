@@ -1,0 +1,57 @@
+<?php
+$sm = $this->getHelperPluginManager()->getServiceLocator();
+
+$authorize = $sm->get('BjyAuthorize\Provider\Identity\ProviderInterface');
+
+$roles = $authorize->getIdentityRoles();
+
+?>
+
+<?php if ($roles[0] != 'guest') { ?>
+    <!-- .navbar -->
+  
+    <nav class="navbar navbar-inverse navbar-static-top inlinemenu" >
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <!-- .nav -->
+            <ul class="nav navbar-nav" style="background-color: #d4d5db;">
+
+                <?php
+                if ($roles[0] == 'user') {
+                    $sm = $this->getHelperPluginManager()->getServiceLocator();
+                    $service = $sm->get('zfcuser_user_service');
+                    $id = $service->getAuthService()->getIdentity()->getId();
+                    ?>
+                    <li class='dropdown'>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            My Account <i class="fa fa-plus fa-fw"></i>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="<?php echo $this->basePath('/user'); ?>">Dashboard</a></li>  
+                            <li><a href="<?php echo $this->basePath('/inbox'); ?>">Email</a></li>
+                            <li><a href="<?php echo $this->basePath('/obituary'); ?>">Obituary</a></li>
+                            <li><a href="<?php echo $this->basePath('/memoralize'); ?>">Memoralize</a></li>
+                            <li><a href="<?php echo $this->basePath('/cremation-plans'); ?>">Cremation Planning</a></li>
+                            <li><a href="<?php echo $this->basePath('/pre-planning'); ?>">Pre Planning</a></li>
+                            <li><a href="<?php echo $this->basePath('/contacts'); ?>">Contacts</a></li> 
+                            <li><a href="<?php echo $this->basePath('/user/change-email'); ?>">Profile</a></li>
+                            <li><a href="<?php echo $this->basePath('/user/change-password'); ?>">Change Password</a></li>  
+                            <li><a href="<?php echo $this->basePath('/accounts'); ?>">Connected Account</a></li>
+                            <li><a href="<?php echo $this->basePath('/connections'); ?>">Connections</a></li> 
+                            <li><a href="<?php echo $this->basePath('/delete-account/' . $id); ?>">Delete Account</a></li>             
+
+                        </ul>
+                    </li>
+    <?php } ?>
+            </ul>
+            <!-- /.nav -->
+        </div>   
+    </nav>
+
+ <style type="text/css">
+#menu_bredcurms{
+    margin-left:15%;
+}
+    </style>
+    
+<?php
+}?>
